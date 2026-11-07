@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RepairRelay — S0 PayPal sandbox approval probe</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 640px; margin: 3rem auto; padding: 0 1rem; color: #152238; }
+    pre { background: #f5f7fa; border: 1px solid #e3e8ef; border-radius: 8px; padding: 1rem; white-space: pre-wrap; }
+    .badge { display: inline-block; background: #fef3c7; color: #b45309; border: 1px solid #fbbf24; border-radius: 6px; padding: 2px 8px; font-size: 12px; font-weight: 600; letter-spacing: 0.04em; }
+  </style>
+</head>
+<body>
+  <h1>PayPal buyer approval — feasibility probe</h1>
+  <p><span class="badge">SANDBOX</span> <span class="badge">FEASIBILITY ONLY — not product UI</span></p>
+  <p>This page exists only to exercise the official PayPal JS SDK buyer approval against a sandbox order created by
+    <code>scripts/feasibility/paypal-feasibility.mjs</code>. Server-side authorization runs separately afterwards.</p>
+  <div id="paypal-buttons"></div>
+  <pre id="out">Loading SDK…</pre>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const clientId = params.get("clientId");
+    const orderId = params.get("orderId");
+    const out = document.getElementById("out");
+
+    if (!clientId || !orderId) {
+      out.textContent = "Missing query params. Open as: /?clientId=<PUBLIC_CLIENT_ID>&orderId=<ORDER_ID>";
+    } else {
+      const s = document.createElement("script");
+      s.src = "https://www.sandbox.paypal.com/sdk/js?client-id=" + encodeURIComponent(clientId) + "&intent=authorize&currency=USD";
+      s.onload = () => {
+        out.textContent = "SDK loaded — order " + orderId + ". Approve as the sandbox buyer.";
+        paypal.Buttons({
+          createOrder: () => orderId,
+          onApprove: (data) => {
+            out.textContent =
+              "BUYER APPROVED\norderID: " + data.orderID +
+              "\n\nNext (server-side — this does NOT mark anything authorized):\n" +
+              "node --env-file=.env.local scripts/feasibility/paypal-feasibility.mjs authorize --order " + data.orderID;
+          },
+          onCancel: () => { out.textContent = "Buyer cancelled — no authorization exists."; },
+          onError: (err) => { out.textContent = "SDK error: " + String((err && err.message) || err).slice(0, 300); },
+        }).render("#paypal-buttons");
+      };
+      s.onerror = () => { out.textContent = "Failed to load PayPal SDK script."; };
+      document.body.appendChild(s);
+    }
+  </script>
+</body>
+</html>

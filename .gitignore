@@ -17,3 +17,5 @@ yarn-debug.log*
 pnpm-debug.log*
 data/uploads/
 *.local.json
+
+data/ (feasibility probe state)
