@@ -38,18 +38,18 @@ Use this file as the live progress tracker. Only check an item after it is imple
 
 ## S2 — Repair intake and AI
 
-- [ ] Create repair request.
-- [ ] Device selection and model-unknown handling.
-- [ ] Symptom entry and functionality checklist.
-- [ ] File allowlist/size/count validation.
-- [ ] Actual image decode/re-encode/EXIF removal.
-- [ ] Private upload/read authorization.
-- [ ] Vision AI provider adapter.
-- [ ] Diagnosis Zod schema and prompt.
-- [ ] Visible observations / suspected causes / unknowns shown separately.
-- [ ] Confidence bands only; no arbitrary percentage.
-- [ ] Inconclusive/error/manual continuation flow.
-- [ ] Diagnosis tests pass.
+- [x] Create repair request. (`POST /api/repairs`, contract-shaped response)
+- [x] Device selection and model-unknown handling. (Controlled catalog + "Other" free text → `UNKNOWN` confidence, exact part search blocked downstream)
+- [x] Symptom entry and functionality checklist.
+- [x] File allowlist/size/count validation. (JPEG/PNG/WebP, 8 MB, max 4; enforced pre- and post-re-encode)
+- [x] Actual image decode/re-encode/EXIF removal. (sharp content sniffing beats browser MIME; SVG/HTML/animated rejected)
+- [x] Private upload/read authorization. (Owner-only preview; 401 unauthenticated, 403 wrong user — verified live)
+- [x] Vision AI provider adapter. (OpenAI-compatible, injectable fetch, response_format fallback, timeout→unknown)
+- [x] Diagnosis Zod schema and prompt. (Strict schema, JSON extraction across content/reasoning_content)
+- [x] Visible observations / suspected causes / unknowns shown separately.
+- [x] Confidence bands only; no arbitrary percentage. (`"87%"` rejected by schema test)
+- [x] Inconclusive/error/manual continuation flow. (DIAGNOSIS_INCONCLUSIVE / FAILED keep the draft; retry + manual path in UI)
+- [x] Diagnosis tests pass. (46/46 total; live end-to-end: real upload → real NVIDIA AI → DIAGNOSIS_READY, MEDIUM, DISPLAY_REPLACEMENT)
 
 ## S3 — Channel3
 

@@ -148,6 +148,11 @@ Never paste access tokens, client secrets, API keys, buyer passwords, card data,
 | 2026-11-08 | S1 working tree | `npm run build` | PASS | All routes dynamic; middleware active; `cacheComponents` disabled (session-aware pages) |
 | 2026-11-08 | S1 working tree | `npx prisma migrate dev` + `tsx prisma/seed.ts` | PASS | Migration `s1_identity`; 5 demo accounts seeded idempotently |
 | 2026-11-08 | S1 working tree | Boot check via `next start` + curl | PASS | Customer/repairer/admin login 200; `/me` returns session; wrong password 401; customer→`/repairer` 307 home; unauthenticated→`/login?next=…`; logout clears session (me → 401) |
+| 2026-11-08 | S2 working tree | `npx tsc --noEmit` / `npx eslint .` | PASS | 0 errors, 0 warnings |
+| 2026-11-08 | S2 working tree | `npm test` (Vitest) | PASS | 46/46 across 9 files (added: diagnosis schema, AI JSON extraction, rate limiter, image-pipeline/ownership integration) |
+| 2026-11-08 | S2 working tree | `npm run build` | PASS | New routes: `/repairs/new`, `/repairs/[repairId]`, assets/diagnosis APIs |
+| 2026-11-08 | S2 working tree | Live E2E via `next start` + curl | PASS | Real upload of synthetic image → sharp re-encode (EXIF stripped) → real NVIDIA AI call → `DIAGNOSIS_READY`, confidence MEDIUM, category DISPLAY_REPLACEMENT, 3 observations / 4 unknowns / 3 questions; owner preview 200 (image/png), unauthenticated 401, wrong user 403 |
+| 2026-11-08 | S2 working tree | AI failure path | DESIGNED, unit-covered | Timeout/invalid-JSON map to `DEPENDENCY_UNAVAILABLE` with draft retained (service + adapter injected-fetch tests); live outage path not forced in production run |
 
 ### V-008 — S1 foundation slice
 
