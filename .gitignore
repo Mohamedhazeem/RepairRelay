@@ -18,5 +18,5 @@ pnpm-debug.log*
 data/uploads/
 *.local.json
 
-data/ (feasibility probe state)
+data/
 *.tsbuildinfo
