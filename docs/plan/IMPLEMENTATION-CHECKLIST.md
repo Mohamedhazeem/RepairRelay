@@ -10,14 +10,14 @@ Use this file as the live progress tracker. Only check an item after it is imple
 - [x] Actual product/offer/price shape recorded and validated. (`price` object `{price, compare_at_price, currency}`; offer-level `currency` absent; images `cleaned_url` optional; detail adds gender/materials/ratings — see VERIFICATION-LOG V-002.)
 - [x] At least two relevant parts with usable priced merchant offers found, or fallback explicitly selected. → **Fallback selected: Repair-versus-Replace mode** (only 1 genuine iPhone 13 part; replacement-device coverage strong). See V-004.
 - [x] Product details refresh returns current offers.
-- [ ] Channel3 credits/usage checked. (Dashboard check pending; ~9 search + 2 detail calls used.)
+- [ ] Channel3 credits/usage checked. (Dashboard check pending; ~11 search + 2 detail calls used.)
 - [x] PayPal sandbox buyer and business accounts created. (User-provided.)
 - [x] PayPal OAuth works.
-- [ ] Sandbox merchant `AUTHORIZE` capability confirmed. (Order created; confirm at authorize step.)
-- [ ] PayPal buyer approval works through official SDK/UI.
-- [ ] PayPal authorization succeeds and returns authorization ID.
-- [ ] PayPal capture succeeds on a test authorization.
-- [ ] PayPal void succeeds on a separate uncaptured authorization.
+- [x] Sandbox merchant `AUTHORIZE` capability confirmed. (No `AUTH_CAPTURE_NOT_ENABLED`; authorization 201 CREATED.)
+- [x] PayPal buyer approval works through official SDK/UI. (SDK Buttons render + hosted page approval; buyer-cancel path observed.)
+- [x] PayPal authorization succeeds and returns authorization ID.
+- [x] PayPal capture succeeds on a test authorization.
+- [x] PayPal void succeeds on a separate uncaptured authorization.
 - [x] AI vision provider key and model verified independently. (`nvidia/nemotron-3.5-super-vl-120b-a12b`; initial `google/gemma-4-31b-it` hangs — replaced in `.env.local`.)
 - [x] One sample image produces schema-valid structured diagnosis.
 - [x] GO/PIVOT decision recorded in verification log. (V-004: PIVOT to Repair-versus-Replace.)

@@ -89,7 +89,7 @@ async function call(method, path, { body, requestId } = {}) {
   const token = await getToken();
   const headers = { Authorization: `Bearer ${token}` };
   if (requestId) headers["PayPal-Request-Id"] = requestId;
-  if (body !== undefined) headers["Content-Type"] = "application/json";
+  if (method === "POST" || method === "PATCH" || body !== undefined) headers["Content-Type"] = "application/json";
   const res = await fetch(`${base}${path}`, {
     method,
     headers,
@@ -127,7 +127,9 @@ switch (sub) {
       console.error("--amount must be a decimal string like 95.00");
       process.exit(1);
     }
-    const requestId = stableRequestId("create-order", `USD:${amount}`);
+    const returnUrl = argValue("--return-url") ?? "http://127.0.0.1:3100/return";
+    const cancelUrl = argValue("--cancel-url") ?? "http://127.0.0.1:3100/cancel";
+    const requestId = stableRequestId("create-order", `USD:${amount}:${Date.now()}`);
     const r = await call("POST", "/v2/checkout/orders", {
       requestId,
       body: {
@@ -139,6 +141,12 @@ switch (sub) {
             amount: { currency_code: "USD", value: amount },
           },
         ],
+        application_context: {
+          brand_name: "RepairRelay S0",
+          user_action: "PAY_NOW",
+          return_url: returnUrl,
+          cancel_url: cancelUrl,
+        },
       },
     });
     console.log(`create-order: HTTP ${r.status} ${r.statusText}`);
@@ -146,7 +154,7 @@ switch (sub) {
       console.log(`  order id: ${r.json.id}`);
       console.log(`  intent: ${r.json.intent} status: ${r.json.status}`);
       printLinks(r.json);
-      console.log(`  (PayPal-Request-Id reused on retry: yes)`);
+      console.log(`  hosted approval: https://www.sandbox.paypal.com/checkoutnow?token=${r.json.id}`);
     } else {
       console.error("  body:", JSON.stringify(r.json).slice(0, 900));
     }

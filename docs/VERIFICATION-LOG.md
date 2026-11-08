@@ -13,8 +13,8 @@
 | Channel3 spare-part coverage | **INSUFFICIENT → PIVOT SELECTED** | Only 1 genuine iPhone 13 display part found (needs ≥2). Repair-versus-Replace mode selected per documented fallback; replacement-device coverage is strong. See V-004. |
 | PayPal sandbox OAuth | **PASS** | Token issued (scope present, 32400s). See V-005. |
 | PayPal order creation (AUTHORIZE) | **PASS** | HTTP 201, one purchase unit, USD 95.00. See V-005. |
-| PayPal buyer approval / authorize | IN PROGRESS | Order `8PL473918C8957611` awaits sandbox buyer approval via JS SDK page. |
-| PayPal capture / void | PENDING | After authorizations: capture on first, void on a separate order. |
+| PayPal buyer approval / authorize | **PASS** | Official sandbox UI approval (SDK page + hosted page); order `APPROVED`; authorization `29294125B72500359` USD 95.00. Buyer-cancel path also observed (`onCancel` fired, no authorization). See V-007. |
+| PayPal capture / void | **PASS** | Capture `3EC39096GD493553N` COMPLETED → auth `CAPTURED`; void → auth `VOIDED`; void-after-capture and capture-after-void both rejected by PayPal with the expected errors. See V-007. |
 | AI vision API | **PASS** | `nvidia/nemotron-3.5-super-vl-120b-a12b` via NVIDIA NIM; schema-valid JSON, honest UNASSESSED on unrelated image. See V-006. |
 | Application build | NOT STARTED | S1 foundation next. |
 | E2E | NOT STARTED | Implement slices before recording results. |
@@ -102,7 +102,29 @@ Never paste access tokens, client secrets, API keys, buyer passwords, card data,
 - Environment: PayPal sandbox (`api-m.sandbox.paypal.com`)
 - Expected: OAuth token; order created with `intent=AUTHORIZE`, one purchase unit.
 - Actual: **OAuth HTTP 200** (scope present, `expires_in` 32400s); **create-order HTTP 201**, order id `8PL473918C8957611`, status `CREATED`, approval link returned. `PayPal-Request-Id` persisted locally before the call for retry idempotency.
-- Result: **PASS (partial — authorization/capture/void pending buyer approval).**
+- Result: **PASS**
+
+### V-007 — PayPal buyer approval, authorization, capture and void (full lifecycle)
+
+- Date/time: 8 November 2026, ~01:15–01:45 IST
+- Command: `paypal-feasibility.mjs` subcommands `create-order` / `show-order` / `authorize` / `show-auth` / `capture` / `void`; official PayPal sandbox UI in the ZCode in-app browser (JS SDK probe page on `127.0.0.1:3100` and the hosted `checkoutnow` approval page).
+- Environment: PayPal sandbox, browser at `127.0.0.1` origin, sandbox buyer account "John Doe".
+- Sequence and actual results:
+  1. JS SDK page rendered the official PayPal Buttons (`intent=authorize`, USD) — PASS (SDK integration renders and opens the approval popup).
+  2. First order `8PL473918C8957611` (no `return_url`): buyer signed in and reached the payment page inside the SDK popup; the final in-popup click was completed as a cancellation, so **`onCancel` fired and the probe displayed "Buyer cancelled — no authorization exists"** — PASS (documented buyer-cancel path verified; no authorization created).
+  3. Full-page `checkoutnow` flow without `return_url`: the hosted page hung at "Review Order — Loading…" (no redirect target). Root cause: orders created without `return_url` cannot complete the hosted-page flow. Fixed by adding `application_context.return_url`/`cancel_url` to `create-order`.
+  4. Order `64P03942GE3951408` (USD 95.00, with return URLs): buyer approval completed on the hosted page; redirect landed on the return URL with `token` + `PayerID`; `show-order` returned **status `APPROVED`**.
+  5. `authorize --order 64P03942GE3951408`: **HTTP 201**, order `COMPLETED`, authorization id `29294125B72500359`, raw status `CREATED`, amount USD 95.00, expiry 2026-12-07T03:04:10Z. **No `AUTH_CAPTURE_NOT_ENABLED`** — the sandbox merchant supports AUTHORIZE.
+  6. `capture --auth 29294125B72500359`: **HTTP 201**, capture id `3EC39096GD493553N`, status `COMPLETED`; `show-auth` then returned authorization status **`CAPTURED`**.
+  7. Negative test — `void` on the captured authorization: **HTTP 422 `PREVIOUSLY_CAPTURED`** ("Authorization has been previously captured and hence cannot be voided.") — provider enforces the no-void-after-capture invariant.
+  8. Order `20T04538KC089600U` (USD 40.00, with return URLs): approved via hosted page, `authorize` returned authorization id `51Y72945K69958937` (USD 40.00); `void`: **HTTP 204**; `show-auth` returned status **`VOIDED`**.
+  9. Negative test — `capture` on the voided authorization: **HTTP 422 `AUTHORIZATION_VOIDED`** — provider enforces no-capture-after-void.
+- Result: **PASS — full authorization/capture/void lifecycle verified in sandbox.**
+- Known limitations / notes for S6 implementation:
+  - Orders must include `return_url`/`cancel_url` for any hosted-page fallback flow; the JS SDK popup flow works without them but the popup's inner frame is not reliably clickable by browser automation — the product demo uses the real buyer click.
+  - OAuth token cached with expiry in `data/feasibility/` (gitignored); request IDs persisted per operation for retry idempotency.
+  - Authorization expiry observed as ~29 days; the demo completes in one sitting regardless.
+  - One transient HTTP 415 occurred (probe bug: missing `Content-Type` on body-less POST) — fixed in the probe; not a PayPal issue.
 
 ### V-006 — AI vision structured diagnosis
 
