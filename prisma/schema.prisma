@@ -109,10 +109,94 @@ model RepairRequest {
   selectedChannel3ProductId String?
   selectedQuoteId           String?
 
-  quotes RepairQuote[]
+  quotes   RepairQuote[]
+  contract RepairContract?
 
   @@index([customerId])
   @@map("repair_requests")
+}
+
+enum ContractStatus {
+  AWAITING_CUSTOMER_APPROVAL
+  APPROVED
+  CHANGE_REQUESTED
+  COMPLETED
+  CANCEL_REQUESTED
+  CANCELLED
+}
+
+enum ChangeRequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELLED
+  EXPIRED
+}
+
+model RepairContract {
+  id              String         @id @default(uuid())
+  repairRequestId String         @unique
+  repairRequest   RepairRequest  @relation(fields: [repairRequestId], references: [id])
+  selectedQuoteId String
+  /// Plain reference to the active ContractVersion id (kept without an FK to avoid
+  /// a circular relation; the authoritative pointer is the highest approved version).
+  currentVersionId String?
+  status          ContractStatus @default(AWAITING_CUSTOMER_APPROVAL)
+  version         Int            @default(1)
+  currency        String         @default("USD")
+  totalMinor      Int
+  approvedAt      DateTime?
+  cancelledAt     DateTime?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  versions       ContractVersion[]
+  changeRequests ContractChangeRequest[]
+
+  @@map("repair_contracts")
+}
+
+/// Immutable after insert (except approval metadata recorded as separate decision fields).
+model ContractVersion {
+  id                            String         @id @default(uuid())
+  contractId                    String
+  contract                      RepairContract @relation(fields: [contractId], references: [id])
+  versionNumber                 Int
+  quoteSnapshotJson             Json
+  /// Repair-versus-Replace mode: historical replacement-device comparison snapshot
+  /// (labelled as observed-at-creation; never a current offer or a repair part).
+  productReferenceSnapshotJson  Json?
+  scopeSnapshot                 String
+  warrantySnapshot              String
+  totalMinor                    Int
+  currency                      String
+  changeReason                  String?
+  createdBy                     String
+  createdAt                     DateTime       @default(now())
+  customerApprovedAt            DateTime?
+  supersededAt                  DateTime?
+
+  @@unique([contractId, versionNumber])
+  @@index([contractId])
+  @@map("contract_versions")
+}
+
+model ContractChangeRequest {
+  id                String             @id @default(uuid())
+  contractId        String
+  contract          RepairContract     @relation(fields: [contractId], references: [id])
+  fromVersionId     String
+  proposedVersionId String
+  requestedBy       String
+  requestedByRole   String
+  reason            String
+  status            ChangeRequestStatus @default(PENDING)
+  customerDecisionAt DateTime?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+
+  @@index([contractId])
+  @@map("contract_change_requests")
 }
 
 /// Seeded demo actor. demoLabel is fixed to SIMULATED — never presented as a real technician.
