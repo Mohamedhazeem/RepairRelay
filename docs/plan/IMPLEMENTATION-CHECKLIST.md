@@ -67,13 +67,13 @@ Use this file as the live progress tracker. Only check an item after it is imple
 
 ## S4 — Quotes
 
-- [ ] Three seeded repairers labelled SIMULATED.
-- [ ] Itemized quote data.
-- [ ] Retail reference price separated from repairer part charge.
-- [ ] Deterministic total calculation.
-- [ ] Warranty, scope, exclusions and ETA.
-- [ ] Quote expiry and selection rules.
-- [ ] Quote tests pass.
+- [x] Three seeded repairers labelled SIMULATED. (Seed profiles + `SIMULATED REPAIRER` badges; `demoActor: true` in API)
+- [x] Itemized quote data. (Part charge, labour, fees/tax fields, warranty, ETA, scope, exclusions, attestation)
+- [x] Retail reference price separated from repairer part charge. (Repair-versus-Replace mode: replacement-device benchmark shown separately; quote part charge is technician-declared — no Channel3 part reference on quotes)
+- [x] Deterministic total calculation. (`computeQuote` — same inputs always produce identical minor-unit totals; regeneration idempotent, unit-tested)
+- [x] Warranty, scope, exclusions and ETA.
+- [x] Quote expiry and selection rules. (48h validity; expired/unconfirmed/zero-total not selectable; CAS GENERATED→SELECTED; others SUPERSEDED; stale version → CONFLICT)
+- [x] Quote tests pass. (79/79 total; live check: 3 quotes 94.48–115.48 USD generated, selection + double-select 409 verified)
 
 ## S5 — Contract and changes
 

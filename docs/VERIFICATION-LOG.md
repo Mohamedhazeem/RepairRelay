@@ -157,6 +157,10 @@ Never paste access tokens, client secrets, API keys, buyer passwords, card data,
 | 2026-11-08 | S3 working tree | `npm test` (Vitest) | PASS | 66/66 across 12 files (added: normalizer matrix incl. real fixture, client error mapping with injected fetch, discovery/selection integration with adapter doubles) |
 | 2026-11-08 | S3 working tree | `npm run build` | PASS | New routes: product-search GET/POST, refresh, selection, `/repairs/[repairId]/products` |
 | 2026-11-08 | S3 working tree | Live E2E via `next start` + curl | PASS | Real Channel3 replacement-device search for iPhone 13: 5 eligible device offers (241.99–469.99 USD, bestbuy/gazelle), all `NOT_VERIFIED_BY_CHANNEL3`; detail refresh returned fresh 469.99 USD @ bestbuy.com; selection succeeded with server re-fetch + exact price match; mismatched selection correctly returned 409 with fresh values |
+| 2026-11-08 | S4 working tree | `npx tsc --noEmit` / `npx eslint .` | PASS | 0 errors, 0 warnings |
+| 2026-11-08 | S4 working tree | `npm test` (Vitest) | PASS | 79/79 across 14 files (added: deterministic pricing, quote generation idempotency/prerequisites, CAS selection incl. stale version / double select / attestation guard) |
+| 2026-11-08 | S4 working tree | `npm run build` | PASS | New routes: quotes GET/POST, quote select, `/repairs/[repairId]/quotes` |
+| 2026-11-08 | S4 working tree | Live E2E via `next start` + curl | PASS | 3 deterministic SIMULATED quotes generated (94.48 / 104.98 / 115.48 USD, 90/180/365-day warranties), all CONFIRMED_FOR_DEMO with simulated-attestation notes; regeneration idempotent; selection marked SELECTED + others SUPERSEDED; second select and stale expectedRepairVersion both returned 409 |
 
 ### V-008 — S1 foundation slice
 
