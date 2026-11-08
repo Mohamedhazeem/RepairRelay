@@ -95,7 +95,13 @@ export async function ensureQuotes(
     return { ok: true, quotes: existing.map(toQuote) };
   }
 
-  const repairers = await prisma.simulatedRepairer.findMany({ where: { active: true }, orderBy: { createdAt: "asc" } });
+  // Only the seeded demo actors quote (parallel test files may create extra repairer profiles).
+  const { SEED_ACCOUNTS } = await import("@/../prisma/seed");
+  const seededEmails = SEED_ACCOUNTS.filter((a) => a.role === "SIMULATED_REPAIRER").map((a) => a.email);
+  const repairers = await prisma.simulatedRepairer.findMany({
+    where: { active: true, user: { email: { in: seededEmails } } },
+    orderBy: { createdAt: "asc" },
+  });
   if (repairers.length !== QUOTE_PROFILES.length) {
     return { ok: false, code: "VALIDATION_ERROR", message: "Simulated repairer seed data is missing — run db:seed" };
   }

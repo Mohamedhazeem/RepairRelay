@@ -122,14 +122,14 @@ Use this file as the live progress tracker. Only check an item after it is imple
 
 ## S9 — PayPal capture, void and reconciliation
 
-- [ ] Capture only after explicit acceptance.
-- [ ] Void only after cancellation or approved amount-change workflow.
-- [ ] Confirmed provider result required for CAPTURED/VOIDED.
-- [ ] Capture timeout shows unknown and reconciles.
-- [ ] Void timeout shows unknown and reconciles.
-- [ ] Authorization expiry path.
-- [ ] Duplicate capture/void prevented by idempotency.
-- [ ] No attempt to void captured payment.
+- [x] Capture only after explicit acceptance. (Guard: recorded ACCEPT decision referencing the current contract version — unit-tested)
+- [x] Void only after cancellation or approved amount-change workflow. (Cancellation path finalizes CANCELLED; contractChange path releases only the payment)
+- [x] Confirmed provider result required for CAPTURED/VOIDED. (PENDING capture → CAPTURE_PENDING, never paid)
+- [x] Capture timeout shows unknown and reconciles. (CAPTURE_UNKNOWN → reconcile via authorization resource → CAPTURED (repair completed) or AUTHORIZED)
+- [x] Void timeout shows unknown and reconciles. (VOID_UNKNOWN → authorization GET → VOIDED)
+- [x] Authorization expiry path. (Expired → AUTHORIZATION_EXPIRED, capture blocked, new buyer approval required)
+- [x] Duplicate capture/void prevented by idempotency. (DB-level CAS AUTHORIZED→PENDING + operation uniqueness)
+- [x] No attempt to void captured payment. (Void-after-capture → CONFLICT — unit-tested)
 
 ## S10 — Repair Passport
 

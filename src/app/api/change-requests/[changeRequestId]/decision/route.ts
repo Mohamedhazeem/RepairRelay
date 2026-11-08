@@ -6,6 +6,7 @@ import { SESSION_COOKIE, verifySessionToken } from "@/lib/auth/session";
 import { requireRole } from "@/lib/auth/guards";
 import { jsonErrorBody, newTraceId, statusForCode } from "@/lib/http/errors";
 import { decideChangeRequest } from "@/domains/contracts/service";
+import { voidAfterCancellation } from "@/domains/payments/orchestration";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -43,5 +44,18 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ cha
     const status = outcome.code === "NOT_FOUND" ? 404 : outcome.code === "CONFLICT" ? 409 : 400;
     return NextResponse.json(jsonErrorBody(outcome.code, outcome.message, traceId), { status });
   }
-  return NextResponse.json({ traceId, ...outcome });
+  // Amount change with an existing authorization: release the old payment (S04 contract).
+  // The contract stays APPROVED; a new buyer approval + authorization is required for the new total.
+  let paymentReleased = false;
+  if (outcome.decision === "APPROVED" && outcome.amountChanged) {
+    const cr = await prisma.contractChangeRequest.findUnique({ where: { id: changeRequestId }, include: { contract: true } });
+    if (cr) {
+      const payment = await prisma.paymentAttempt.findFirst({ where: { repairContractId: cr.contractId }, orderBy: { createdAt: "desc" } });
+      if (payment?.status === "AUTHORIZED") {
+        const voided = await voidAfterCancellation(prisma, cr.contractId, guard.session.userId, { traceId, contractChange: true });
+        paymentReleased = voided.ok;
+      }
+    }
+  }
+  return NextResponse.json({ traceId, ...outcome, paymentReleased });
 }

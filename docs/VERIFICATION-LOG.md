@@ -177,6 +177,9 @@ Never paste access tokens, client secrets, API keys, buyer passwords, card data,
 | 2026-11-08 | S8 working tree | `npm test` (Vitest) | PASS | 115/115 across 18 files (added: ownership, per-submission decision immutability, rework cap + supersede, cancel with/without authorization, stale version/evidence guards) |
 | 2026-11-08 | S8 working tree | `npm run build` | PASS | New route: customer-decision; DecisionPanel with confirm dialogs |
 | 2026-11-08 | S8 working tree | **Live full happy path** via `next start` + curl | PASS | Live rework decision (REWORK_IN_PROGRESS, no capture, auth untouched) → repairer resubmission (INCOMPLETE advisory) → customer ACCEPT → **real PayPal capture `6SV67765LK889111T` COMPLETED → payment CAPTURED, repair COMPLETED**. Bug found and fixed live: duplicate-decision guard was per-job, corrected to per-submission (legitimate post-rework decisions) |
+| 2026-11-08 | S9 working tree | `npx tsc --noEmit` / `npx eslint .` | PASS | 0 errors, 0 warnings |
+| 2026-11-08 | S9 working tree | `npm test` (Vitest) | PASS | 123/123 across 19 files (added: accept-decision guard, expiry block, DB-level CAS concurrency, void-after-capture, authorization-resource reconciliation resolving unknowns to CAPTURED/AUTHORIZED/VOIDED, amount-change void with contractChange context) |
+| 2026-11-08 | S9 working tree | Hardening notes | DONE | createOrderForContract now validates expectedContractVersion (bug found by the S9 tests); reconcile→CAPTURED completes the repair; amount-change void keeps the contract APPROVED (re-authorization required); quote generation scoped to seeded repairer emails |
 
 ### V-008 — S1 foundation slice
 

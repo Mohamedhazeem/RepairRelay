@@ -21,7 +21,7 @@ export async function captureAfterAcceptance(
   prisma: PrismaClient,
   contractId: string,
   customerId: string,
-  opts?: { traceId?: string },
+  opts?: { traceId?: string; captureAdapter?: typeof captureAuthorization },
 ): Promise<OrchestrationOutcome> {
   const attempt = await prisma.paymentAttempt.findFirst({
     where: { repairContractId: contractId },
@@ -33,9 +33,28 @@ export async function captureAfterAcceptance(
   if (attempt.status !== "AUTHORIZED" || !attempt.paypalAuthorizationId) {
     return { ok: false, code: "CONFLICT", message: `Payment is ${attempt.status} — capture is not possible` };
   }
-  // Contract version guard: the accepted decision referenced the current version (enforced by the decision service).
+  // Contract version guard: the payment must match the current approved version.
   if (attempt.contractVersionId !== attempt.contract.currentVersionId) {
     return { ok: false, code: "CONFLICT", message: "The payment no longer matches the current contract version" };
+  }
+  // Explicit-accept guard: a recorded ACCEPT decision must reference this contract version.
+  const job = await prisma.repairJob.findUnique({ where: { repairRequestId: attempt.contract.repairRequestId }, include: { decisions: true } });
+  const accepted = job?.decisions.find((d) => d.decision === "ACCEPT" && d.contractVersionId === attempt.contractVersionId);
+  if (!accepted) {
+    return { ok: false, code: "CONFLICT", message: "Capture requires an explicit customer acceptance of this contract version" };
+  }
+  // Authorization expiry guard: never capture past the provider validity window.
+  if (attempt.authorizationExpiresAt && attempt.authorizationExpiresAt.getTime() <= Date.now()) {
+    await prisma.paymentAttempt.update({ where: { id: attempt.id }, data: { status: "AUTHORIZATION_EXPIRED" } });
+    await writeAudit(prisma, {
+      aggregateType: "PaymentAttempt",
+      aggregateId: attempt.id,
+      actorType: "SYSTEM",
+      eventType: "payment.authorization_expired",
+      payload: { expiredAt: attempt.authorizationExpiresAt.toISOString() },
+      traceId: opts?.traceId,
+    });
+    return { ok: false, code: "CONFLICT", message: "The authorization has expired — a new buyer approval is required" };
   }
 
   const requestHash = createHash("sha256").update(`${attempt.id}:capture`).digest("hex");
@@ -51,9 +70,17 @@ export async function captureAfterAcceptance(
   await prisma.paymentOperation.create({
     data: { paymentAttemptId: attempt.id, operationType: "CAPTURE", idempotencyKey, status: "STARTED", requestHash },
   });
-  await prisma.paymentAttempt.update({ where: { id: attempt.id }, data: { status: "CAPTURE_PENDING" } });
+  // DB-level CAS: only one caller can move AUTHORIZED → CAPTURE_PENDING (concurrent-click guard).
+  const cas = await prisma.paymentAttempt.updateMany({
+    where: { id: attempt.id, status: "AUTHORIZED" },
+    data: { status: "CAPTURE_PENDING" },
+  });
+  if (cas.count !== 1) {
+    return { ok: false, code: "PROVIDER_OUTCOME_UNKNOWN", message: "A capture is already in progress — reconcile before retrying" };
+  }
 
-  const result = await captureAuthorization({ authorizationId: attempt.paypalAuthorizationId, requestId: idempotencyKey });
+  const captureAdapter = opts?.captureAdapter ?? captureAuthorization;
+  const result = await captureAdapter({ authorizationId: attempt.paypalAuthorizationId, requestId: idempotencyKey });
   if (!result.ok) {
     const unknown = result.error.kind === "TIMEOUT" || result.error.kind === "NETWORK" || result.error.kind === "PROVIDER_ERROR";
     await prisma.paymentOperation.updateMany({
@@ -118,7 +145,7 @@ export async function voidAfterCancellation(
   prisma: PrismaClient,
   contractId: string,
   customerId: string,
-  opts?: { traceId?: string },
+  opts?: { traceId?: string; voidAdapter?: typeof voidAuthorization; contractChange?: boolean },
 ): Promise<OrchestrationOutcome> {
   const attempt = await prisma.paymentAttempt.findFirst({
     where: { repairContractId: contractId },
@@ -146,9 +173,17 @@ export async function voidAfterCancellation(
   await prisma.paymentOperation.create({
     data: { paymentAttemptId: attempt.id, operationType: "VOID", idempotencyKey, status: "STARTED" },
   });
-  await prisma.paymentAttempt.update({ where: { id: attempt.id }, data: { status: "VOID_PENDING" } });
+  // DB-level CAS: only one caller can move AUTHORIZED → VOID_PENDING.
+  const cas = await prisma.paymentAttempt.updateMany({
+    where: { id: attempt.id, status: "AUTHORIZED" },
+    data: { status: "VOID_PENDING" },
+  });
+  if (cas.count !== 1) {
+    return { ok: false, code: "PROVIDER_OUTCOME_UNKNOWN", message: "A void is already in progress — reconcile before retrying" };
+  }
 
-  const result = await voidAuthorization({ authorizationId: attempt.paypalAuthorizationId, requestId: idempotencyKey });
+  const voidAdapter = opts?.voidAdapter ?? voidAuthorization;
+  const result = await voidAdapter({ authorizationId: attempt.paypalAuthorizationId, requestId: idempotencyKey });
   if (!result.ok) {
     const unknown = result.error.kind === "TIMEOUT" || result.error.kind === "NETWORK" || result.error.kind === "PROVIDER_ERROR";
     await prisma.paymentOperation.updateMany({
@@ -177,6 +212,18 @@ export async function voidAfterCancellation(
     where: { id: attempt.id },
     data: { status: "VOIDED", rawAuthorizationStatus: "VOIDED" },
   });
+  if (opts?.contractChange) {
+    // Amount-change path: the contract stays APPROVED; a new buyer approval + authorization is required for the new total.
+    await writeAudit(prisma, {
+      aggregateType: "PaymentAttempt",
+      aggregateId: attempt.id,
+      actorType: "SYSTEM",
+      eventType: "payment.voided_for_contract_change",
+      payload: { authorizationId: attempt.paypalAuthorizationId },
+      traceId: opts?.traceId,
+    });
+    return { ok: true, status: "VOIDED" };
+  }
   // Confirmed void → final cancelled state (void is never treated as a refund).
   await prisma.repairJob.updateMany({ where: { repairRequestId: attempt.contract.repairRequestId, status: "CANCEL_REQUESTED" }, data: { status: "CANCELLED", cancelledAt: new Date() } });
   await prisma.repairRequest.update({ where: { id: attempt.contract.repairRequestId }, data: { status: "CANCELLED" } });

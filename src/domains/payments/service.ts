@@ -6,10 +6,10 @@
  */
 
 import { createHash, randomUUID } from "node:crypto";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient, PaymentStatus } from "@prisma/client";
 import { writeAudit } from "@/lib/audit";
 import { getServerEnv } from "@/lib/env";
-import { createPayPalOrder, authorizeOrder, getOrder, type PayPalError } from "@/integrations/paypal/client";
+import { createPayPalOrder, authorizeOrder, getOrder, getAuthorization, type PayPalError } from "@/integrations/paypal/client";
 import type { AuthorizationResult } from "@/integrations/paypal/client";
 
 type Adapter = typeof createPayPalOrder;
@@ -90,6 +90,9 @@ export async function createOrderForContract(
     return failure("VALIDATION_ERROR", "The contract must be approved before payment");
   }
   if (contract.versions[0].id !== contract.currentVersionId) {
+    return failure("CONFLICT", "The contract changed — refresh and review the latest version");
+  }
+  if (contract.version !== input.expectedContractVersion) {
     return failure("CONFLICT", "The contract changed — refresh and review the latest version");
   }
 
@@ -349,54 +352,103 @@ export async function markBuyerCancelled(
 }
 
 /** Reconciliation: provider reads only; updates raw + normalized statuses. */
+export function mapAuthorizationStatus(raw: string): string {
+  switch (raw) {
+    case "CAPTURED": return "CAPTURED";
+    case "VOIDED": return "VOIDED";
+    case "DENIED": return "AUTHORIZATION_DECLINED";
+    case "PENDING": return "CAPTURE_PENDING";
+    case "CREATED": return "AUTHORIZED";
+    case "EXPIRED": return "AUTHORIZATION_EXPIRED";
+    default: return "AUTHORIZATION_UNKNOWN";
+  }
+}
+
+/**
+ * Reconciliation: provider reads only, never a mutation. Prefers the
+ * authorization resource (authoritative for capture/void outcomes) and falls
+ * back to the order read for approval-state questions.
+ */
 export async function reconcileAttempt(
   prisma: PrismaClient,
   attemptId: string,
-  deps?: { orderAdapter?: typeof getOrder },
+  deps?: { orderAdapter?: typeof getOrder; authAdapter?: typeof getAuthorization },
 ): Promise<PaymentOutcome<{ attemptId: string; status: string; rawOrderStatus: string | null }>> {
   const attempt = await prisma.paymentAttempt.findUnique({ where: { id: attemptId }, include: { contract: { include: { repairRequest: true } } } });
   if (!attempt) return failure("NOT_FOUND", "Payment attempt not found");
   if (!attempt.paypalOrderId) return failure("VALIDATION_ERROR", "No order was created for this attempt");
 
+  let resolvedStatus: string | null = null;
+  let rawAuthStatus: string | null = null;
+  let rawOrderStatus: string | null = null;
+  let authorizationId: string | null = attempt.paypalAuthorizationId;
+  let expiresAt: Date | null = attempt.authorizationExpiresAt;
+
+  // 1. Authorization resource (when present) — authoritative for capture/void outcomes.
+  if (authorizationId) {
+    const authAdapter = deps?.authAdapter ?? getAuthorization;
+    const authResult = await authAdapter(authorizationId);
+    if (authResult.ok) {
+      const raw = authResult.authorization as { status?: string; expiration_time?: string | null };
+      rawAuthStatus = raw.status ?? null;
+      if (raw.expiration_time) expiresAt = new Date(raw.expiration_time);
+      if (raw.status) resolvedStatus = mapAuthorizationStatus(raw.status);
+    } else if (authResult.error.kind === "PROVIDER_ERROR" && JSON.stringify(authResult.error).includes("404")) {
+      resolvedStatus = null; // fall through to the order read
+    }
+  }
+
+  // 2. Order read (approval state; also the only source before an authorization exists).
   const adapter = deps?.orderAdapter ?? getOrder;
   const result = await adapter(attempt.paypalOrderId);
   if (!result.ok) {
-    const mapped = providerErrorMessage(result.error);
-    return failure(mapped.code as "PROVIDER_OUTCOME_UNKNOWN", "Reconciliation could not read the provider state — try again");
+    if (resolvedStatus === null) {
+      const mapped = providerErrorMessage(result.error);
+      return failure(mapped.code as "PROVIDER_OUTCOME_UNKNOWN", "Reconciliation could not read the provider state — try again");
+    }
+  } else {
+    const order = result.order as {
+      status?: string;
+      purchase_units?: Array<{ payments?: { authorizations?: Array<{ id: string; status: string }> } }>;
+    };
+    rawOrderStatus = order.status ?? null;
+    const orderAuth = order.purchase_units?.[0]?.payments?.authorizations?.[0];
+    if (orderAuth) {
+      authorizationId = orderAuth.id;
+      rawAuthStatus = orderAuth.status;
+    }
+    if (resolvedStatus === null) {
+      if (order.status === "APPROVED") resolvedStatus = "BUYER_APPROVAL_PENDING";
+      else if (order.status === "COMPLETED" && orderAuth) resolvedStatus = mapAuthorizationStatus(orderAuth.status);
+      else if (order.status === "CREATED" && (attempt.status === "ORDER_CREATED" || attempt.status === "BUYER_CANCELLED")) resolvedStatus = attempt.status;
+      else resolvedStatus = attempt.status;
+    }
   }
-  const order = result.order as {
-    status?: string;
-    purchase_units?: Array<{ payments?: { authorizations?: Array<{ id: string; status: string; amount?: { value: string } }> } }>;
-  };
-  const auth = order.purchase_units?.[0]?.payments?.authorizations?.[0];
-  let status = attempt.status;
-  if (order.status === "APPROVED") status = "BUYER_APPROVAL_PENDING";
-  if (order.status === "COMPLETED" && auth) {
-    status =
-      auth.status === "CAPTURED" ? "CAPTURED"
-      : auth.status === "VOIDED" ? "VOIDED"
-      : auth.status === "DENIED" ? "AUTHORIZATION_DECLINED"
-      : auth.status === "PENDING" ? "CAPTURE_PENDING"
-      : auth.status === "CREATED" ? "AUTHORIZED"
-      : "AUTHORIZATION_UNKNOWN";
-  }
+
+  const finalStatus = (resolvedStatus ?? attempt.status) as PaymentStatus;
   await prisma.paymentAttempt.update({
     where: { id: attempt.id },
     data: {
-      status,
-      rawOrderStatus: order.status ?? null,
-      rawAuthorizationStatus: auth?.status ?? attempt.rawAuthorizationStatus,
-      paypalAuthorizationId: auth?.id ?? attempt.paypalAuthorizationId,
+      status: finalStatus,
+      rawOrderStatus,
+      rawAuthorizationStatus: rawAuthStatus ?? attempt.rawAuthorizationStatus,
+      paypalAuthorizationId: authorizationId,
+      authorizationExpiresAt: expiresAt,
     },
   });
+  if (finalStatus === "CAPTURED" && attempt.status !== "CAPTURED") {
+    // Reconciliation confirmed a capture the app never saw complete.
+    await prisma.repairRequest.update({ where: { id: attempt.contract.repairRequestId }, data: { status: "COMPLETED" } });
+    await prisma.repairJob.updateMany({ where: { repairRequestId: attempt.contract.repairRequestId, status: "CUSTOMER_REVIEW" }, data: { status: "ACCEPTED", acceptedAt: new Date() } });
+  }
   await writeAudit(prisma, {
     aggregateType: "PaymentAttempt",
     aggregateId: attempt.id,
     actorType: "DEMO_ADMIN",
     eventType: "payment.reconciled",
-    payload: { providerOrderStatus: order.status ?? null, authorizationStatus: auth?.status ?? null, resolvedStatus: status },
+    payload: { providerOrderStatus: rawOrderStatus, authorizationStatus: rawAuthStatus, resolvedStatus: resolvedStatus ?? attempt.status },
   });
-  return { ok: true, result: { attemptId: attempt.id, status, rawOrderStatus: order.status ?? null } };
+  return { ok: true, result: { attemptId: attempt.id, status: resolvedStatus ?? attempt.status, rawOrderStatus } };
 }
 
 export async function getPaymentView(prisma: PrismaClient, repairId: string, customerId: string) {
