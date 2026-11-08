@@ -153,6 +153,10 @@ Never paste access tokens, client secrets, API keys, buyer passwords, card data,
 | 2026-11-08 | S2 working tree | `npm run build` | PASS | New routes: `/repairs/new`, `/repairs/[repairId]`, assets/diagnosis APIs |
 | 2026-11-08 | S2 working tree | Live E2E via `next start` + curl | PASS | Real upload of synthetic image → sharp re-encode (EXIF stripped) → real NVIDIA AI call → `DIAGNOSIS_READY`, confidence MEDIUM, category DISPLAY_REPLACEMENT, 3 observations / 4 unknowns / 3 questions; owner preview 200 (image/png), unauthenticated 401, wrong user 403 |
 | 2026-11-08 | S2 working tree | AI failure path | DESIGNED, unit-covered | Timeout/invalid-JSON map to `DEPENDENCY_UNAVAILABLE` with draft retained (service + adapter injected-fetch tests); live outage path not forced in production run |
+| 2026-11-08 | S3 working tree | `npx tsc --noEmit` / `npx eslint .` | PASS | 0 errors, 0 warnings |
+| 2026-11-08 | S3 working tree | `npm test` (Vitest) | PASS | 66/66 across 12 files (added: normalizer matrix incl. real fixture, client error mapping with injected fetch, discovery/selection integration with adapter doubles) |
+| 2026-11-08 | S3 working tree | `npm run build` | PASS | New routes: product-search GET/POST, refresh, selection, `/repairs/[repairId]/products` |
+| 2026-11-08 | S3 working tree | Live E2E via `next start` + curl | PASS | Real Channel3 replacement-device search for iPhone 13: 5 eligible device offers (241.99–469.99 USD, bestbuy/gazelle), all `NOT_VERIFIED_BY_CHANNEL3`; detail refresh returned fresh 469.99 USD @ bestbuy.com; selection succeeded with server re-fetch + exact price match; mismatched selection correctly returned 409 with fresh values |
 
 ### V-008 — S1 foundation slice
 

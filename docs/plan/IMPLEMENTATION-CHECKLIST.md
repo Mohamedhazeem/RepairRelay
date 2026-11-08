@@ -53,17 +53,17 @@ Use this file as the live progress tracker. Only check an item after it is imple
 
 ## S3 — Channel3
 
-- [ ] Server-only Channel3 adapter.
-- [ ] Raw response schema matches actual live response.
-- [ ] Optional/missing product fields handled.
-- [ ] Offer parser handles only verified price shape(s).
-- [ ] Currency and URL validation.
-- [ ] Product detail refresh.
-- [ ] Product cards show live timestamp and candidate disclaimer.
-- [ ] No-offer products cannot be selected.
-- [ ] No stale offer UI fallback.
-- [ ] Empty, timeout, 401/403, 429, 5xx and malformed response handling.
-- [ ] Parts-referenced mode or repair-versus-replace fallback verified.
+- [x] Server-only Channel3 adapter. (`src/integrations/channel3/client.ts`, key never leaves server, timeout + bounded 429 retry with jitter)
+- [x] Raw response schema matches actual live response. (Zod schemas written from S0 fixtures V-002; per-product/per-offer fail-soft, envelope fail-closed)
+- [x] Optional/missing product fields handled. (description/images/brands/next_page_token variants tested)
+- [x] Offer parser handles only verified price shape(s). (`{price, compare_at_price, currency}` only; "From $45" strings and unknown shapes fail closed)
+- [x] Currency and URL validation. (USD-only, HTTPS-only, positive finite price, domain required)
+- [x] Product detail refresh. (`GET /v1/products/{id}` before selection; 404 → candidate unavailable, no stale resurrection)
+- [x] Product cards show live timestamp and candidate disclaimer. ("Candidate listings — Channel3 does not certify condition or authenticity" + observed-time label)
+- [x] No-offer products cannot be selected. (`selectionEligible=false`; select button only when eligible AND fresh)
+- [x] No stale offer UI fallback. (Offer observations carry `expiresAt` TTL 10 min; expired → "Offer not current — refresh"; GET surfaces not-fresh)
+- [x] Empty, timeout, 401/403, 429, 5xx and malformed response handling. (All mapped + unit-tested with injected fetch; empty state offers new search, no placeholders)
+- [x] Parts-referenced mode or repair-versus-replace fallback verified. (**Repair-versus-Replace live-verified**: real search returned 5 device offers 241.99–469.99 USD; refresh + selection OK; stale/mismatched selection → 409 OFFER_CHANGED)
 
 ## S4 — Quotes
 
