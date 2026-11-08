@@ -77,15 +77,15 @@ Use this file as the live progress tracker. Only check an item after it is imple
 
 ## S5 — Contract and changes
 
-- [ ] Immutable Repair Contract version created.
-- [ ] Contract review screen shows all terms.
-- [ ] Explicit customer approval.
-- [ ] Optimistic version check.
-- [ ] Change request includes reason and before/after values.
-- [ ] Customer approve/reject path.
-- [ ] Rejected change keeps original contract.
-- [ ] Amount change triggers void then new buyer approval/authorization.
-- [ ] Contract tests pass.
+- [x] Immutable Repair Contract version created. (Snapshot frozen from selected quote; versions append-only; history readable — live-verified)
+- [x] Contract review screen shows all terms. (Part/labour/total, warranty, scope, exclusions, simulated attestation, historical replace-benchmark, payment explanation, SIMULATED + SANDBOX badges)
+- [x] Explicit customer approval. (Confirm dialog; `confirmed:true` required)
+- [x] Optimistic version check. (CAS on contract.version; stale version and duplicate approve → 409 — unit + live tested)
+- [x] Change request includes reason and before/after values. (Repairer-only via workbench form; server computes deterministic diff; work pauses while PENDING)
+- [x] Customer approve/reject path. (Approve activates proposed version; reject preserves prior contract)
+- [x] Rejected change keeps original contract. (Unit-tested: total unchanged, proposed version superseded)
+- [ ] Amount change triggers void then new buyer approval/authorization. (Deferred to S6/S9 by design: S03 never calls PayPal; no payment exists at S5 — the S04 orchestrator will own void/reauthorize when an authorization exists)
+- [x] Contract tests pass. (92/92 total; live: create $94.48 → approve → repairer change (+$20.50 part, 365-day warranty) → customer approve → v2 current $114.98, v1 preserved)
 
 ## S6 — PayPal approval and authorization
 

@@ -161,6 +161,10 @@ Never paste access tokens, client secrets, API keys, buyer passwords, card data,
 | 2026-11-08 | S4 working tree | `npm test` (Vitest) | PASS | 79/79 across 14 files (added: deterministic pricing, quote generation idempotency/prerequisites, CAS selection incl. stale version / double select / attestation guard) |
 | 2026-11-08 | S4 working tree | `npm run build` | PASS | New routes: quotes GET/POST, quote select, `/repairs/[repairId]/quotes` |
 | 2026-11-08 | S4 working tree | Live E2E via `next start` + curl | PASS | 3 deterministic SIMULATED quotes generated (94.48 / 104.98 / 115.48 USD, 90/180/365-day warranties), all CONFIRMED_FOR_DEMO with simulated-attestation notes; regeneration idempotent; selection marked SELECTED + others SUPERSEDED; second select and stale expectedRepairVersion both returned 409 |
+| 2026-11-08 | S5 working tree | `npx tsc --noEmit` / `npx eslint .` | PASS | 0 errors, 0 warnings |
+| 2026-11-08 | S5 working tree | `npm test` (Vitest) | PASS | 92/92 across 15 files (added: contract creation/immutability, approval CAS + double-click, change request authorization + deterministic diff, approve/reject decision paths, history preservation) |
+| 2026-11-08 | S5 working tree | `npm run build` | PASS | New routes: contract GET/POST, approve, change-requests, decision, repairer contracts; contract review + repairer workbench UI |
+| 2026-11-08 | S5 working tree | Live E2E via `next start` + curl | PASS | Contract v1 created from selected quote ($94.48) → customer approved (CAS) → repairer proposed change (part 5949→7999, warranty 90→365; server-computed diff; new total $114.98) → customer approved → v2 in force with v1 preserved in history. Amount-change-with-existing-payment path deferred to the S04 payment orchestrator by slice design |
 
 ### V-008 — S1 foundation slice
 

@@ -101,6 +101,14 @@ export default async function RepairDetailPage({ params }: { params: Promise<{ r
         <Link href={`/repairs/${repair.id}/quotes`} className="font-medium text-brand hover:underline">
           compare repairer quotes →
         </Link>
+        {repair.selectedQuoteId ? (
+          <>
+            {" "}·{" "}
+            <Link href={`/repairs/${repair.id}/contract`} className="font-medium text-brand hover:underline">
+              review contract →
+            </Link>
+          </>
+        ) : null}
       </p>
       <Link href="/repairs" className="text-sm font-medium text-brand hover:underline">
         ← Back to repairs

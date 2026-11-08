@@ -28,7 +28,8 @@ describe("demo seed", () => {
       expect(await verifyPassword(seedPassword, user!.passwordHash)).toBe(true);
     }
 
-    const repairers = await prisma.user.findMany({ where: { role: "SIMULATED_REPAIRER" } });
-    expect(repairers.length).toBe(3);
+    // Count only the seeded repairer accounts (other test files may create their own users in parallel).
+    const seededRepairers = await prisma.user.findMany({ where: { role: "SIMULATED_REPAIRER", email: { in: SEED_ACCOUNTS.filter((a) => a.role === "SIMULATED_REPAIRER").map((a) => a.email) } } });
+    expect(seededRepairers.length).toBe(3);
   });
 });
