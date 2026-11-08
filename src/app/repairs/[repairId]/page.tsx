@@ -6,6 +6,7 @@ import { SESSION_COOKIE, verifySessionToken } from "@/lib/auth/session";
 import { requireRole } from "@/lib/auth/guards";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { DiagnosisPanel, type DiagnosisView } from "./DiagnosisPanel";
+import { DecisionPanel } from "./DecisionPanel";
 
 export const dynamic = "force-dynamic";
 
@@ -83,6 +84,16 @@ export default async function RepairDetailPage({ params }: { params: Promise<{ r
           ))}
         </ul>
       </section>
+
+      {submission ? (
+        <DecisionPanel
+          repairId={repair.id}
+          contractVersionId={submission.contractVersionId}
+          evidenceSubmissionId={submission.id}
+          jobStatus={repair.jobs[0].status}
+          aiCompleteness={submission.assessments[0]?.completeness ?? null}
+        />
+      ) : null}
 
       {submission ? (
         <section className="rounded-card border border-line bg-surface p-5">

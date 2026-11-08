@@ -173,6 +173,10 @@ Never paste access tokens, client secrets, API keys, buyer passwords, card data,
 | 2026-11-08 | S7 working tree | `npm test` (Vitest) | PASS | 108/108 across 17 files (added: job start gates, deterministic evidence rules, stale-version/duplicate submission, asset ownership) |
 | 2026-11-08 | S7 working tree | `npm run build` | PASS | New routes: job/start, evidence/assets, evidence; workbench evidence form; customer evidence view |
 | 2026-11-08 | S7 working tree | Live E2E via `next start` + curl | PASS | Job started live (gates passed: approved contract + AUTHORIZED payment); after-photo uploaded through the private pipeline; evidence submitted → job CUSTOMER_REVIEW; duplicate submit → 409; real AI advisory assessment recorded (INCOMPLETE, MISSING_COMPONENT_LABEL_PHOTOS flag — correct: no label photo provided). Fix during slice: reasoning-model output split content/reasoning fields now extracted with balanced-brace scanning; outage → UNAVAILABLE with customer-informed state |
+| 2026-11-08 | S8 working tree | `npx tsc --noEmit` / `npx eslint .` | PASS | 0 errors, 0 warnings |
+| 2026-11-08 | S8 working tree | `npm test` (Vitest) | PASS | 115/115 across 18 files (added: ownership, per-submission decision immutability, rework cap + supersede, cancel with/without authorization, stale version/evidence guards) |
+| 2026-11-08 | S8 working tree | `npm run build` | PASS | New route: customer-decision; DecisionPanel with confirm dialogs |
+| 2026-11-08 | S8 working tree | **Live full happy path** via `next start` + curl | PASS | Live rework decision (REWORK_IN_PROGRESS, no capture, auth untouched) → repairer resubmission (INCOMPLETE advisory) → customer ACCEPT → **real PayPal capture `6SV67765LK889111T` COMPLETED → payment CAPTURED, repair COMPLETED**. Bug found and fixed live: duplicate-decision guard was per-job, corrected to per-submission (legitimate post-rework decisions) |
 
 ### V-008 — S1 foundation slice
 

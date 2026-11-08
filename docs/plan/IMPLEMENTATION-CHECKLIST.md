@@ -113,12 +113,12 @@ Use this file as the live progress tracker. Only check an item after it is imple
 
 ## S8 — Customer decision
 
-- [ ] Customer review page shows evidence and caveats.
-- [ ] Explicit Accept confirmation.
-- [ ] Request rework (no capture).
-- [ ] Cancel (void required if authorized).
-- [ ] Decisions reference latest evidence/current contract.
-- [ ] Duplicate/racing decision rejected safely.
+- [x] Customer review page shows evidence and caveats. (Evidence gallery + checks + advisory AI flags; "AI never accepts or pays")
+- [x] Explicit Accept confirmation. (Confirm dialog; no default selection)
+- [x] Request rework (no capture). (Comment required; authorization untouched; old submission superseded; one cycle cap)
+- [x] Cancel (void required if authorized). (CANCEL_REQUESTED until confirmed void via S04 orchestration; no-authorization path cancels immediately)
+- [x] Decisions reference latest evidence/current contract. (Stale version/superseded evidence → CONFLICT; immutable decisions, unique per submission)
+- [x] Duplicate/racing decision rejected safely. (Per-submission uniqueness — live-verified after rework; DB unique constraint backs the app guard)
 
 ## S9 — PayPal capture, void and reconciliation
 
