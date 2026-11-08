@@ -47,7 +47,7 @@ Never paste access tokens, client secrets, API keys, buyer passwords, card data,
 ### V-002 — Channel3 authenticated search feasibility
 
 - Date/time: 8 November 2026, ~00:40–01:00 IST
-- Commit: f3743eb (harness), repository initialized at a03d5cc
+- Commit: bde6f14 (harness), repository initialized at eed45f9 (SHAs from before the authorship rewrite of 8 Nov)
 - Command: `node --env-file=.env.local scripts/feasibility/channel3-search.mjs --query "<query>" --limit 5|8 [--save slug]`
 - Environment: local, server-side key, locale `{"country":"US","currency":"USD","language":"en","mode":"default"}`
 - Expected: HTTP 200 with `products[]`, offers, and a documented price shape.
@@ -129,7 +129,7 @@ Never paste access tokens, client secrets, API keys, buyer passwords, card data,
 ### V-006 — AI vision structured diagnosis
 
 - Date/time: 8 November 2026, ~01:20 IST
-- Commit: f3743eb (harness; JSON-extraction fix after)
+- Commit: bde6f14 (harness; JSON-extraction fix after)
 - Command: `AI_REQUEST_TIMEOUT_MS=120000 node --env-file=.env.local scripts/feasibility/ai-vision.mjs --image tests/fixtures/ai/sample-device.png`
 - Provider: NVIDIA NIM (`integrate.api.nvidia.com`), OpenAI-compatible chat completions, image via `image_url` data URL.
 - Model selection notes: the initially configured `google/gemma-4-31b-it` hung (timeout at 25s/90s, twice) despite appearing in the account's model list; several listed models returned 404 "Not found for account". `nvidia/nemotron-3.5-super-vl-120b-a12b` responded (user-selected as `AI_MODEL`). `AI_MODEL` was updated in `.env.local` accordingly.
