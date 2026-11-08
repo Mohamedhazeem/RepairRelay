@@ -6,6 +6,31 @@ RepairRelay is an AI-assisted electronics repair decision and transaction experi
 
 **Status: functional demo.** The full transaction has been executed live against real providers — Channel3 search, vision AI assessment, and PayPal sandbox authorize → capture (`CAPTURED/COMPLETED`), plus void and reconciliation paths. See `docs/VERIFICATION-LOG.md` for every recorded verification.
 
+---
+
+## What problem does RepairRelay solve?
+
+When a consumer's phone breaks, several disconnected decisions follow — and each one is a trust gap:
+
+- **What is actually damaged?** Online advice guesses; nothing separates what is *visible* in a photo from what needs physical inspection.
+- **What will the repair actually cost?** Quotes are opaque one-liners — parts, labour, warranty and turnaround are never itemized against anything verifiable.
+- **Will the repairer install the part they quoted?** Nothing ties a quote to a component declaration, and repairers can silently substitute cheaper parts or prices.
+- **What if the plan changes mid-repair?** There is usually no formal customer approval — just a bigger bill at the end.
+- **Why pay before seeing proof?** Customers are asked to pay upfront, or leave payment entirely to the repairer's honesty.
+
+RepairRelay connects all of these into **one traceable transaction**: an honest AI assessment with explicit unknowns, itemized quotes from labelled actors, a versioned contract whose history cannot be rewritten, completion evidence with functional checks, and a payment that is **authorized up-front but captured only after the customer reviews the evidence and explicitly accepts**. Every state change is audited, and uncertain payment outcomes are shown as unknown until reconciled with the provider — never faked.
+
+## What is different about this approach?
+
+No single feature below is unique in isolation — the differentiated combination is:
+
+- **Versioned, immutable Repair Contracts.** Every quote is frozen into an immutable contract version. A repairer *cannot* silently change the part, price, scope or warranty — any change is a formal change request with a server-computed before/after diff, and the customer's approval creates a *new* version while the old one stays readable forever.
+- **Pay-after-proof, human-controlled.** PayPal authorization holds funds before work starts, but **only the customer's explicit acceptance of submitted evidence can trigger the capture**. Rejection or rework never moves money; cancellation voids the authorization (confirmed at the provider, never assumed). Unknown payment outcomes are an explicit state that must be reconciled — never shown as success.
+- **Honest AI boundaries.** The AI separates visible observations from hypotheses and unknowns, uses confidence *bands* (never invented percentages), refuses to assess unrelated images, and can never decide compatibility, approve work, or touch payments. Its evidence-completeness flags are advisory only.
+- **Real product data, clearly bounded.** Live retail offers from the Channel3 API ground the repair-vs-replace decision with current market prices — and the app never overstates what they mean: candidate listings, offers expire, nothing stale is shown as current, and compatibility is always attributed to the simulated repairer's declaration, never to the catalog.
+- **Evidence-gated completion.** The repairer must submit after-repair photos, a component declaration (with identity basis — photo-verified or technician-declared, clearly distinguished), and mandatory functional checks. Deterministic product rules enforce completeness; the AI only adds advisory flags.
+- **Auditable by construction.** Every meaningful state transition writes an append-only audit event, surfaced as the transaction timeline in the final Repair Passport.
+
 ## The core flow (all verified live)
 
 1. Customer creates a repair request and uploads a damage photo (privately stored, EXIF-stripped, access-controlled).
@@ -20,51 +45,102 @@ RepairRelay is an AI-assisted electronics repair decision and transaction experi
 
 AI is advisory. Channel3 does not certify anything. Repairer identities are simulated. PayPal authorization/capture is not escrow and does not pay a repairer.
 
-## Quick start
+---
+
+## For judges and reviewers: setting up and testing
+
+### Option A — run it yourself (recommended, ~10 minutes)
+
+**Prerequisites:** Node.js 20+ (LTS), PostgreSQL 14+ running locally, and API credentials (below).
+
+1. **Clone and install:**
+
+   ```bash
+   git clone https://github.com/Mohamedhazeem/RepairRelay.git
+   cd RepairRelay
+   npm install
+   ```
+
+2. **Create your environment file** (secrets stay local; `.env.local` is gitignored and must never be committed):
+
+   ```bash
+   cp .env.example .env.local
+   ```
+
+   Then set these values in `.env.local`:
+
+   | Variable | Where to get it | Notes |
+   |---|---|---|
+   | `DATABASE_URL` | Your local PostgreSQL | e.g. `postgresql://postgres:postgres@localhost:5432/repairrelay` (database must exist) |
+   | `AUTH_SECRET` | Generate: `openssl rand -hex 32` | Session signing key |
+   | `DEMO_SEED_PASSWORD` | Choose any 12+ char password | Password for all seeded demo accounts |
+   | `AI_BASE_URL` | Your vision-capable AI provider | OpenAI-compatible, e.g. `https://api.openai.com/v1` or `https://integrate.api.nvidia.com/v1` |
+   | `AI_API_KEY` | Same provider | Server-side only |
+   | `AI_MODEL` | Same provider | Must accept image input, e.g. a vision-capable model from the provider's catalog |
+   | `CHANNEL3_API_KEY` | [Channel3 developer portal](https://trychannel3.com/developers) | Powers live product discovery (US/USD/en) |
+   | `PAYPAL_CLIENT_ID` + `PAYPAL_CLIENT_SECRET` | [PayPal developer dashboard](https://developer.paypal.com/dashboard/applications/sandbox) | **Sandbox** credentials; also create a **sandbox buyer** test account there (Testing Tools → Sandbox test accounts) |
+
+   Optional for local judging: `APP_URL=http://localhost:3000` (used for PayPal return URLs).
+
+3. **Migrate, seed, and run:**
+
+   ```bash
+   npx prisma migrate dev        # applies the schema
+   npm run db:seed               # seeds the demo accounts (uses DEMO_SEED_PASSWORD)
+   npm run dev                   # http://localhost:3000
+   ```
+
+4. **Sign in and take the walkthrough** (below) with the demo accounts:
+
+   | Role | Email | Password |
+   |---|---|---|
+   | Customer | `customer@demo.repairrelay.test` | your `DEMO_SEED_PASSWORD` |
+   | Simulated repairer | `repairer.ava@demo.repairrelay.test` | same |
+   | Demo operator | `admin@demo.repairrelay.test` | same |
+
+5. **PayPal buyer step:** when the PayPal button opens, log in with your **sandbox buyer** account (from the PayPal dashboard) — no real money moves.
+
+**Reset between runs:** `npm run db:demo-reset` wipes all transactions and re-seeds accounts. A damaged-device test photo is provided at `tests/fixtures/ai/sample-device.png` for intake.
+
+### Option B — code and test review without credentials
 
 ```bash
-npm install
-cp .env.example .env.local    # fill in values — secrets stay local; .env.local is gitignored
-npx prisma migrate dev        # apply schema (PostgreSQL 14+ must be reachable)
-npm run db:seed               # seed demo accounts (uses DEMO_SEED_PASSWORD)
-npm run dev                   # http://localhost:3000
+npm run lint          # ESLint — 0 problems
+npm run typecheck     # TypeScript strict
+npm test              # 128 unit/integration tests (needs only DATABASE_URL + AUTH_SECRET)
+npm run e2e           # Playwright journey — needs the AI + Channel3 keys (real providers; the PayPal step stops before buyer approval)
+npm run build         # production build
 ```
 
-Environment variables (all documented in `.env.example`): `DATABASE_URL`, `AUTH_SECRET`, `DEMO_SEED_PASSWORD`, `AI_BASE_URL`/`AI_API_KEY`/`AI_MODEL` (OpenAI-compatible vision endpoint), `CHANNEL3_API_KEY`, `PAYPAL_CLIENT_ID`/`PAYPAL_CLIENT_SECRET` (sandbox), `APP_URL`.
+`npm test` covers money arithmetic, contract versioning/immutability, payment state machines (declines, timeouts, unknown outcomes, CAS concurrency), role guards, upload validation (MIME spoofing, EXIF stripping), and provider error mapping. Provider credentials are **not** required for the unit/integration suite.
 
-## Demo accounts
+### Suggested 3-minute judge walkthrough
 
-Seeded by `npm run db:seed` (password = your `DEMO_SEED_PASSWORD`):
-
-| Role | Email |
-|---|---|
-| Customer | `customer@demo.repairrelay.test` |
-| Simulated repairers | `repairer.ava@…`, `repairer.marcus@…`, `repairer.nadia@…` (`@demo.repairrelay.test`) |
-| Demo operator | `admin@demo.repairrelay.test` |
-
-Demo reset (wipes transactions, keeps accounts): `npm run db:demo-reset`.
-
-## Judge walkthrough (~3 minutes)
-
-1. Sign in as the **customer** → *Start a repair* → pick iPhone 13, describe symptoms, upload a damage photo.
+1. Sign in as the **customer** → *Start a repair* → pick iPhone 13, describe symptoms, upload `tests/fixtures/ai/sample-device.png`.
 2. *Run AI assessment* → honest structured triage with unknowns.
 3. *replacement-device prices* → *Find replacement devices* (live Channel3) → pick one as the replace-price reference.
 4. *compare repairer quotes* → *Request quotes* → compare itemized SIMULATED quotes → select one.
 5. *review contract* → read the terms → *Approve repair terms*.
-6. *Continue to PayPal authorization* → click the PayPal button → approve with a **sandbox buyer** account → the backend shows `AUTHORIZED` (a network blip shows `UNKNOWN` + reconciliation, never a fake success).
+6. *Continue to PayPal authorization* → click the PayPal button → approve with your **sandbox buyer** → the backend shows `AUTHORIZED` (an interrupted network shows `UNKNOWN` + reconciliation — never a fake success).
 7. Sign in as **repairer.ava** → workbench → *Start repair* → upload an after photo, declare the component, complete the checks → *Submit evidence*.
 8. Back as the **customer** → review evidence → *Accept repair* (confirm) → the backend captures the held funds (`CAPTURED`).
 9. Open the **Repair Passport** — contract versions, evidence, checks, payment reference, full timeline.
 
-## Quality gates
+### For coding agents setting up this project
 
-```bash
-npm run lint        # ESLint, 0 problems
-npm run typecheck   # TypeScript strict
-npm test            # Vitest — 128 unit/integration tests
-npm run e2e         # Playwright — customer journey + role guards (builds first run)
-npm run build       # production build
-```
+If you are an automated agent preparing this repository for review:
+
+1. Run the Option A steps 1–3 exactly (all commands are non-interactive; `npx prisma migrate dev` applies committed migrations).
+2. All required environment variables are declared in `.env.example`; every one must be present or the app fails fast at startup with a named-variable error (`src/lib/env.ts`). Do not invent defaults for `AI_*`, `CHANNEL3_API_KEY` or `PAYPAL_*` — the providers are gated, and the app degrades honestly (dependency-unavailable states) rather than faking results.
+3. Tests: `npm test` runs without provider credentials; `npm run e2e` exercises real providers and the PayPal step intentionally stops before buyer approval (no test fakes provider results — see `AGENTS.md`).
+4. Useful npm scripts: `dev`, `build`, `start`, `lint`, `typecheck`, `test`, `e2e`, `db:migrate`, `db:seed`, `db:demo-reset`.
+5. Server-only boundaries to preserve: `src/integrations/*` (Channel3/AI/PayPal adapters) must never be imported into client components; secrets live only in `.env.local`.
+
+---
+
+## Documentation
+
+Start with [`docs/README.md`](docs/README.md), then [`docs/REPAIRRELAY-2.0-SPEC-AND-BUILD-PLAN.md`](docs/REPAIRRELAY-2.0-SPEC-AND-BUILD-PLAN.md). Every recorded verification with real commands and results: [`docs/VERIFICATION-LOG.md`](docs/VERIFICATION-LOG.md). Coding rules: [`AGENTS.md`](AGENTS.md).
 
 ## Stack
 
@@ -76,10 +152,6 @@ Next.js 16 App Router, TypeScript (strict), React 19, Tailwind CSS 4 (UX-spec de
 - Channel3 `US/USD/en` locale only for this demo; India/INR is not in the documented supported locale list.
 - PayPal standard authorization is not escrow. Sandbox capture reaches the configured platform merchant; repairer payout is out of scope.
 - All demo repairers and their compatibility statements are simulated.
-
-## Documentation
-
-Start with [`docs/README.md`](docs/README.md), then [`docs/REPAIRRELAY-2.0-SPEC-AND-BUILD-PLAN.md`](docs/REPAIRRELAY-2.0-SPEC-AND-BUILD-PLAN.md). Every recorded verification with real commands and results: [`docs/VERIFICATION-LOG.md`](docs/VERIFICATION-LOG.md). Coding rules: [`AGENTS.md`](AGENTS.md).
 
 ## Hackathon submission
 
