@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { SESSION_COOKIE, verifySessionToken } from "@/lib/auth/session";
 import { requireRole } from "@/lib/auth/guards";
+import { DemoResetButton } from "./DemoResetButton";
 
 export const dynamic = "force-dynamic";
 
@@ -14,11 +15,11 @@ export default async function DemoAdminPage() {
   return (
     <div>
       <h1 className="text-2xl font-bold tracking-tight">Demo operator</h1>
-      <p className="mt-2 max-w-2xl text-muted">
-        Seed resets and redacted provider diagnostics will appear here. No access to secrets.
+            <p className="mt-2 max-w-2xl text-muted">
+        Demo-operator tools. No access to provider secrets.
       </p>
-      <div className="mt-8 rounded-card border border-dashed border-line bg-surface p-10 text-center text-muted">
-        Demo reset tooling arrives with the integration slice.
+      <div className="mt-8 max-w-xl">
+        <DemoResetButton />
       </div>
     </div>
   );

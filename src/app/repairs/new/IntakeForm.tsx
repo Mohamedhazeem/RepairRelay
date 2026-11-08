@@ -71,6 +71,7 @@ export function IntakeForm({ catalog }: { catalog: CatalogEntry[] }) {
           deviceModel: isOther ? otherModel : model,
           isOtherDevice: isOther,
           symptoms,
+          functionalityChecks: Object.entries(checks).filter(([, ok]) => ok).map(([label]) => label),
           repairCategory: category === "DISPLAY_REPLACEMENT" ? category : category,
         }),
       });

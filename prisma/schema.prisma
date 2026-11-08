@@ -95,6 +95,7 @@ model RepairRequest {
   modelIdentifier        String?
   deviceModelConfidence  DeviceModelConfidence @default(USER_SELECTED)
   symptoms               String
+  functionalityChecks    Json?
   repairCategory         RepairCategory?
   status                 RepairStatus          @default(DRAFT)
   version                Int                   @default(1)

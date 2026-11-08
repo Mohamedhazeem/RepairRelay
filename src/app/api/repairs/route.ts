@@ -18,6 +18,7 @@ const createSchema = z.strictObject({
   deviceModel: z.string().min(1).max(120),
   isOtherDevice: z.boolean(),
   symptoms: z.string().min(10).max(2000),
+  functionalityChecks: z.array(z.string().min(1).max(60)).max(10).optional(),
   repairCategory: z
     .enum(["DISPLAY_REPLACEMENT", "BATTERY_REPLACEMENT", "CHARGING_PORT_REPLACEMENT", "CAMERA_REPLACEMENT", "DIAGNOSTIC_ONLY", "OTHER"])
     .nullable()

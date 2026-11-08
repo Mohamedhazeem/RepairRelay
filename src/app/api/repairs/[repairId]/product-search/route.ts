@@ -4,11 +4,14 @@ import { cookies } from "next/headers";
 import { SESSION_COOKIE, verifySessionToken } from "@/lib/auth/session";
 import { requireRole } from "@/lib/auth/guards";
 import { jsonErrorBody, newTraceId, statusForCode } from "@/lib/http/errors";
+import { SlidingWindowRateLimiter } from "@/lib/ratelimit";
 import { searchForRepair, latestSearchRows, type DiscoveryErrorCode } from "@/domains/products/service";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
+const searchLimiter = new SlidingWindowRateLimiter(10, 60 * 1000);
+
 
 const prisma = new PrismaClient();
 
@@ -42,6 +45,10 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ rep
   const { repairId } = await params;
   void req;
 
+  const rl = searchLimiter.check(guard.session.userId);
+  if (!rl.allowed) {
+    return NextResponse.json(jsonErrorBody("RATE_LIMITED", `Too many searches — retry in ${rl.retryAfterSeconds}s`, traceId), { status: 429 });
+  }
   const outcome = await searchForRepair(prisma, repairId, guard.session.userId);
   if (!outcome.ok) {
     return NextResponse.json(

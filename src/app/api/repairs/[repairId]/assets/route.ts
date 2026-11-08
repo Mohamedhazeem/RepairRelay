@@ -4,12 +4,15 @@ import { cookies } from "next/headers";
 import { SESSION_COOKIE, verifySessionToken } from "@/lib/auth/session";
 import { requireRole } from "@/lib/auth/guards";
 import { jsonErrorBody, newTraceId, statusForCode } from "@/lib/http/errors";
+import { SlidingWindowRateLimiter } from "@/lib/ratelimit";
 import { addIntakeAsset } from "@/domains/repairs/assetService";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 const prisma = new PrismaClient();
+const uploadLimiter = new SlidingWindowRateLimiter(20, 60 * 1000);
+
 
 export async function POST(req: NextRequest, { params }: { params: Promise<{ repairId: string }> }) {
   const traceId = newTraceId();
@@ -23,6 +26,10 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ rep
     );
   }
   const { repairId } = await params;
+  const rl = uploadLimiter.check(guard.session.userId);
+  if (!rl.allowed) {
+    return NextResponse.json(jsonErrorBody("RATE_LIMITED", `Too many uploads — retry in ${rl.retryAfterSeconds}s`, traceId), { status: 429 });
+  }
 
   let form: FormData;
   try {

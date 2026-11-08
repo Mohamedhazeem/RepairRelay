@@ -4,12 +4,15 @@ import { cookies } from "next/headers";
 import { SESSION_COOKIE, verifySessionToken } from "@/lib/auth/session";
 import { requireRole } from "@/lib/auth/guards";
 import { jsonErrorBody, newTraceId, statusForCode } from "@/lib/http/errors";
+import { SlidingWindowRateLimiter } from "@/lib/ratelimit";
 import { addEvidenceAsset } from "@/domains/evidence/service";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 const prisma = new PrismaClient();
+const evidenceUploadLimiter = new SlidingWindowRateLimiter(20, 60 * 1000);
+
 
 /** Private evidence uploads (after/component-label) by the assigned repairer. */
 export async function POST(req: NextRequest, { params }: { params: Promise<{ repairId: string }> }) {
@@ -21,6 +24,10 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ rep
     return NextResponse.json(jsonErrorBody(guard.code, "Simulated repairer role required", traceId), { status: statusForCode(guard.code) });
   }
   const { repairId } = await params;
+  const rl = evidenceUploadLimiter.check(guard.session.userId);
+  if (!rl.allowed) {
+    return NextResponse.json(jsonErrorBody("RATE_LIMITED", `Too many uploads — retry in ${rl.retryAfterSeconds}s`, traceId), { status: 429 });
+  }
 
   let form: FormData;
   try {

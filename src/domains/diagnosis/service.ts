@@ -70,6 +70,7 @@ export async function runDiagnosis(
   const userText = [
     `Device model selected by the customer: "${repair.deviceBrand} ${repair.deviceModel}".`,
     `Customer-reported symptoms: "${repair.symptoms}".`,
+    repair.functionalityChecks ? `Customer-reported functionality status: ${JSON.stringify(repair.functionalityChecks)}.` : "",
     repair.repairCategory ? `Pre-selected repair category: ${repair.repairCategory}.` : "",
     "Assess the attached image(s) and return only the JSON object.",
   ]

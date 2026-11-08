@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 import { SESSION_COOKIE, verifySessionToken } from "@/lib/auth/session";
 import { requireRole } from "@/lib/auth/guards";
 import { jsonErrorBody, newTraceId, statusForCode } from "@/lib/http/errors";
+import { SlidingWindowRateLimiter } from "@/lib/ratelimit";
 import { createOrderForContract } from "@/domains/payments/service";
 
 export const runtime = "nodejs";
@@ -12,6 +13,8 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
 const prisma = new PrismaClient();
+const paymentLimiter = new SlidingWindowRateLimiter(10, 60 * 1000);
+
 
 const schema = z.strictObject({ expectedContractVersion: z.number().int().positive() });
 
@@ -24,6 +27,10 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ con
     return NextResponse.json(jsonErrorBody(guard.code, "Customer role required", traceId), { status: statusForCode(guard.code) });
   }
   const { contractId } = await params;
+  const rl = paymentLimiter.check(guard.session.userId);
+  if (!rl.allowed) {
+    return NextResponse.json(jsonErrorBody("RATE_LIMITED", `Too many payment attempts — retry in ${rl.retryAfterSeconds}s`, traceId), { status: 429 });
+  }
 
   let body: unknown;
   try {

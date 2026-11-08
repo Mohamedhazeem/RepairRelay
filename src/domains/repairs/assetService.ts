@@ -20,6 +20,7 @@ export type CreateRepairInput = {
   deviceModel: string;
   isOtherDevice: boolean;
   symptoms: string;
+  functionalityChecks?: string[];
   repairCategory: RepairCategory | null;
 };
 
@@ -58,6 +59,7 @@ export async function createRepairRequest(prisma: PrismaClient, input: CreateRep
       modelIdentifier,
       deviceModelConfidence: confidence,
       symptoms,
+      functionalityChecks: input.functionalityChecks?.length ? input.functionalityChecks : undefined,
       repairCategory: input.repairCategory,
       status: "DRAFT",
     },
