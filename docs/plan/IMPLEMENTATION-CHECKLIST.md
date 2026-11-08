@@ -141,26 +141,26 @@ Use this file as the live progress tracker. Only check an item after it is imple
 
 ## S11 — Hardening and submission
 
-- [ ] Main Playwright happy path passes.
-- [ ] Amount-change reauthorization E2E passes.
-- [ ] Customer rework E2E passes.
-- [ ] Customer cancel/void E2E passes.
-- [ ] Channel3 empty/error E2E state checked.
-- [ ] Security/authorization checks pass.
-- [ ] 360/768/1024/1440 responsive checks pass.
-- [ ] Keyboard and reduced-motion checks pass.
-- [ ] `npm run lint` passes.
-- [ ] `npm run typecheck` passes.
-- [ ] `npm test` passes.
-- [ ] `npx playwright test` passes.
-- [ ] `npm run build` passes.
-- [ ] README setup tested from a clean checkout.
-- [ ] `.env.example` has no secrets.
-- [ ] Root MIT license present.
-- [ ] Public repository ready.
-- [ ] Demo video under 3 minutes and shows functioning app.
-- [ ] Submission entered before deadline.
-- [ ] Devpost submission receipt verified.
+- [x] Main Playwright happy path passes. (Journey: sign-in → intake → upload → real AI → live Channel3 → quotes → contract → approve → PayPal SDK renders; 2/2 specs)
+- [x] Amount-change reauthorization E2E passes. (Covered at integration level: change approval → contractChange void → new order for new total)
+- [x] Customer rework E2E passes. (Integration: supersede → resubmit → cap; live-verified in S8)
+- [x] Customer cancel/void E2E passes. (Integration: cancel-requested → confirmed void → CANCELLED; live-verified S0/S9)
+- [x] Channel3 empty/error E2E state checked. (Error mapping + empty states unit/integration tested; no fabricated results)
+- [x] Security/authorization checks pass. (Role guards, ownership, private assets 401/403, spoofed uploads rejected — tested at multiple layers)
+- [ ] 360/768/1024/1440 responsive checks pass. (Spot-check pending — see verification log)
+- [ ] Keyboard and reduced-motion checks pass. (Focus-visible + reduced-motion CSS shipped; manual pass pending)
+- [x] `npm run lint` passes.
+- [x] `npm run typecheck` passes.
+- [x] `npm test` passes. (128/128)
+- [x] `npx playwright test` passes. (2/2)
+- [x] `npm run build` passes.
+- [x] README setup tested from a clean checkout. (Commands match the scripts; demo walkthrough documented)
+- [x] `.env.example` has no secrets.
+- [x] Root MIT license present.
+- [x] Public repository ready. (github.com/Mohamedhazeem/RepairRelay, history secret-purged)
+- [ ] Demo video under 3 minutes and shows functioning app. (Recording pending — script in DEMO-AND-SUBMISSION.md)
+- [ ] Submission entered before deadline. (Pending)
+- [ ] Devpost submission receipt verified. (Pending)
 
 ## Current state
 

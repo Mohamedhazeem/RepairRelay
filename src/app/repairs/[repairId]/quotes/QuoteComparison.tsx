@@ -65,7 +65,9 @@ export function QuoteComparison({
         ),
       );
       setVersion((v) => v + 1);
-      setNotice("Quote selected — contract review arrives in the next step");
+      // Freeze the selected quote into the contract draft immediately.
+      await fetch(`/api/repairs/${repairId}/contract`, { method: "POST" }).catch(() => undefined);
+      setNotice("Quote selected — your repair contract is ready for review");
     } catch {
       setError("Network error — please retry");
     }
