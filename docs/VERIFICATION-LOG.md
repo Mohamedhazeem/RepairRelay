@@ -138,15 +138,24 @@ Never paste access tokens, client secrets, API keys, buyer passwords, card data,
 - Result: **PASS**
 - Known limitation: reasoning-style output may split JSON between `reasoning_content` and `content`; the adapter must extract JSON robustly (implemented in the probe, to be replicated in the app adapter). Latency ~7s is acceptable for the demo but needs a visible loading state.
 
-## 4. Application test log template
+## 4. Application test log
 
 | Date | Commit | Command | Result | Notes |
 |---|---|---|---|---|
-| — | — | `npm run lint` | NOT RUN | — |
-| — | — | `npm run typecheck` | NOT RUN | — |
-| — | — | `npm test` | NOT RUN | — |
-| — | — | `npm run build` | NOT RUN | — |
-| — | — | `npx playwright test` | NOT RUN | — |
+| 2026-11-08 | S1 working tree | `npx tsc --noEmit` | PASS | 0 errors after fixing `LayoutProps` usage |
+| 2026-11-08 | S1 working tree | `npx eslint .` | PASS | 0 problems |
+| 2026-11-08 | S1 working tree | `npm test` (Vitest) | PASS | 24/24 across 5 files (money, envelope, auth/session/guards, upload config, seed integration) |
+| 2026-11-08 | S1 working tree | `npm run build` | PASS | All routes dynamic; middleware active; `cacheComponents` disabled (session-aware pages) |
+| 2026-11-08 | S1 working tree | `npx prisma migrate dev` + `tsx prisma/seed.ts` | PASS | Migration `s1_identity`; 5 demo accounts seeded idempotently |
+| 2026-11-08 | S1 working tree | Boot check via `next start` + curl | PASS | Customer/repairer/admin login 200; `/me` returns session; wrong password 401; customer→`/repairer` 307 home; unauthenticated→`/login?next=…`; logout clears session (me → 401) |
+
+### V-008 — S1 foundation slice
+
+- Date/time: 8 November 2026, ~09:00 IST
+- Scope: Next.js 16 App Router + TypeScript strict + Tailwind 4 (UX-spec tokens) + Prisma 6/PostgreSQL 16 + jose cookie sessions + role middleware + money/envelope/storage primitives + Vitest.
+- Decisions: session auth implemented as a signed HttpOnly cookie (`jose` HS256, 7-day TTL) — the documented "Auth.js or equivalent" option, chosen for zero-beta-deps; Prisma pinned to 6.x stable (v8 is RC); Next `cacheComponents` disabled because every page is session-aware.
+- Result: **PASS** (see application test log above). Demo accounts: customer / 3 simulated repairers / demo admin, all seeded from `DEMO_SEED_PASSWORD` (gitignored `.env.local`).
+- Known limitation: no E2E (Playwright) yet — scheduled for later slices; component tests still shallow at S1.
 
 ## 5. Release sign-off
 

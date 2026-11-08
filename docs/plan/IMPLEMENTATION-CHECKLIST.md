@@ -24,17 +24,17 @@ Use this file as the live progress tracker. Only check an item after it is imple
 
 ## S1 — Foundation
 
-- [ ] Existing repository inspected; no working code overwritten.
-- [ ] TypeScript / lint / test / build scripts confirmed.
-- [ ] PostgreSQL and Prisma configured.
-- [ ] Auth/session and demo role checks implemented.
-- [ ] Customer, simulated repairer and demo admin seeded.
-- [ ] Design tokens and app shell implemented.
-- [ ] Shared error envelope / trace ID implemented.
-- [ ] Money minor-unit helper implemented and tested.
-- [ ] Private storage abstraction implemented.
-- [ ] `.env.example` matches actual runtime variables.
-- [ ] Baseline lint/typecheck/test/build pass.
+- [x] Existing repository inspected; no working code overwritten.
+- [x] TypeScript / lint / test / build scripts confirmed. (Next 16 App Router, TS strict, ESLint 9, Vitest 5)
+- [x] PostgreSQL and Prisma configured. (Postgres 16 local; Prisma 6.19, migration `s1_identity`)
+- [x] Auth/session and demo role checks implemented. (jose-signed HttpOnly cookie session; edge middleware + per-page guards; `requireRole` primitives)
+- [x] Customer, simulated repairer and demo admin seeded. (5 accounts, idempotent upsert seed)
+- [x] Design tokens and app shell implemented. (UX-spec palette via Tailwind 4 `@theme`; top bar, role nav, demo banner, simulated badge, states)
+- [x] Shared error envelope / trace ID implemented. (`src/lib/http/errors.ts`, 12 stable codes)
+- [x] Money minor-unit helper implemented and tested. (`src/lib/money`, strict parse/format)
+- [x] Private storage abstraction implemented. (`StorageAdapter` + local private driver, key-safety regex)
+- [x] `.env.example` matches actual runtime variables.
+- [x] Baseline lint/typecheck/test/build pass. (24/24 tests; boot check verified all 3 role logins + role isolation + logout)
 
 ## S2 — Repair intake and AI
 

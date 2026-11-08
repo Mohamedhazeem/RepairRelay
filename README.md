@@ -30,7 +30,17 @@ Next.js App Router, TypeScript, PostgreSQL, Prisma, Auth.js, Tailwind CSS, shadc
 
 ## Setup status
 
-Application code has not yet been implemented in this project pack. The planned setup and environment contract are in `.env.example` and the architecture docs. Do not expect `npm install` or a running app from this documentation-only pack.
+**S0 feasibility passed and the S1 foundation slice is implemented** (Next.js 16 App Router, TypeScript, Tailwind 4, Prisma 6 + PostgreSQL, signed-cookie sessions with three demo roles, Vitest). Feature slices S2+ are in progress. Setup:
+
+```bash
+npm install
+cp .env.example .env.local   # then fill in values (secrets stay local; .env.local is gitignored)
+npx prisma migrate dev       # apply schema (PostgreSQL must be reachable)
+npm run db:seed              # seed demo accounts (uses DEMO_SEED_PASSWORD)
+npm run dev                  # http://localhost:3000
+```
+
+Quality gates: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`. See `docs/VERIFICATION-LOG.md` for what has actually been verified.
 
 ## Important integration constraints
 
