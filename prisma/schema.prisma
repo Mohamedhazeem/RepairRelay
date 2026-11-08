@@ -111,9 +111,114 @@ model RepairRequest {
 
   quotes   RepairQuote[]
   contract RepairContract?
+  jobs     RepairJob[]
 
   @@index([customerId])
   @@map("repair_requests")
+}
+
+enum JobStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  AWAITING_EVIDENCE
+  CUSTOMER_REVIEW
+  REWORK_REQUESTED
+  REWORK_IN_PROGRESS
+  ACCEPTED
+  CANCEL_REQUESTED
+  CANCELLED
+}
+
+enum EvidenceStatus {
+  DRAFT
+  SUBMITTED
+  SUPERSEDED
+}
+
+enum EvidenceAssetType {
+  BEFORE
+  AFTER
+  COMPONENT_LABEL
+  OTHER
+}
+
+enum ComponentIdentityBasis {
+  LABEL_PHOTO
+  TECHNICIAN_DECLARATION
+  OTHER
+}
+
+model RepairJob {
+  id                  String         @id @default(uuid())
+  repairRequestId     String         @unique
+  repairRequest       RepairRequest  @relation(fields: [repairRequestId], references: [id])
+  contractId          String
+  contractVersionId   String
+  repairerId          String
+  status              JobStatus      @default(NOT_STARTED)
+  startedAt           DateTime?
+  evidenceSubmittedAt DateTime?
+  acceptedAt          DateTime?
+  cancelledAt         DateTime?
+  reworkCount         Int            @default(0)
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+
+  submissions EvidenceSubmission[]
+
+  @@index([repairerId])
+  @@map("repair_jobs")
+}
+
+model EvidenceSubmission {
+  id                     String                  @id @default(uuid())
+  repairJobId            String
+  repairJob              RepairJob               @relation(fields: [repairJobId], references: [id])
+  contractVersionId      String
+  submittedBy            String
+  status                 EvidenceStatus          @default(DRAFT)
+  componentDeclaration   String
+  componentIdentityBasis ComponentIdentityBasis
+  functionalChecksJson   Json
+  notes                  String?
+  submittedAt            DateTime?
+  createdAt              DateTime                @default(now())
+
+  assets      EvidenceAsset[]
+  assessments EvidenceAssessment[]
+
+  @@index([repairJobId])
+  @@map("evidence_submissions")
+}
+
+model EvidenceAsset {
+  id             String            @id @default(uuid())
+  submissionId   String
+  submission     EvidenceSubmission @relation(fields: [submissionId], references: [id])
+  uploadedAssetId String
+  evidenceType   EvidenceAssetType
+  caption        String?
+  createdAt      DateTime          @default(now())
+
+  @@index([submissionId])
+  @@map("evidence_assets")
+}
+
+/// Advisory only — never treated as customer acceptance or payment eligibility.
+model EvidenceAssessment {
+  id             String   @id @default(uuid())
+  submissionId   String
+  submission     EvidenceSubmission @relation(fields: [submissionId], references: [id])
+  provider       String
+  model          String
+  schemaVersion  Int
+  completeness   String
+  flags          Json
+  reasoningSummary String
+  createdAt      DateTime @default(now())
+
+  @@index([submissionId])
+  @@map("evidence_assessments")
 }
 
 enum ContractStatus {
