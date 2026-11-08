@@ -1,0 +1,30 @@
+// RepairRelay — Prisma schema (S1 slice: identity foundation).
+// Domain scopes propose owned model changes via reviewed patches; integrator owns this file.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  CUSTOMER
+  SIMULATED_REPAIRER
+  DEMO_ADMIN
+}
+
+model User {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  displayName  String
+  passwordHash String
+  role         UserRole
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  disabledAt   DateTime?
+
+  @@map("users")
+}
