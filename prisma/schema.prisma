@@ -152,8 +152,98 @@ model RepairContract {
 
   versions       ContractVersion[]
   changeRequests ContractChangeRequest[]
+  paymentAttempts PaymentAttempt[]
 
   @@map("repair_contracts")
+}
+
+enum PaymentProvider {
+  PAYPAL
+}
+
+enum ProviderEnvironment {
+  SANDBOX
+  PRODUCTION
+}
+
+enum PaymentStatus {
+  NOT_CREATED
+  ORDER_CREATE_PENDING
+  ORDER_CREATED
+  BUYER_APPROVAL_PENDING
+  BUYER_CANCELLED
+  AUTHORIZATION_PENDING
+  AUTHORIZED
+  AUTHORIZATION_DECLINED
+  AUTHORIZATION_UNKNOWN
+  AUTHORIZATION_EXPIRED
+  CAPTURE_PENDING
+  CAPTURED
+  CAPTURE_FAILED
+  CAPTURE_UNKNOWN
+  VOID_PENDING
+  VOIDED
+  VOID_FAILED
+  VOID_UNKNOWN
+}
+
+enum PaymentOperationType {
+  CREATE_ORDER
+  AUTHORIZE
+  CAPTURE
+  VOID
+  RECONCILE
+}
+
+enum PaymentOperationStatus {
+  STARTED
+  SUCCEEDED
+  FAILED
+  UNKNOWN
+}
+
+model PaymentAttempt {
+  id                       String              @id @default(uuid())
+  repairContractId         String
+  contract                 RepairContract      @relation(fields: [repairContractId], references: [id])
+  contractVersionId        String
+  provider                 PaymentProvider     @default(PAYPAL)
+  providerEnvironment      ProviderEnvironment @default(SANDBOX)
+  currency                 String
+  amountMinor              Int
+  status                   PaymentStatus       @default(NOT_CREATED)
+  paypalOrderId            String?             @unique
+  paypalAuthorizationId    String?             @unique
+  paypalCaptureId          String?             @unique
+  rawOrderStatus           String?
+  rawAuthorizationStatus   String?
+  rawCaptureStatus         String?
+  authorizationExpiresAt   DateTime?
+  createdAt                DateTime            @default(now())
+  updatedAt                DateTime            @updatedAt
+
+  operations PaymentOperation[]
+
+  @@index([repairContractId])
+  @@map("payment_attempts")
+}
+
+model PaymentOperation {
+  id                       String                @id @default(uuid())
+  paymentAttemptId         String
+  attempt                  PaymentAttempt        @relation(fields: [paymentAttemptId], references: [id])
+  operationType            PaymentOperationType
+  idempotencyKey           String                @unique
+  status                   PaymentOperationStatus @default(STARTED)
+  requestHash              String?
+  providerRequestId        String?
+  providerResponseRedacted Json?
+  errorCode                String?
+  startedAt                DateTime              @default(now())
+  completedAt              DateTime?
+
+  @@index([paymentAttemptId])
+  @@map("payment_operations")
 }
 
 /// Immutable after insert (except approval metadata recorded as separate decision fields).
