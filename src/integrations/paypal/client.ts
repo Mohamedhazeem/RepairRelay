@@ -191,3 +191,36 @@ export async function getAuthorization(
   if (!result.ok) return result;
   return { ok: true, authorization: result.json as Record<string, unknown> };
 }
+
+export type CaptureResult = {
+  captureId: string;
+  status: string;
+  amount: { currencyCode: string; value: string } | null;
+};
+
+/** Capture an authorization (Payments v2). Called only by the payment orchestrator. */
+export async function captureAuthorization(
+  input: { authorizationId: string; requestId: string },
+  deps?: { fetchFn?: FetchLike; now?: () => number },
+): Promise<{ ok: true; capture: CaptureResult } | { ok: false; error: PayPalError }> {
+  const result = await call("POST", `/v2/payments/authorizations/${encodeURIComponent(input.authorizationId)}/capture`, { requestId: input.requestId, body: {} }, deps);
+  if (!result.ok) return result;
+  const json = result.json as { id?: string; status?: string; amount?: { currency_code?: string; value?: string } };
+  if (typeof json.id !== "string") return { ok: false, error: { kind: "PROVIDER_ERROR", status: 200 } };
+  return {
+    ok: true,
+    capture: {
+      captureId: json.id,
+      status: json.status ?? "UNKNOWN",
+      amount: json.amount ? { currencyCode: json.amount.currency_code ?? "", value: json.amount.value ?? "" } : null,
+    },
+  };
+}
+
+/** Void an uncaptured authorization (Payments v2). Called only by the payment orchestrator. */
+export async function voidAuthorization(
+  input: { authorizationId: string; requestId: string },
+  deps?: { fetchFn?: FetchLike; now?: () => number },
+): Promise<{ ok: true } | { ok: false; error: PayPalError }> {
+  return call("POST", `/v2/payments/authorizations/${encodeURIComponent(input.authorizationId)}/void`, { requestId: input.requestId }, deps);
+}
