@@ -167,6 +167,14 @@ export default async function RepairDetailPage({ params }: { params: Promise<{ r
             </Link>
           </>
         ) : null}
+        {repair.status === "COMPLETED" ? (
+          <>
+            {" "}·{" "}
+            <Link href={`/repairs/${repair.id}/passport`} className="font-medium text-brand hover:underline">
+              Repair Passport →
+            </Link>
+          </>
+        ) : null}
       </p>
       <Link href="/repairs" className="text-sm font-medium text-brand hover:underline">
         ← Back to repairs

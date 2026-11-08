@@ -133,11 +133,11 @@ Use this file as the live progress tracker. Only check an item after it is imple
 
 ## S10 — Repair Passport
 
-- [ ] Passport gated on accepted repair + confirmed capture.
-- [ ] Historical contract/product reference clearly dated.
-- [ ] Simulated repairer disclosure.
-- [ ] Evidence, checks, warranty and payment reference displayed.
-- [ ] Role/ownership tests pass.
+- [x] Passport gated on accepted repair + confirmed capture. (job ACCEPTED + repair COMPLETED + CAPTURED attempt; otherwise a status summary with reason)
+- [x] Historical contract/product reference clearly dated. ("Historical replacement-device comparison observed … — not a current offer and not a repair part")
+- [x] Simulated repairer disclosure. (SIMULATED badge + attestation note)
+- [x] Evidence, checks, warranty and payment reference displayed. (Capture/authorization references, no secrets; unavailable evidence assets marked, not fatal)
+- [x] Role/ownership tests pass. (Other user → NOT_FOUND; 128/128 tests total)
 
 ## S11 — Hardening and submission
 

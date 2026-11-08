@@ -6,6 +6,7 @@
 
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { PrismaClient } from "@prisma/client";
+import { collectAggregateIds, deleteAuditEventsFor } from "../helpers/auditCleanup";
 import { computeQuote, QUOTE_PROFILES } from "../../src/domains/quotes/pricing";
 import {
   createContractFromSelection,
@@ -72,6 +73,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+  await deleteAuditEventsFor(prisma, await collectAggregateIds(prisma, [repairId]));
   const repair = await prisma.repairRequest.findUnique({ where: { id: repairId }, include: { contract: true } });
   if (repair?.contract) {
     await prisma.contractChangeRequest.deleteMany({ where: { contractId: repair.contract.id } });
@@ -79,7 +81,6 @@ afterAll(async () => {
     await prisma.repairContract.delete({ where: { id: repair.contract.id } });
   }
   await prisma.repairQuote.deleteMany({ where: { repairRequestId: repairId } });
-  await prisma.auditEvent.deleteMany({ where: { aggregateId: { in: [repairId] } } });
   await prisma.repairRequest.delete({ where: { id: repairId } }).catch(() => undefined);
   await prisma.simulatedRepairer.deleteMany({ where: { userId: repairerUserId } });
   await prisma.user.deleteMany({ where: { id: { in: [customerId, repairerUserId] } } });

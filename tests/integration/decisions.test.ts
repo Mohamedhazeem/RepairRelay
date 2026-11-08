@@ -7,6 +7,7 @@
 
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { PrismaClient } from "@prisma/client";
+import { collectAggregateIds, deleteAuditEventsFor } from "../helpers/auditCleanup";
 import sharp from "sharp";
 import { createContractFromSelection, approveContract } from "../../src/domains/contracts/service";
 import { createOrderForContract, authorizeApprovedOrder } from "../../src/domains/payments/service";
@@ -156,6 +157,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+  await deleteAuditEventsFor(prisma, await collectAggregateIds(prisma, [createdRepairIds].flat()));
   for (const repairId of createdRepairIds) {
     const repair = await prisma.repairRequest.findUnique({ where: { id: repairId }, include: { contract: true, jobs: true } });
     if (!repair) continue;
@@ -176,7 +178,6 @@ afterAll(async () => {
     await prisma.repairQuote.deleteMany({ where: { repairRequestId: repairId } });
     await prisma.repairRequest.delete({ where: { id: repairId } }).catch(() => undefined);
   }
-  await prisma.auditEvent.deleteMany({ where: { aggregateType: { in: ["RepairJob", "EvidenceSubmission", "PaymentAttempt", "RepairContract", "RepairRequest"] } } });
   await prisma.simulatedRepairer.deleteMany({ where: { userId: repairerUserId } });
   await prisma.user.deleteMany({ where: { id: { in: [customerId, otherCustomerId, repairerUserId] } } });
   await prisma.$disconnect();

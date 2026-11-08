@@ -6,6 +6,7 @@
 
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { PrismaClient } from "@prisma/client";
+import { collectAggregateIds, deleteAuditEventsFor } from "../helpers/auditCleanup";
 import sharp from "sharp";
 import { createContractFromSelection, approveContract } from "../../src/domains/contracts/service";
 import { createOrderForContract, authorizeApprovedOrder } from "../../src/domains/payments/service";
@@ -133,6 +134,7 @@ async function addIntakeAsset(prisma2: PrismaClient, rid: string, cid: string, f
 }
 
 afterAll(async () => {
+  await deleteAuditEventsFor(prisma, await collectAggregateIds(prisma, [repairId]));
   const repair = await prisma.repairRequest.findUnique({ where: { id: repairId }, include: { contract: true, jobs: true } });
   if (repair) {
     for (const job of repair.jobs) {
@@ -149,7 +151,6 @@ afterAll(async () => {
     }
     await prisma.uploadedAsset.deleteMany({ where: { repairRequestId: repairId } });
     await prisma.repairQuote.deleteMany({ where: { repairRequestId: repairId } });
-    await prisma.auditEvent.deleteMany({ where: { aggregateType: { in: ["RepairJob", "EvidenceSubmission", "RepairRequest"] } } });
     await prisma.repairRequest.delete({ where: { id: repairId } }).catch(() => undefined);
   }
   await prisma.simulatedRepairer.deleteMany({ where: { userId: repairerUserId } });

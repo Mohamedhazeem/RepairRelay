@@ -180,6 +180,10 @@ Never paste access tokens, client secrets, API keys, buyer passwords, card data,
 | 2026-11-08 | S9 working tree | `npx tsc --noEmit` / `npx eslint .` | PASS | 0 errors, 0 warnings |
 | 2026-11-08 | S9 working tree | `npm test` (Vitest) | PASS | 123/123 across 19 files (added: accept-decision guard, expiry block, DB-level CAS concurrency, void-after-capture, authorization-resource reconciliation resolving unknowns to CAPTURED/AUTHORIZED/VOIDED, amount-change void with contractChange context) |
 | 2026-11-08 | S9 working tree | Hardening notes | DONE | createOrderForContract now validates expectedContractVersion (bug found by the S9 tests); reconcile→CAPTURED completes the repair; amount-change void keeps the contract APPROVED (re-authorization required); quote generation scoped to seeded repairer emails |
+| 2026-11-08 | S10 working tree | `npx tsc --noEmit` / `npx eslint .` | PASS | 0 errors, 0 warnings |
+| 2026-11-08 | S10 working tree | `npm test` (Vitest) | PASS | 128/128 across 20 files (added: passport gate before capture/accept, wrong-user refusal, historical labels, chronological timeline, unavailable-evidence marking) |
+| 2026-11-08 | S10 working tree | `npm run build` + live check | PASS | Live passport issued for the S8 completed repair: capture 6SV67765LK889111T, $114.98, contract v2 with 2-version history, SIMULATED repairer declaration, historical replace-benchmark label; page renders 200. Timeline empty for this repair (see incident note) |
+| 2026-11-08 | S10 working tree | Test-hygiene incident | FIXED | Test cleanups were deleting audit events by type in the shared dev DB, wiping live demo timeline events. Fixed: scoped cleanup helper deletes only by exact aggregate ids collected before row deletion; orphaned test-era events purged once. The S11 demo rehearsal regenerates a fresh timeline on a clean seed |
 
 ### V-008 — S1 foundation slice
 
