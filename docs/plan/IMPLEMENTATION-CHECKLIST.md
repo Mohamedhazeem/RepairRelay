@@ -89,15 +89,15 @@ Use this file as the live progress tracker. Only check an item after it is imple
 
 ## S6 — PayPal approval and authorization
 
-- [ ] PayPal JS SDK Buttons configured `intent=authorize`.
-- [ ] Server-side order create with one purchase unit.
-- [ ] Amount/currency verified against approved contract.
-- [ ] Idempotency operation persisted before provider call.
-- [ ] Buyer cancel and SDK error paths.
-- [ ] Backend order authorization.
-- [ ] Authorization ID and raw status persisted.
-- [ ] Repair cannot start until confirmed AUTHORIZED.
-- [ ] Timeout/unknown reconciliation test passes.
+- [x] PayPal JS SDK Buttons configured `intent=authorize`. (Official SDK on the payment page; server-side actions only)
+- [x] Server-side order create with one purchase unit. (Amount decimal from minor units; `PayPal-Request-Id` persisted before the call)
+- [x] Amount/currency verified against approved contract. (Exact match required; mismatch → AUTHORIZATION_DECLINED + audit, no AUTHORIZED)
+- [x] Idempotency operation persisted before provider call. (PaymentOperation + deterministic key; duplicate clicks return the same order; duplicate onApprove idempotent)
+- [x] Buyer cancel and SDK error paths. (onCancel marks BUYER_CANCELLED, no authorization; SDK error shows retry guidance)
+- [x] Backend order authorization. (Order must belong to the customer + current contract version; hosted-page approvals reconciled then authorized)
+- [x] Authorization ID and raw status persisted.
+- [x] Repair cannot start until confirmed AUTHORIZED. (Workbench gate arrives in S7; state machine already blocks)
+- [x] Timeout/unknown reconciliation test passes. (Timeout → AUTHORIZATION_UNKNOWN → admin reconcile endpoint restores state from provider reads)
 
 ## S7 — Repairer work and evidence
 

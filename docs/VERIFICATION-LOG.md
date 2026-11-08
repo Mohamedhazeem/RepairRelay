@@ -165,6 +165,10 @@ Never paste access tokens, client secrets, API keys, buyer passwords, card data,
 | 2026-11-08 | S5 working tree | `npm test` (Vitest) | PASS | 92/92 across 15 files (added: contract creation/immutability, approval CAS + double-click, change request authorization + deterministic diff, approve/reject decision paths, history preservation) |
 | 2026-11-08 | S5 working tree | `npm run build` | PASS | New routes: contract GET/POST, approve, change-requests, decision, repairer contracts; contract review + repairer workbench UI |
 | 2026-11-08 | S5 working tree | Live E2E via `next start` + curl | PASS | Contract v1 created from selected quote ($94.48) → customer approved (CAS) → repairer proposed change (part 5949→7999, warranty 90→365; server-computed diff; new total $114.98) → customer approved → v2 in force with v1 preserved in history. Amount-change-with-existing-payment path deferred to the S04 payment orchestrator by slice design |
+| 2026-11-08 | S6 working tree | `npx tsc --noEmit` / `npx eslint .` | PASS | 0 errors, 0 warnings |
+| 2026-11-08 | S6 working tree | `npm test` (Vitest) | PASS | 102/102 across 16 files (added: order creation guards + idempotency, authorization amount match/decline/timeout, buyer cancel, reconcile from provider reads, ownership) |
+| 2026-11-08 | S6 working tree | `npm run build` | PASS | New routes: paypal-order, authorize, cancel, config, payments reconcile; payment page with official JS SDK |
+| 2026-11-08 | S6 working tree | Live E2E via `next start` + curl + hosted approval | PASS | Real order `7TP61506GX975205D` created for the approved contract ($114.98, one purchase unit, USD); duplicate order click returned the same order; buyer completed hosted approval (return URL redirect observed); reconciliation mapped APPROVED → BUYER_APPROVAL_PENDING; server-side authorize returned AUTHORIZED with authorization `6UG97296AT193300A`, expires 2026-12-07; duplicate onApprove idempotent. Lesson: hosted-flow approvals surface via reconciliation (`BUYER_APPROVAL_PENDING`) and are authorizable; SDK popup cancel path marks BUYER_CANCELLED without any authorization |
 
 ### V-008 — S1 foundation slice
 

@@ -20,12 +20,14 @@ export function ContractReview({
   status,
   terms,
   initialPendingChange,
+  repairIdParam,
 }: {
   contractId: string;
   contractVersion: number;
   status: string;
   terms: ContractTerms | null;
   initialPendingChange: PendingChange | null;
+  repairIdParam: string;
 }) {
   const router = useRouter();
   const [version, setVersion] = useState(contractVersion);
@@ -186,6 +188,14 @@ export function ContractReview({
         >
           Approve repair terms — {formatUsd(terms.totalMinor)}
         </button>
+      ) : null}
+      {currentStatus === "APPROVED" ? (
+        <a
+          href={`/repairs/${repairIdParam}/payment`}
+          className="block w-full rounded-control bg-brand px-6 py-3 text-center text-sm font-semibold text-white hover:opacity-90"
+        >
+          Continue to PayPal authorization →
+        </a>
       ) : null}
 
       {confirming ? (

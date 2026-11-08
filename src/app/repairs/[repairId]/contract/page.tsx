@@ -62,6 +62,7 @@ export default async function ContractPage({ params }: { params: Promise<{ repai
         status={contract.status}
         terms={terms}
         initialPendingChange={pendingChange}
+        repairIdParam={repairId}
       />
     </div>
   );
