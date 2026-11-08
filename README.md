@@ -31,6 +31,31 @@ No single feature below is unique in isolation — the differentiated combinatio
 - **Evidence-gated completion.** The repairer must submit after-repair photos, a component declaration (with identity basis — photo-verified or technician-declared, clearly distinguished), and mandatory functional checks. Deterministic product rules enforce completeness; the AI only adds advisory flags.
 - **Auditable by construction.** Every meaningful state transition writes an append-only audit event, surfaced as the transaction timeline in the final Repair Passport.
 
+---
+
+## How PayPal powers this (the payment core)
+
+PayPal is not a bolted-on checkout button — the Orders + Payments APIs are the trust backbone of the whole transaction:
+
+- **Authorization-first lifecycle.** Orders v2 is called with `intent=AUTHORIZE` and exactly one purchase unit whose amount and currency are locked to the immutable approved contract version. Funds are held before work starts, so the repairer can commit — but nothing is earned yet.
+- **The customer's acceptance is the capture trigger.** `POST /v2/payments/authorizations/{id}/capture` is reachable **only** from a recorded customer ACCEPT decision that references the current contract version. There is no code path where the AI, the repairer, or a browser click can capture. Rejection and rework never touch money.
+- **Void as the safety exit.** Cancellation and approved amount-changes call the void endpoint — and void is never assumed: the final `CANCELLED` state appears only after the provider confirms it, and a captured payment can never be voided (provider-enforced and app-enforced).
+- **Every mutation is idempotent and reversible-safe.** Each capture/void/order persists a `PayPal-Request-Id` and a local operation record **before** the outbound call. Duplicate clicks, double `onApprove` callbacks, and concurrent requests all resolve to the same single operation (DB-level compare-and-set on the attempt status).
+- **Unknown outcomes are a first-class state.** If a response is lost (timeout, server restart, client disconnect), the payment lands in `CAPTURE_UNKNOWN` / `VOID_UNKNOWN` / `AUTHORIZATION_UNKNOWN` — the UI says "do not retry", and an operator reconciliation endpoint reads the provider's authoritative state to recover. This was demonstrated live: a buyer approval whose authorize call failed was reconciled and completed without any duplicate payment.
+- **Sandbox honesty.** The buyer approval uses the official PayPal JS SDK + hosted sandbox UI; the capture goes to the configured platform merchant. The UI states plainly: this is not escrow and does not pay the repairer.
+
+The full payment state machine (18 states including declines, expiry, pending, and unknowns) is implemented and unit-tested in `src/domains/payments/` — see `docs/VERIFICATION-LOG.md` for the live sandbox verifications of authorize → capture, void, expiry, and reconciliation.
+
+## How AI powers this (the intelligence core)
+
+AI is embedded at three points where it genuinely helps — and fenced off everywhere it could harm:
+
+1. **Vision intake triage.** The customer's damage photo goes to a vision-capable model that returns schema-validated structured JSON: visible observations (with certainty levels), suspected causes, likely repair category, explicit **unknowns** (touch functionality, internal damage — things a photo cannot prove), and follow-up questions. It uses confidence *bands* (LOW/MEDIUM/HIGH/UNASSESSED), never fabricated percentages, and it **refuses to assess** blurry, unrelated, or abstract images — verified live: on an abstract test image it answered "no device visible, please upload a real photo" instead of inventing damage.
+2. **Evidence completeness review.** When the repairer submits completion evidence, the model cross-checks the declaration against the approved contract and flags gaps and inconsistencies (e.g. "label photos missing — identity rests on technician declaration alone"). These flags are **advisory**: deterministic product rules enforce the hard requirements, and the customer decides with full knowledge even when the AI check is unavailable.
+3. **Structured-output discipline.** Every AI response passes a strict Zod schema before it reaches the UI or the database; malformed or reasoning-split outputs are recovered by a robust extraction layer, and failures degrade to honest "AI assessment unavailable" states — the flow never fabricates a diagnosis or blocks the customer.
+
+What AI is **fenced off from**: it cannot certify part compatibility or authenticity, approve the contract, accept evidence, compute payment amounts, or trigger any PayPal operation. Those boundaries are enforced in code, not just in prompts — `src/domains/payments/` is unreachable from AI/evidence code paths.
+
 ## The core flow (all verified live)
 
 1. Customer creates a repair request and uploads a damage photo (privately stored, EXIF-stripped, access-controlled).
