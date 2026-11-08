@@ -93,9 +93,13 @@ export default async function RepairDetailPage({ params }: { params: Promise<{ r
       </section>
 
       <p className="text-sm text-muted">
-        Next step:{" "}
+        Next steps:{" "}
         <Link href={`/repairs/${repair.id}/products`} className="font-medium text-brand hover:underline">
-          compare live replacement-device prices (repair vs replace) →
+          replacement-device prices →
+        </Link>{" "}
+        ·{" "}
+        <Link href={`/repairs/${repair.id}/quotes`} className="font-medium text-brand hover:underline">
+          compare repairer quotes →
         </Link>
       </p>
       <Link href="/repairs" className="text-sm font-medium text-brand hover:underline">
