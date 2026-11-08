@@ -93,7 +93,10 @@ export default async function RepairDetailPage({ params }: { params: Promise<{ r
       </section>
 
       <p className="text-sm text-muted">
-        Next step (arriving with the parts-discovery slice): live Channel3 replacement-device comparison.
+        Next step:{" "}
+        <Link href={`/repairs/${repair.id}/products`} className="font-medium text-brand hover:underline">
+          compare live replacement-device prices (repair vs replace) →
+        </Link>
       </p>
       <Link href="/repairs" className="text-sm font-medium text-brand hover:underline">
         ← Back to repairs
