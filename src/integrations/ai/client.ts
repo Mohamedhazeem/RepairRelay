@@ -11,7 +11,7 @@ import { getServerEnv } from "@/lib/env";
 export type ImageInput = { mimeType: string; base64: string };
 
 export type ChatResult =
-  | { ok: true; text: string; model: string; latencyMs: number; usage: { prompt: number; completion: number } | null }
+  | { ok: true; content: string | null; reasoningContent: string | null; text: string; model: string; latencyMs: number; usage: { prompt: number; completion: number } | null }
   | { ok: false; error: "TIMEOUT" | "NETWORK" | "HTTP" | "EMPTY"; status?: number; detail?: string };
 
 type FetchLike = typeof fetch;
@@ -37,7 +37,32 @@ export function systemPromptForDiagnosis(): string {
   ].join("\n");
 }
 
-/** Robust JSON extraction: content first, then reasoning_content, then outermost object. */
+/** Extract the first balanced JSON object from a string (string/escape aware). */
+function firstBalancedObject(text: string): string | null {
+  const start = text.indexOf("{");
+  if (start < 0) return null;
+  let depth = 0;
+  let inString = false;
+  let escaped = false;
+  for (let i = start; i < text.length; i++) {
+    const ch = text[i];
+    if (inString) {
+      if (escaped) escaped = false;
+      else if (ch === "\\") escaped = true;
+      else if (ch === '"') inString = false;
+      continue;
+    }
+    if (ch === '"') inString = true;
+    else if (ch === "{") depth += 1;
+    else if (ch === "}") {
+      depth -= 1;
+      if (depth === 0) return text.slice(start, i + 1);
+    }
+  }
+  return null;
+}
+
+/** Robust JSON extraction: content first, then reasoning_content; handles fences and trailing commentary. */
 export function extractJsonObject(message: { content?: unknown; reasoning_content?: unknown }): unknown | null {
   const candidates: string[] = [];
   for (const raw of [message.content, message.reasoning_content]) {
@@ -45,18 +70,24 @@ export function extractJsonObject(message: { content?: unknown; reasoning_conten
       candidates.push(raw.trim().replace(/^```(?:json)?\s*/i, "").replace(/\s*```\s*$/i, ""));
     }
   }
-  const combined = candidates.join("\n");
-  if (combined) {
-    const start = combined.indexOf("{");
-    const end = combined.lastIndexOf("}");
-    if (start >= 0 && end > start) candidates.push(combined.slice(start, end + 1));
-  }
   for (const candidate of candidates) {
     if (!candidate) continue;
+    // Whole candidate first (clean JSON case).
     try {
       return JSON.parse(candidate);
     } catch {
-      // try next candidate
+      // fall through to balanced extraction
+    }
+    let cursor = 0;
+    while (cursor < candidate.length) {
+      const obj = firstBalancedObject(candidate.slice(cursor));
+      if (!obj) break;
+      try {
+        return JSON.parse(obj);
+      } catch {
+        const idx = candidate.indexOf(obj, cursor);
+        cursor = idx >= 0 ? idx + 1 : cursor + 1;
+      }
     }
   }
   return null;
@@ -119,13 +150,14 @@ export async function chatWithImage(
       return { ok: false, error: "EMPTY", detail: "Non-JSON provider response" };
     }
     const message = payload.choices?.[0]?.message;
-    const text = [message?.content, message?.reasoning_content]
-      .filter((c): c is string => typeof c === "string" && c.trim().length > 0)
-      .map((c) => c.trim())
-      .join("\n");
+    const content = typeof message?.content === "string" && message.content.trim() ? message.content.trim() : null;
+    const reasoningContent = typeof message?.reasoning_content === "string" && message.reasoning_content.trim() ? message.reasoning_content.trim() : null;
+    const text = [content, reasoningContent].filter((t): t is string => t !== null).join("\n");
     if (!text) return { ok: false, error: "EMPTY", detail: `finish_reason=${payload.choices?.[0]?.finish_reason ?? "unknown"}` };
     return {
       ok: true,
+      content,
+      reasoningContent,
       text,
       model: payload.model ?? env.AI_MODEL ?? "unknown",
       latencyMs,
@@ -147,4 +179,19 @@ export async function chatWithImage(
     const isTimeout = err instanceof Error && (err.name === "AbortError" || err.name === "TimeoutError");
     return { ok: false, error: isTimeout ? "TIMEOUT" : "NETWORK", detail: err instanceof Error ? err.message : undefined };
   }
+}
+
+export function systemPromptForEvidence(): string {
+  return [
+    "You are an evidence-completeness assistant for a repair transaction. You are advisory only.",
+    "You check whether a submission looks complete and internally consistent. You do NOT certify repair quality, authenticity, compatibility, or customer acceptance, and you never influence payment.",
+    "Flag missing items or inconsistencies (for example: a component declaration that does not match the approved contract label, or a label photo claimed but not provided).",
+    "Return ONLY one JSON object matching exactly this shape — no markdown, no extra keys:",
+    `{`,
+    `  "completeness": "COMPLETE" | "INCOMPLETE" | "UNAVAILABLE",`,
+    `  "flags": [ { "code": string, "severity": "BLOCKING_FOR_SUBMISSION" | "REVIEW" | "INFO", "message": string } ],`,
+    `  "consistencyObservations": [ { "code": string, "severity": "REVIEW" | "INFO", "message": string } ],`,
+    `  "limitations": [string]`,
+    `}`,
+  ].join("\n");
 }

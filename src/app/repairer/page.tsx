@@ -7,6 +7,7 @@ import { termsFromVersion } from "@/domains/contracts/service";
 import { SimulatedActorBadge } from "@/components/shell/SimulatedActorBadge";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { ChangeRequestForm } from "./ChangeRequestForm";
+import { EvidenceForm } from "./EvidenceForm";
 
 export const dynamic = "force-dynamic";
 
@@ -29,6 +30,21 @@ export default async function RepairerPage() {
     : [];
   const assignments = selectedQuotes.filter((q) => q.repairRequest.contract);
 
+  // Job + payment state per assignment.
+  const jobViews = await Promise.all(
+    assignments.map(async (q) => {
+      const job = await prisma.repairJob.findUnique({
+        where: { repairRequestId: q.repairRequestId },
+        include: { submissions: { where: { status: "SUBMITTED" }, take: 1 } },
+      });
+      const payment = q.repairRequest.contract
+        ? await prisma.paymentAttempt.findFirst({ where: { repairContractId: q.repairRequest.contract.id }, orderBy: { createdAt: "desc" } })
+        : null;
+      const intake = await prisma.uploadedAsset.findMany({ where: { repairRequestId: q.repairRequestId, assetKind: "INTAKE", deletedAt: null } });
+      return { quote: q, job, payment, intake };
+    }),
+  );
+
   return (
     <div className="space-y-8">
       <div>
@@ -41,15 +57,18 @@ export default async function RepairerPage() {
         </p>
       </div>
 
-      {assignments.length === 0 ? (
+      {jobViews.length === 0 ? (
         <div className="rounded-card border border-dashed border-line bg-surface p-10 text-center text-muted">
           No assigned jobs yet. They appear once a customer selects your quote and approves the contract.
         </div>
       ) : (
-        assignments.map((q) => {
+        jobViews.map(({ quote: q, job, payment, intake }) => {
           const contract = q.repairRequest.contract!;
           const latest = contract.versions[0];
           const terms = termsFromVersion(latest);
+          const authorized = payment?.status === "AUTHORIZED";
+          const canStart = !job && contract.status === "APPROVED" && authorized;
+          const canSubmit = Boolean(job && (job.status === "IN_PROGRESS" || job.status === "REWORK_IN_PROGRESS") && authorized);
           return (
             <section key={contract.id} className="rounded-card border border-line bg-surface p-6">
               <div className="flex flex-wrap items-center justify-between gap-3">
@@ -62,27 +81,40 @@ export default async function RepairerPage() {
                     {contract.status.replaceAll("_", " ").toLowerCase()}
                   </p>
                 </div>
-                <StatusBadge label={contract.status.replaceAll("_", " ")} tone={contract.status === "APPROVED" ? "success" : "warning"} />
+                <div className="flex gap-2">
+                  <StatusBadge label={`Payment: ${payment?.status.replaceAll("_", " ") ?? "NONE"}`} tone={authorized ? "success" : "warning"} />
+                  {job ? <StatusBadge label={job.status.replaceAll("_", " ")} tone={job.status === "CUSTOMER_REVIEW" ? "info" : "neutral"} /> : null}
+                </div>
               </div>
               <dl className="mt-4 grid gap-2 text-sm sm:grid-cols-2">
                 <div><dt className="inline text-muted">Component: </dt><dd className="inline font-medium">{terms.quote.componentLabel}</dd></div>
                 <div><dt className="inline text-muted">Total: </dt><dd className="inline font-bold">{`$${(terms.totalMinor / 100).toFixed(2)}`}</dd></div>
                 <div className="sm:col-span-2"><dt className="inline text-muted">Scope: </dt><dd className="inline">{terms.scopeText}</dd></div>
               </dl>
-              {contract.status === "APPROVED" ? (
+
+              {contract.status === "APPROVED" && !job ? (
                 <div className="mt-4">
                   <ChangeRequestForm contractId={contract.id} contractVersion={contract.version} terms={terms} />
                 </div>
+              ) : null}
+              {contract.status === "CHANGE_REQUESTED" ? (
+                <p className="mt-4 text-sm text-warning">A change request is awaiting the customer&apos;s decision — work is paused.</p>
+              ) : null}
+
+              {job?.status === "CUSTOMER_REVIEW" ? (
+                <p className="mt-4 text-sm text-info">Evidence submitted — awaiting the customer&apos;s accept / rework / cancel decision.</p>
               ) : (
-                <p className="mt-4 text-sm text-warning">
-                  {contract.status === "CHANGE_REQUESTED"
-                    ? "A change request is awaiting the customer's decision — work is paused."
-                    : "Waiting for the customer to approve the contract."}
-                </p>
+                <div className="mt-5">
+                  <EvidenceForm
+                    repairId={q.repairRequestId}
+                    job={job ? { jobId: job.id, status: job.status, contractVersionId: job.contractVersionId } : null}
+                    category={q.repairRequest.repairCategory ?? "OTHER"}
+                    intakeAssets={intake.map((a) => ({ id: a.id, width: a.width, height: a.height }))}
+                    canStart={canStart}
+                    canSubmit={canSubmit}
+                  />
+                </div>
               )}
-              <p className="mt-3 text-xs text-muted">
-                Repair work and evidence submission arrive with the workbench slice; payment must be authorized first.
-              </p>
             </section>
           );
         })

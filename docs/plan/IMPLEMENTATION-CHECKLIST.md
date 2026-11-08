@@ -101,15 +101,15 @@ Use this file as the live progress tracker. Only check an item after it is imple
 
 ## S7 — Repairer work and evidence
 
-- [ ] Simulated repairer workbench.
-- [ ] Job start authorization/contract preconditions.
-- [ ] Before/after assets.
-- [ ] Component declaration and identity basis.
-- [ ] Functional checklist.
-- [ ] Evidence submission bound to contract version.
-- [ ] Evidence completeness rules.
-- [ ] AI advisory assessment and unavailable state.
-- [ ] Evidence access control tests.
+- [x] Simulated repairer workbench. (SIMULATED banner; assignment view with contract + payment state)
+- [x] Job start authorization/contract preconditions. (Approved contract + confirmed AUTHORIZED payment + assigned repairer; idempotent)
+- [x] Before/after assets. (Before photos from intake; after/component uploads via the shared private pipeline)
+- [x] Component declaration and identity basis. (TECHNICIAN_DECLARATION marked not-photo-verified; LABEL_PHOTO requires a photo)
+- [x] Functional checklist. (Mandatory checks per repair category, PASS/FAIL recorded)
+- [x] Evidence submission bound to contract version. (Stale version → CONFLICT; one SUBMITTED submission per job)
+- [x] Evidence completeness rules. (Deterministic product rules block submission; AI never gates)
+- [x] AI advisory assessment and unavailable state. (Advisory flags recorded; outage → UNAVAILABLE + customer informed; robust reasoning-content JSON extraction)
+- [x] Evidence access control tests. (Unassigned repairer → FORBIDDEN; uploads by assigned repairer only)
 
 ## S8 — Customer decision
 

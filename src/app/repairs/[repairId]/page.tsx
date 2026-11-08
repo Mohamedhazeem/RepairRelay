@@ -23,9 +23,11 @@ export default async function RepairDetailPage({ params }: { params: Promise<{ r
     include: {
       assets: { where: { assetKind: "INTAKE", deletedAt: null }, orderBy: { createdAt: "asc" } },
       diagnosisReports: { orderBy: { createdAt: "desc" }, take: 1 },
+      jobs: { include: { submissions: { where: { status: "SUBMITTED" }, orderBy: { createdAt: "desc" }, take: 1, include: { assets: true, assessments: { orderBy: { createdAt: "desc" }, take: 1 } } } } },
     },
   });
   if (!repair || repair.customerId !== guard.session.userId) notFound();
+  const submission = repair.jobs[0]?.submissions[0] ?? null;
 
   const latest = repair.diagnosisReports[0];
   const diagnosis: DiagnosisView | null = latest
@@ -81,6 +83,51 @@ export default async function RepairDetailPage({ params }: { params: Promise<{ r
           ))}
         </ul>
       </section>
+
+      {submission ? (
+        <section className="rounded-card border border-line bg-surface p-5">
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-muted">Submitted repair evidence</h2>
+          <p className="mt-1 text-sm">
+            Component: <span className="font-medium">{submission.componentDeclaration}</span>
+            {submission.componentIdentityBasis === "TECHNICIAN_DECLARATION" ? (
+              <span className="ml-1 text-xs text-muted">(technician-declared identity — not photo-verified)</span>
+            ) : null}
+          </p>
+          <ul className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {submission.assets.map((a) => (
+              <li key={a.id}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={`/api/assets/${a.uploadedAssetId}`} alt={`Evidence photo (${a.evidenceType.toLowerCase()})`} className="h-28 w-full rounded-card border border-line object-cover" />
+                <p className="mt-1 text-center text-xs text-muted">{a.evidenceType.replaceAll("_", " ").toLowerCase()}</p>
+              </li>
+            ))}
+          </ul>
+          <ul className="mt-3 space-y-1 text-sm">
+            {(submission.functionalChecksJson as Array<{ check: string; result: string }>).map((c) => (
+              <li key={c.check}>
+                {c.check.replaceAll("_", " ")}: <span className={c.result === "PASS" ? "font-semibold text-success" : "font-semibold text-danger"}>{c.result}</span>
+              </li>
+            ))}
+          </ul>
+          {submission.notes ? <p className="mt-2 text-sm text-muted">Repairer note: {submission.notes}</p> : null}
+          {(() => {
+            const assessment = submission.assessments[0];
+            if (!assessment) return null;
+            const flags = (assessment.flags as Array<{ code: string; severity: string; message: string }>) ?? [];
+            return (
+              <div className="mt-3 rounded-control border border-info/30 bg-info/5 p-3 text-xs">
+                <p className="font-semibold text-info">AI completeness check: {assessment.completeness.toLowerCase()} — advisory only, it does not certify the repair</p>
+                {flags.map((f, i) => (
+                  <p key={i} className="mt-1 text-muted">{f.message}</p>
+                ))}
+                {assessment.completeness === "UNAVAILABLE" ? (
+                  <p className="mt-1 text-muted">AI check unavailable — you can review the evidence and decide yourself.</p>
+                ) : null}
+              </div>
+            );
+          })()}
+        </section>
+      ) : null}
 
       <section>
         <h2 className="mb-3 text-lg font-semibold">AI assessment</h2>
