@@ -4,23 +4,23 @@ Use this file as the live progress tracker. Only check an item after it is imple
 
 ## Gate 0 — External feasibility (must pass before app feature build)
 
-- [ ] Channel3 key obtained and stored server-side.
-- [ ] `POST /v1/search` succeeds in US/USD/en `default` mode.
-- [ ] Sanitized real response saved as test fixture only.
-- [ ] Actual product/offer/price shape recorded and validated.
-- [ ] At least two relevant parts with usable priced merchant offers found, or fallback explicitly selected.
-- [ ] Product details refresh returns current offers.
-- [ ] Channel3 credits/usage checked.
-- [ ] PayPal sandbox buyer and business accounts created.
-- [ ] PayPal OAuth works.
-- [ ] Sandbox merchant `AUTHORIZE` capability confirmed.
+- [x] Channel3 key obtained and stored server-side.
+- [x] `POST /v1/search` succeeds in US/USD/en `default` mode.
+- [x] Sanitized real response saved as test fixture only.
+- [x] Actual product/offer/price shape recorded and validated. (`price` object `{price, compare_at_price, currency}`; offer-level `currency` absent; images `cleaned_url` optional; detail adds gender/materials/ratings — see VERIFICATION-LOG V-002.)
+- [x] At least two relevant parts with usable priced merchant offers found, or fallback explicitly selected. → **Fallback selected: Repair-versus-Replace mode** (only 1 genuine iPhone 13 part; replacement-device coverage strong). See V-004.
+- [x] Product details refresh returns current offers.
+- [ ] Channel3 credits/usage checked. (Dashboard check pending; ~9 search + 2 detail calls used.)
+- [x] PayPal sandbox buyer and business accounts created. (User-provided.)
+- [x] PayPal OAuth works.
+- [ ] Sandbox merchant `AUTHORIZE` capability confirmed. (Order created; confirm at authorize step.)
 - [ ] PayPal buyer approval works through official SDK/UI.
 - [ ] PayPal authorization succeeds and returns authorization ID.
 - [ ] PayPal capture succeeds on a test authorization.
 - [ ] PayPal void succeeds on a separate uncaptured authorization.
-- [ ] AI vision provider key and model verified independently.
-- [ ] One sample image produces schema-valid structured diagnosis.
-- [ ] GO/PIVOT decision recorded in verification log.
+- [x] AI vision provider key and model verified independently. (`nvidia/nemotron-3.5-super-vl-120b-a12b`; initial `google/gemma-4-31b-it` hangs — replaced in `.env.local`.)
+- [x] One sample image produces schema-valid structured diagnosis.
+- [x] GO/PIVOT decision recorded in verification log. (V-004: PIVOT to Repair-versus-Replace.)
 
 ## S1 — Foundation
 

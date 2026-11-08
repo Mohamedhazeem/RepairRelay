@@ -1,0 +1,173 @@
+{
+  "id": "6bShsMo",
+  "title": "iPhone 13",
+  "description": "Experience top-tier smartphone performance with this Gazelle Certified Pre-Owned iPhone 13. Featuring the lightning-fast A15 chip, this model delivers speed significantly faster than its competitors. Enjoy an immersive viewing experience on the 5.4-inch Super Retina XDR display with HDR and True Tone technology. The upgraded dual-camera system includes an Ultra Wide lens for better low-light detail and a Wide camera that captures 50% more light, plus a new Cinematic mode for video. This specific unit is configured for AT&T service and comes with 128GB of storage.",
+  "brands": [
+    {
+      "id": "k8qh",
+      "name": "Apple"
+    }
+  ],
+  "images": [
+    {
+      "url": "https://cdn.trychannel3.com/e9c44315-ca04-4baa-a3f9-0addd23b10e3?aid=01M6WFP0JWMFH89VJX05ZWAKZM&mid=1bcG",
+      "cleaned_url": null,
+      "is_main_image": true,
+      "shot_type": "hero",
+      "alt_text": "White and black iPhone 13 models side by side."
+    },
+    {
+      "url": "https://cdn.trychannel3.com/d1bcc1cc-f34c-45a5-9c7c-b53ef56f8adc?aid=01M6WFP0JWMFH89VJX05ZWAKZM&mid=1bcG",
+      "cleaned_url": null,
+      "is_main_image": false,
+      "shot_type": "hero",
+      "alt_text": "Black iPhone 13 and a pink iPhone 13 displayed together."
+    },
+    {
+      "url": "https://cdn.trychannel3.com/e75614bd-5cad-4453-8eb0-93a70428d5ea?aid=01M6WFP0JWMFH89VJX05ZWAKZM&mid=1bcG",
+      "cleaned_url": null,
+      "is_main_image": false,
+      "shot_type": "lifestyle",
+      "alt_text": "Black and white iPhone 13 models side by side."
+    },
+    {
+      "url": "https://cdn.trychannel3.com/5f97fd00-95cc-4ac3-9425-e15f9885d964?aid=01M6WFP0JWMFH89VJX05ZWAKZM&mid=1bcG",
+      "cleaned_url": null,
+      "is_main_image": false,
+      "shot_type": "hero",
+      "alt_text": "Black and pink iPhone 13 placed on a surface."
+    },
+    {
+      "url": "https://cdn.trychannel3.com/e1c08788-babc-45b5-8ea2-ed7ad01a6dc0?aid=01M6WFP0JWMFH89VJX05ZWAKZM&mid=1bcG",
+      "cleaned_url": null,
+      "is_main_image": false,
+      "shot_type": "hero",
+      "alt_text": "Close-up of the camera module of a dark smartphone."
+    },
+    {
+      "url": "https://cdn.trychannel3.com/bc9cda9f-6794-4437-942a-b8ddbce94ae0?aid=01M6WFP0JWMFH89VJX05ZWAKZM&mid=1bcG",
+      "cleaned_url": null,
+      "is_main_image": false,
+      "shot_type": "hero",
+      "alt_text": "Black iPhone 13 and a pink iPhone 13 displayed together."
+    }
+  ],
+  "category": {
+    "slug": "smart-phones",
+    "title": "Smart Phones",
+    "path": [
+      {
+        "slug": "electronics",
+        "title": "Electronics"
+      },
+      {
+        "slug": "communications",
+        "title": "Communications"
+      },
+      {
+        "slug": "telephony",
+        "title": "Telephony"
+      },
+      {
+        "slug": "mobile-phones",
+        "title": "Mobile Phones"
+      },
+      {
+        "slug": "smart-phones",
+        "title": "Smart Phones"
+      }
+    ],
+    "has_children": false
+  },
+  "gender": null,
+  "age": null,
+  "materials": [
+    "Glass",
+    "Aluminum"
+  ],
+  "key_features": [
+    "Revamped A15 chip for extremely fast performance",
+    "Up to 17 hours of video playback battery life",
+    "5.4-inch Super Retina XDR display with HDR and True Tone",
+    "Dual rear camera system with Ultra Wide and Wide lenses",
+    "New Cinematic mode for video rack focus",
+    "Photographic Styles feature for custom photo adjustments",
+    "Compatible with MagSafe accessories",
+    "Guaranteed to work with AT&T carrier"
+  ],
+  "colors": [
+    {
+      "hex": "#3c3a43",
+      "percentage": 0.3787
+    },
+    {
+      "hex": "#060607",
+      "percentage": 0.2431
+    },
+    {
+      "hex": "#202020",
+      "percentage": 0.1342
+    },
+    {
+      "hex": "#767677",
+      "percentage": 0.1241
+    },
+    {
+      "hex": "#d3d2d2",
+      "percentage": 0.1199
+    }
+  ],
+  "offers": [
+    {
+      "url": "https://buy.trychannel3.com/6bShsMo-1bcG-L47KZW?o=01KBPB2PX5WESFWE7KNKYQK0R7&aid=01M6WFP0JWMFH89VJX05ZWAKZM",
+      "domain": "buy.gazelle.com",
+      "price": {
+        "price": 241.99,
+        "compare_at_price": null,
+        "currency": "USD"
+      },
+      "availability": "InStock",
+      "condition": "new",
+      "max_commission_rate": 0.02,
+      "dimensions": null
+    }
+  ],
+  "variants": null,
+  "structured_attributes": {
+    "battery-type": [
+      "Contained-undetachable"
+    ],
+    "wireless-charging-standard": [
+      "MagSafe"
+    ],
+    "power-source": [
+      "Rechargeable"
+    ],
+    "cosmetic-condition": [
+      "Refurbished-certified"
+    ],
+    "mobile-phone-form-factor": [
+      "Bar"
+    ],
+    "battery-technology": [
+      "Lithium-ion (Li-ion)"
+    ],
+    "processor-family": [
+      "Apple A15"
+    ],
+    "operating-system": [
+      "iOS"
+    ],
+    "charging-interface-type": [
+      "Lightning"
+    ],
+    "connectivity-technology": [
+      "Bluetooth",
+      "GPS",
+      "NFC",
+      "USB",
+      "Wi-Fi"
+    ]
+  },
+  "ratings": null
+}

@@ -1,0 +1,1116 @@
+{
+  "products": [
+    {
+      "id": "QgMjGXm",
+      "title": "iPhone 13 Pro",
+      "description": "This is a Gazelle Certified Pre-Owned iPhone 13 Pro with 128GB storage, configured for the Verizon network. It features the powerful A15 Bionic chip for top-tier performance and graphics, along with an enhanced battery offering up to 1.5 more hours of life than previous models. The display is a 6.1” Super Retina XDR with ProMotion technology for smoother scrolling and enhanced Ceramic Shield protection. The advanced triple-camera system includes a redesigned ultra-wide camera for macrophotography (capturing details from 2cm away), a wide camera that captures over 2x more light, and a telephoto lens for increased zoom. It also supports cinematic video editing with Dolby Vision HDR support and Photographic Styles for saving preferred photo tones.",
+      "brands": [
+        {
+          "id": "k8qh",
+          "name": "Apple"
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.trychannel3.com/3F4ZF6x?aid=01M6WFJSYXQ71CA1QCJZ2MS8M4&mid=1bcG",
+          "cleaned_url": "https://cdn.trychannel3.com/cleaned/v1/d3a7aed1-a8ac-4b0f-973f-b9b5d0252b06?aid=01M6WFJSYXQ71CA1QCJZ2MS8M4&mid=1bcG",
+          "is_main_image": true,
+          "shot_type": "hero",
+          "alt_text": "iPhone with purple screen"
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0658/7190/4833/files/refurbished-iphone-13-pro-graphite-1_cf9d000a-b4a2-4f0d-b65b-edd1610d1002.jpg?v=1754085005",
+          "cleaned_url": "https://cdn.trychannel3.com/cleaned/v1/d3a7aed1-a8ac-4b0f-973f-b9b5d0252b06?aid=01M6WFJSYXQ71CA1QCJZ2MS8M4&mid=1bcG",
+          "is_main_image": false,
+          "shot_type": "hero",
+          "alt_text": "iPhone with purple screen"
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0658/7190/4833/files/refurbished-iphone-13-pro-graphite-2_b39c2547-e6d0-442d-8ec9-54c375a381db.jpg?v=1754085005",
+          "cleaned_url": "https://cdn.trychannel3.com/cleaned/v1/d61c3634-6dd0-49ec-863e-84150b81873b?aid=01M6WFJSYXQ71CA1QCJZ2MS8M4&mid=1bcG",
+          "is_main_image": false,
+          "shot_type": "angle_view",
+          "alt_text": "Side view of iPhone"
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0658/7190/4833/files/refurbished-iphone-13-pro-graphite-3_2b22095e-9415-4314-aedb-001fc683704e.jpg?v=1754085005",
+          "cleaned_url": null,
+          "is_main_image": false,
+          "shot_type": "detail",
+          "alt_text": "Close-up of iPhone camera lenses"
+        }
+      ],
+      "category": {
+        "slug": "smart-phones",
+        "title": "Smart Phones",
+        "path": [
+          {
+            "slug": "electronics",
+            "title": "Electronics"
+          },
+          {
+            "slug": "communications",
+            "title": "Communications"
+          },
+          {
+            "slug": "telephony",
+            "title": "Telephony"
+          },
+          {
+            "slug": "mobile-phones",
+            "title": "Mobile Phones"
+          },
+          {
+            "slug": "smart-phones",
+            "title": "Smart Phones"
+          }
+        ],
+        "has_children": false
+      },
+      "gender": null,
+      "age": null,
+      "materials": [
+        "Stainless steel",
+        "Matt glass back"
+      ],
+      "key_features": [
+        "Refurbished",
+        "Graphite color",
+        "Verizon compatible",
+        "128 GB storage",
+        "ProMotion 120Hz display",
+        "A15 Bionic chip",
+        "Pro camera system (12MP Main, Ultra Wide + Telephoto)",
+        "Cinematic mode",
+        "Super Retina XDR display",
+        "Stainless steel frame with textured matte glass back"
+      ],
+      "colors": [
+        {
+          "hex": "#2e022e",
+          "percentage": 0.3812
+        },
+        {
+          "hex": "#560954",
+          "percentage": 0.187
+        },
+        {
+          "hex": "#ab36ae",
+          "percentage": 0.1515
+        },
+        {
+          "hex": "#690126",
+          "percentage": 0.1346
+        },
+        {
+          "hex": "#0a000c",
+          "percentage": 0.1162
+        }
+      ],
+      "offers": [
+        {
+          "url": "https://buy.trychannel3.com/QgMjGXm-1bcG-L47KZW?o=01KBPD0EH6RZXVE6A614Z9FPBE&aid=01M6WFJSYXQ71CA1QCJZ2MS8M4",
+          "domain": "buy.gazelle.com",
+          "price": {
+            "price": 359.99,
+            "compare_at_price": null,
+            "currency": "USD"
+          },
+          "availability": "InStock",
+          "condition": "new",
+          "max_commission_rate": 0,
+          "dimensions": null
+        }
+      ],
+      "variants": null,
+      "structured_attributes": {
+        "battery-type": [
+          "Disposable",
+          "Rechargeable",
+          "Contained-undetachable"
+        ],
+        "battery-technology": [
+          "Lithium",
+          "Lithium-ion (Li-ion)"
+        ],
+        "headphone-jack-type": [
+          "USB type-C"
+        ],
+        "wi-fi-standard": [
+          "802.11ac",
+          "802.11ax"
+        ],
+        "sim-card-capability": [
+          "Single",
+          "Embedded"
+        ],
+        "charging-interface-type": [
+          "Proprietary connector",
+          "Lightning",
+          "USB type-C",
+          "Wireless charging"
+        ],
+        "sim-card-type": [
+          "Nano SIM",
+          "eSIM"
+        ],
+        "operating-system": [
+          "iOS"
+        ],
+        "power-source": [
+          "Batteries",
+          "Battery-powered",
+          "Rechargeable",
+          "USB"
+        ],
+        "display-technology": [
+          "LCD",
+          "OLED"
+        ],
+        "display-resolution": [
+          "1920 x 1080",
+          "2160p",
+          "2560 x 1440"
+        ],
+        "sim-card-type-1": [
+          "Nano SIM",
+          "eSIM"
+        ],
+        "connectivity-technology": [
+          "Bluetooth",
+          "NFC",
+          "USB",
+          "Wi-Fi",
+          "Cellular",
+          "GPS",
+          "LTE",
+          "Wireless",
+          "Ethernet"
+        ],
+        "processor-cores": [
+          "Multi",
+          "Octa",
+          "Hexa",
+          "Quad"
+        ],
+        "data-network": [
+          "4G",
+          "LTE",
+          "5G"
+        ],
+        "subscription-type": [
+          "Unlocked"
+        ],
+        "mobile-phone-form-factor": [
+          "Bar"
+        ],
+        "processor-family": [
+          "Apple A15"
+        ],
+        "biometric-authentication-method": [
+          "Face recognition",
+          "None"
+        ],
+        "battery-size": [
+          "Built-in battery",
+          "21700",
+          "N"
+        ],
+        "wireless-charging-standard": [
+          "MagSafe",
+          "Qi",
+          "Proprietary"
+        ],
+        "ingress-protection-ip-rating": [
+          "IP68",
+          "IP67"
+        ],
+        "cosmetic-condition": [
+          "Refurbished-excellent",
+          "Refurbished-good",
+          "Refurbished-fair",
+          "Refurbished-very good",
+          "Refurbished-certified"
+        ],
+        "pattern": [
+          "Solid"
+        ]
+      },
+      "ratings": null
+    },
+    {
+      "id": "5KLa2SK",
+      "title": "iPhone 13 Pro",
+      "description": "Experience the power and advanced features of the refurbished iPhone 13 Pro in a stunning Gold finish, unlocked for T-Mobile. This device comes in Excellent condition and features a brand new battery, ensuring longevity and peak performance. It boasts a vibrant Super Retina XDR display for immersive viewing and is powered by the highly capable A15 Bionic chip. Certified by Loop's rigorous 75-point quality check, this smartphone offers premium technology at a significant discount while minimizing environmental impact.",
+      "brands": [
+        {
+          "id": "k8qh",
+          "name": "Apple"
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.trychannel3.com/a0342401-f1d9-4273-8266-c272fc3c6a1d?aid=01M6WFJSYXQ71CA1QCJZ2MS8M4&mid=1bcG",
+          "cleaned_url": null,
+          "is_main_image": true,
+          "shot_type": "hero",
+          "alt_text": "Gold iPhone 13 Pro case and phone shown side by side."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/84dba30c-a6f3-4d8c-83be-27e411b34fb7?aid=01M6WFJSYXQ71CA1QCJZ2MS8M4&mid=1bcG",
+          "cleaned_url": null,
+          "is_main_image": false,
+          "shot_type": "hero",
+          "alt_text": "Grey and orange iPhone 13 Pro case and phone side by side."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/89d1efa6-3f7e-45f7-b8f6-0baec81364ad?aid=01M6WFJSYXQ71CA1QCJZ2MS8M4&mid=1bcG",
+          "cleaned_url": null,
+          "is_main_image": false,
+          "shot_type": "hero",
+          "alt_text": "Grey iPhone 13 Pro case and phone shown side by side."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/745ccf5e-970e-4000-add6-33d532b97054?aid=01M6WFJSYXQ71CA1QCJZ2MS8M4&mid=1bcG",
+          "cleaned_url": "https://cdn.trychannel3.com/cleaned/v1/745ccf5e-970e-4000-add6-33d532b97054?aid=01M6WFJSYXQ71CA1QCJZ2MS8M4&mid=1bcG",
+          "is_main_image": false,
+          "shot_type": "hero",
+          "alt_text": "Back view of an iPhone case with camera module."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/eb5d421f-ff31-4e84-99c0-4834fca195d5?aid=01M6WFJSYXQ71CA1QCJZ2MS8M4&mid=1bcG",
+          "cleaned_url": null,
+          "is_main_image": false,
+          "shot_type": "hero",
+          "alt_text": "Black iPhone 13 Pro case and phone shown together."
+        }
+      ],
+      "category": {
+        "slug": "smart-phones",
+        "title": "Smart Phones",
+        "path": [
+          {
+            "slug": "electronics",
+            "title": "Electronics"
+          },
+          {
+            "slug": "communications",
+            "title": "Communications"
+          },
+          {
+            "slug": "telephony",
+            "title": "Telephony"
+          },
+          {
+            "slug": "mobile-phones",
+            "title": "Mobile Phones"
+          },
+          {
+            "slug": "smart-phones",
+            "title": "Smart Phones"
+          }
+        ],
+        "has_children": false
+      },
+      "gender": null,
+      "age": null,
+      "materials": [
+        "Stainless steel",
+        "Textured matt glass back"
+      ],
+      "key_features": [
+        "A15 Bionic chip",
+        "6.1” Super Retina XDR display with ProMotion",
+        "128GB Storage",
+        "Verizon compatibility",
+        "Advanced camera system with macrophotography and cinematic mode",
+        "Ceramic Shield front cover",
+        "Refurbished condition: Excellent",
+        "Battery health: New (10% capacity)",
+        "Water resistant up to 6 meters for 30 minutes",
+        "Compatible with MagSafe wireless charging up to 15W"
+      ],
+      "colors": [
+        {
+          "hex": "#e45c58",
+          "percentage": 0.2773
+        },
+        {
+          "hex": "#936b84",
+          "percentage": 0.1911
+        },
+        {
+          "hex": "#ee9a6f",
+          "percentage": 0.1334
+        },
+        {
+          "hex": "#592a44",
+          "percentage": 0.1307
+        },
+        {
+          "hex": "#0c0405",
+          "percentage": 0.1229
+        },
+        {
+          "hex": "#ad2b3b",
+          "percentage": 0.0984
+        }
+      ],
+      "offers": [
+        {
+          "url": "https://buy.trychannel3.com/5KLa2SK-1bcG-L47KZW?o=01M2TX8QYTK34H7QS0KTD8F79K&aid=01M6WFJSYXQ71CA1QCJZ2MS8M4",
+          "domain": "buy.gazelle.com",
+          "price": {
+            "price": 359.99,
+            "compare_at_price": 999,
+            "currency": "USD"
+          },
+          "availability": "InStock",
+          "condition": "new",
+          "max_commission_rate": 0,
+          "dimensions": null
+        }
+      ],
+      "variants": null,
+      "structured_attributes": {
+        "headphone-jack-type": [
+          "USB type-C"
+        ],
+        "processor-family": [
+          "Apple A15"
+        ],
+        "cosmetic-condition": [
+          "Refurbished-excellent",
+          "Refurbished-very good",
+          "Refurbished-good",
+          "Refurbished-fair",
+          "New"
+        ],
+        "sim-card-type": [
+          "Nano SIM"
+        ],
+        "ingress-protection-ip-rating": [
+          "Not rated",
+          "IP68"
+        ],
+        "sim-card-capability": [
+          "Single"
+        ],
+        "power-source": [
+          "Battery-powered",
+          "Rechargeable",
+          "USB"
+        ],
+        "operating-system": [
+          "iOS"
+        ],
+        "wi-fi-standard": [
+          "802.11ac"
+        ],
+        "display-resolution": [
+          "1920 x 1080",
+          "2160p"
+        ],
+        "mobile-phone-form-factor": [
+          "Bar"
+        ],
+        "battery-size": [
+          "Built-in battery",
+          "N"
+        ],
+        "battery-technology": [
+          "Lithium-ion (Li-ion)"
+        ],
+        "connectivity-technology": [
+          "Bluetooth",
+          "GPS",
+          "NFC",
+          "Wi-Fi",
+          "Cellular",
+          "USB",
+          "Wireless"
+        ],
+        "data-network": [
+          "4G",
+          "5G"
+        ],
+        "processor-cores": [
+          "Multi",
+          "Quad"
+        ],
+        "battery-type": [
+          "Disposable",
+          "Rechargeable"
+        ],
+        "charging-interface-type": [
+          "Proprietary connector",
+          "Lightning",
+          "USB type-C",
+          "Wireless charging"
+        ],
+        "biometric-authentication-method": [
+          "Fingerprint sensor",
+          "Face recognition"
+        ],
+        "display-technology": [
+          "LCD",
+          "OLED"
+        ],
+        "sim-card-type-1": [
+          "Nano SIM"
+        ],
+        "wireless-charging-standard": [
+          "MagSafe"
+        ],
+        "subscription-type": [
+          "Unlocked"
+        ]
+      },
+      "ratings": {
+        "value": 3.62,
+        "count": 364,
+        "source_count": 1
+      }
+    },
+    {
+      "id": "Ueeb9dV",
+      "title": "iPhone 13 Pro",
+      "description": "A pre-owned iPhone 13 Pro featuring 256GB of storage, configured for the AT&T network. This Graphite model is rated in 'Fair' condition and runs on the powerful A15 Bionic chip, offering exceptional speed and graphics performance. It boasts the longest battery life ever in an iPhone up to that point, providing up to 1.5 more hours than previous models. The display is a 6.1-inch Super Retina XDR with ProMotion technology for smoother scrolling and an enhanced Ceramic Shield for durability. The advanced camera system includes a redesigned ultra-wide lens capable of macrophotography, a wide camera capturing over 2x more light, and a telephoto lens for improved zoom. Video enthusiasts will appreciate Cinematic mode with depth editing capabilities and Dolby Vision HDR support.",
+      "brands": [
+        {
+          "id": "k8qh",
+          "name": "Apple"
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.trychannel3.com/Ueeb9dV?aid=01M6WFJSYXQ71CA1QCJZ2MS8M4&mid=1bcG",
+          "cleaned_url": "https://cdn.trychannel3.com/cleaned/v1/9549672d-df42-4b15-84f4-9077a55a9cef?aid=01M6WFJSYXQ71CA1QCJZ2MS8M4&mid=1bcG",
+          "is_main_image": true,
+          "shot_type": "hero",
+          "alt_text": "iPhone with three cameras and a screen displaying a purple and red gradient"
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0658/7190/4833/files/refurbished-iphone-13-pro-graphite-1_2bf06435-6d67-40d6-a52d-1e8fea2316c2.jpg?v=1754085156",
+          "cleaned_url": "https://cdn.trychannel3.com/cleaned/v1/9549672d-df42-4b15-84f4-9077a55a9cef?aid=01M6WFJSYXQ71CA1QCJZ2MS8M4&mid=1bcG",
+          "is_main_image": false,
+          "shot_type": "hero",
+          "alt_text": "iPhone with three cameras and a screen displaying a purple and red gradient"
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0658/7190/4833/files/refurbished-iphone-13-pro-graphite-2_e1b0c015-8b69-4c9d-a688-47e7f0dfcae3.jpg?v=1754085157",
+          "cleaned_url": null,
+          "is_main_image": false,
+          "shot_type": "angle_view",
+          "alt_text": "Side view of iPhone with three cameras"
+        },
+        {
+          "url": "https://cdn.shopify.com/s/files/1/0658/7190/4833/files/refurbished-iphone-13-pro-graphite-3_c018101c-ea9f-4607-b4cb-86b4152b6a7e.jpg?v=1754085157",
+          "cleaned_url": null,
+          "is_main_image": false,
+          "shot_type": "detail",
+          "alt_text": "Close-up of iPhone's three cameras"
+        }
+      ],
+      "category": {
+        "slug": "smart-phones",
+        "title": "Smart Phones",
+        "path": [
+          {
+            "slug": "electronics",
+            "title": "Electronics"
+          },
+          {
+            "slug": "communications",
+            "title": "Communications"
+          },
+          {
+            "slug": "telephony",
+            "title": "Telephony"
+          },
+          {
+            "slug": "mobile-phones",
+            "title": "Mobile Phones"
+          },
+          {
+            "slug": "smart-phones",
+            "title": "Smart Phones"
+          }
+        ],
+        "has_children": false
+      },
+      "gender": null,
+      "age": null,
+      "materials": [
+        "Stainless steel",
+        "Textured matt glass back"
+      ],
+      "key_features": [
+        "Refurbished and certified",
+        "A15 Bionic chip",
+        "ProMotion 120Hz display",
+        "Pro camera system (12MP Main, Ultra Wide + Telephoto)",
+        "Ceramic Shield front",
+        "Superfast 5G cellular",
+        "Face ID",
+        "128 GB storage capacity",
+        "Graphite color",
+        "T-Mobile network compatibility"
+      ],
+      "colors": [
+        {
+          "hex": "#2e022e",
+          "percentage": 0.3797
+        },
+        {
+          "hex": "#560954",
+          "percentage": 0.1877
+        },
+        {
+          "hex": "#ab35ae",
+          "percentage": 0.1502
+        },
+        {
+          "hex": "#690126",
+          "percentage": 0.1333
+        },
+        {
+          "hex": "#0a000c",
+          "percentage": 0.1172
+        }
+      ],
+      "offers": [
+        {
+          "url": "https://buy.trychannel3.com/Ueeb9dV-1bcG-L47KZW?o=01KBP7S3WW20TC6PR1EX88KMSD&aid=01M6WFJSYXQ71CA1QCJZ2MS8M4",
+          "domain": "buy.gazelle.com",
+          "price": {
+            "price": 369.99,
+            "compare_at_price": null,
+            "currency": "USD"
+          },
+          "availability": "InStock",
+          "condition": "new",
+          "max_commission_rate": 0,
+          "dimensions": null
+        }
+      ],
+      "variants": null,
+      "structured_attributes": {
+        "data-network": [
+          "5G"
+        ],
+        "mobile-phone-form-factor": [
+          "Bar"
+        ],
+        "wireless-charging-standard": [
+          "MagSafe"
+        ],
+        "processor-cores": [
+          "Multi",
+          "Hexa"
+        ],
+        "operating-system": [
+          "iOS"
+        ],
+        "ingress-protection-ip-rating": [
+          "IP68"
+        ],
+        "headphone-jack-type": [
+          "USB type-C"
+        ],
+        "display-technology": [
+          "OLED"
+        ],
+        "connectivity-technology": [
+          "Bluetooth",
+          "GPS",
+          "Wi-Fi"
+        ],
+        "sim-card-capability": [
+          "Single"
+        ],
+        "sim-card-type-1": [
+          "Nano SIM"
+        ],
+        "battery-type": [
+          "Rechargeable"
+        ],
+        "subscription-type": [
+          "Unlocked"
+        ],
+        "biometric-authentication-method": [
+          "Face recognition"
+        ],
+        "wi-fi-standard": [
+          "802.11ac",
+          "802.11ax"
+        ],
+        "sim-card-type": [
+          "Nano SIM"
+        ],
+        "charging-interface-type": [
+          "Lightning",
+          "Wireless charging"
+        ],
+        "power-source": [
+          "Battery-powered",
+          "Rechargeable"
+        ],
+        "cosmetic-condition": [
+          "Refurbished-fair",
+          "Refurbished-good",
+          "Refurbished-excellent",
+          "Refurbished-certified"
+        ],
+        "processor-family": [
+          "Apple A15"
+        ]
+      },
+      "ratings": null
+    },
+    {
+      "id": "LkVvrZn",
+      "title": "iPhone 13 128GB (Unlocked)",
+      "description": "This is a refurbished Apple iPhone 13 in Starlight, featuring 128GB of storage and an unlocked status for carrier flexibility. It is powered by the A15 Bionic chip, boasting a 6.1-inch Super Retina XDR display and a dual-camera system with advanced cinematic mode. This Gazelle Certified Pre-Owned device has undergone a 55-point quality inspection to ensure functionality and performance.",
+      "brands": [
+        {
+          "id": "k8qh",
+          "name": "Apple"
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.trychannel3.com/afdead7c-1230-4599-adbc-45648a87898d?aid=01M6WFJSYXQ71CA1QCJZ2MS8M4&mid=1bcG",
+          "cleaned_url": null,
+          "is_main_image": true,
+          "shot_type": "hero",
+          "alt_text": "White iPhone 13 in three-quarter view."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/8198068f-0658-43a1-85d1-8e337c1ba512?aid=01M6WFJSYXQ71CA1QCJZ2MS8M4&mid=1bcG",
+          "cleaned_url": null,
+          "is_main_image": false,
+          "shot_type": "hero",
+          "alt_text": "Black iPhone 13 in three-quarter view."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/fcfc0bdc-9cf6-44f4-902a-f564234993a9?aid=01M6WFJSYXQ71CA1QCJZ2MS8M4&mid=1bcG",
+          "cleaned_url": null,
+          "is_main_image": false,
+          "shot_type": "lifestyle",
+          "alt_text": "Two iPhone 13 models, one black and one white, side by side."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/77997356-0d79-42b4-9c36-610c0e0ffd2e?aid=01M6WFJSYXQ71CA1QCJZ2MS8M4&mid=1bcG",
+          "cleaned_url": "https://cdn.trychannel3.com/cleaned/v1/77997356-0d79-42b4-9c36-610c0e0ffd2e?aid=01M6WFJSYXQ71CA1QCJZ2MS8M4&mid=1bcG",
+          "is_main_image": false,
+          "shot_type": "hero",
+          "alt_text": "iPhone 13 in a three-quarter view showing the back."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/f8bb2468-9e46-4842-b0a3-a3d22ada5d05?aid=01M6WFJSYXQ71CA1QCJZ2MS8M4&mid=1bcG",
+          "cleaned_url": null,
+          "is_main_image": false,
+          "shot_type": "hero",
+          "alt_text": "Close-up of the camera module of a dark phone."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/68cd5a97-6f47-49e7-89e2-438ff522c890?aid=01M6WFJSYXQ71CA1QCJZ2MS8M4&mid=1bcG",
+          "cleaned_url": null,
+          "is_main_image": false,
+          "shot_type": "hero",
+          "alt_text": "Two iPhone 13 models displayed side by side."
+        }
+      ],
+      "category": {
+        "slug": "smart-phones",
+        "title": "Smart Phones",
+        "path": [
+          {
+            "slug": "electronics",
+            "title": "Electronics"
+          },
+          {
+            "slug": "communications",
+            "title": "Communications"
+          },
+          {
+            "slug": "telephony",
+            "title": "Telephony"
+          },
+          {
+            "slug": "mobile-phones",
+            "title": "Mobile Phones"
+          },
+          {
+            "slug": "smart-phones",
+            "title": "Smart Phones"
+          }
+        ],
+        "has_children": false
+      },
+      "gender": null,
+      "age": null,
+      "materials": [],
+      "key_features": [
+        "A15 Bionic chip for high speed and performance",
+        "6.1-inch Super Retina XDR display with HDR and True Tone",
+        "Dual-camera system with Ultra Wide and Wide lenses",
+        "Cinematic mode for rack focus video shooting",
+        "Compatible with MagSafe accessories",
+        "Up to 17 hours of video playback",
+        "SIM Unlocked for carrier compatibility"
+      ],
+      "colors": [
+        {
+          "hex": "#a47a8f",
+          "percentage": 0.2004
+        },
+        {
+          "hex": "#593e65",
+          "percentage": 0.139
+        },
+        {
+          "hex": "#c63547",
+          "percentage": 0.1309
+        },
+        {
+          "hex": "#0f0508",
+          "percentage": 0.1161
+        },
+        {
+          "hex": "#856079",
+          "percentage": 0.114
+        },
+        {
+          "hex": "#8f3656",
+          "percentage": 0.1113
+        },
+        {
+          "hex": "#df9783",
+          "percentage": 0.1036
+        },
+        {
+          "hex": "#c7646f",
+          "percentage": 0.0847
+        }
+      ],
+      "offers": [
+        {
+          "url": "https://buy.trychannel3.com/LkVvrZn-1bcG-L47KZW?o=01KBP7SJNSNJSQSXQ7BDJNG5G8&aid=01M6WFJSYXQ71CA1QCJZ2MS8M4",
+          "domain": "buy.gazelle.com",
+          "price": {
+            "price": 241.99,
+            "compare_at_price": null,
+            "currency": "USD"
+          },
+          "availability": "InStock",
+          "condition": "new",
+          "max_commission_rate": 0,
+          "dimensions": null
+        }
+      ],
+      "variants": null,
+      "structured_attributes": {
+        "biometric-authentication-method": [
+          "Face recognition"
+        ],
+        "mobile-phone-form-factor": [
+          "Bar"
+        ],
+        "processor-cores": [
+          "Hexa"
+        ],
+        "sim-card-type-1": [
+          "Nano SIM"
+        ],
+        "data-network": [
+          "5G",
+          "LTE"
+        ],
+        "operating-system": [
+          "iOS"
+        ],
+        "display-technology": [
+          "OLED"
+        ],
+        "sim-card-type": [
+          "Nano SIM"
+        ],
+        "headphone-jack-type": [
+          "USB type-C"
+        ],
+        "subscription-type": [
+          "Unlocked"
+        ],
+        "battery-technology": [
+          "Lithium-ion (Li-ion)"
+        ],
+        "charging-interface-type": [
+          "USB type-C",
+          "Lightning",
+          "Wireless charging"
+        ],
+        "processor-family": [
+          "Apple A15"
+        ],
+        "battery-size": [
+          "A"
+        ],
+        "wi-fi-standard": [
+          "802.11ac"
+        ],
+        "sim-card-capability": [
+          "Single"
+        ],
+        "cosmetic-condition": [
+          "Refurbished-excellent",
+          "Refurbished-certified"
+        ],
+        "connectivity-technology": [
+          "Wi-Fi",
+          "Bluetooth",
+          "GPS",
+          "NFC",
+          "USB"
+        ],
+        "battery-type": [
+          "Contained-undetachable"
+        ],
+        "wireless-charging-standard": [
+          "MagSafe"
+        ],
+        "display-resolution": [
+          "1024 x 768"
+        ],
+        "power-source": [
+          "Rechargeable"
+        ]
+      },
+      "ratings": null
+    },
+    {
+      "id": "7GKaj7H",
+      "title": "iPhone 13",
+      "description": "This is a certified pre-owned Apple iPhone 13 featuring 256GB of storage, locked to the Verizon network. It comes in the Starlight color and is rated in Excellent condition. Powered by the A15 Bionic chip, it offers top-tier speed and performance, nearly 50% faster than competitors, along with impressive battery life supporting up to 17 hours of video playback and wireless charging. The device boasts a 5.4\" Super Retina XDR display with HDR and True Tone. The dual rear camera system includes an upgraded Ultra Wide lens that captures more light and detail in low-light conditions, and it supports a new Cinematic mode for video recording. Additional features include Photographic Styles and MagSafe accessory compatibility. It has passed a 55-point inspection for quality assurance.",
+      "brands": [
+        {
+          "id": "k8qh",
+          "name": "Apple"
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.trychannel3.com/b72d64bc-b5eb-4416-84ac-dea6f889e5bd?aid=01M6WFJSYXQ71CA1QCJZ2MS8M4&mid=1bcG",
+          "cleaned_url": "https://cdn.trychannel3.com/0bcfeba9-d85b-4058-9517-50fb0020f3c1?aid=01M6WFJSYXQ71CA1QCJZ2MS8M4&mid=1bcG",
+          "is_main_image": true,
+          "shot_type": "hero",
+          "alt_text": "Back view of a dark-colored smartphone showing the camera module and body shape."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/af32adb6-391d-460a-9adf-09fdb6f420ac?aid=01M6WFJSYXQ71CA1QCJZ2MS8M4&mid=1bcG",
+          "cleaned_url": null,
+          "is_main_image": false,
+          "shot_type": "hero",
+          "alt_text": "A black smartphone and a white smartphone displayed together."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/696aa7f5-94eb-4261-8cc8-0e27c3c4c2a5?aid=01M6WFJSYXQ71CA1QCJZ2MS8M4&mid=1bcG",
+          "cleaned_url": null,
+          "is_main_image": false,
+          "shot_type": "hero",
+          "alt_text": "A black smartphone and a white smartphone displayed side by side."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/5ac6e7a2-d5ac-4b8e-8dff-018dfaf2109a?aid=01M6WFJSYXQ71CA1QCJZ2MS8M4&mid=1bcG",
+          "cleaned_url": null,
+          "is_main_image": false,
+          "shot_type": "lifestyle",
+          "alt_text": "Two black smartphones side by side, one showing the back and one showing the screen."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/b1edec03-78f2-4720-b376-e8bc2e02d29e?aid=01M6WFJSYXQ71CA1QCJZ2MS8M4&mid=1bcG",
+          "cleaned_url": null,
+          "is_main_image": false,
+          "shot_type": "hero",
+          "alt_text": "A black smartphone and a lighter-colored smartphone displayed together."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/c9d6d933-9090-4de8-b0d0-1a8192b3ab32?aid=01M6WFJSYXQ71CA1QCJZ2MS8M4&mid=1bcG",
+          "cleaned_url": null,
+          "is_main_image": false,
+          "shot_type": "hero",
+          "alt_text": "A black smartphone shown with its screen displaying a colorful abstract wallpaper."
+        }
+      ],
+      "category": {
+        "slug": "smart-phones",
+        "title": "Smart Phones",
+        "path": [
+          {
+            "slug": "electronics",
+            "title": "Electronics"
+          },
+          {
+            "slug": "communications",
+            "title": "Communications"
+          },
+          {
+            "slug": "telephony",
+            "title": "Telephony"
+          },
+          {
+            "slug": "mobile-phones",
+            "title": "Mobile Phones"
+          },
+          {
+            "slug": "smart-phones",
+            "title": "Smart Phones"
+          }
+        ],
+        "has_children": false
+      },
+      "gender": null,
+      "age": null,
+      "materials": [
+        "Glass",
+        "Aluminum"
+      ],
+      "key_features": [
+        "A15 chip for high speed and performance",
+        "5.4-inch Super Retina XDR display with HDR and True Tone",
+        "Dual rear camera system with improved low-light capture",
+        "Cinematic mode for video rack focus",
+        "Photographic Styles feature",
+        "Wireless charging capabilities",
+        "Up to 17 hours of video playback battery life",
+        "Compatible with MagSafe accessories",
+        "SIM Unlocked for carrier flexibility",
+        "512GB storage capacity"
+      ],
+      "colors": [
+        {
+          "hex": "#222323",
+          "percentage": 0.4029
+        },
+        {
+          "hex": "#070707",
+          "percentage": 0.3363
+        },
+        {
+          "hex": "#6c6b6c",
+          "percentage": 0.1335
+        },
+        {
+          "hex": "#e6e6e5",
+          "percentage": 0.1272
+        }
+      ],
+      "offers": [
+        {
+          "url": "https://buy.trychannel3.com/7GKaj7H-1bcG-L47KZW?o=01KBPB3KKTHF8WJ8P6DQ3K34TZ&aid=01M6WFJSYXQ71CA1QCJZ2MS8M4",
+          "domain": "buy.gazelle.com",
+          "price": {
+            "price": 241.99,
+            "compare_at_price": null,
+            "currency": "USD"
+          },
+          "availability": "InStock",
+          "condition": "new",
+          "max_commission_rate": 0,
+          "dimensions": null
+        }
+      ],
+      "variants": null,
+      "structured_attributes": {
+        "headphone-jack-type": [
+          "USB type-C"
+        ],
+        "charging-interface-type": [
+          "Proprietary connector"
+        ],
+        "sim-card-capability": [
+          "Single"
+        ],
+        "battery-type": [
+          "Disposable",
+          "Contained-undetachable"
+        ],
+        "mobile-phone-form-factor": [
+          "Bar"
+        ],
+        "wireless-charging-standard": [
+          "MagSafe",
+          "Qi"
+        ],
+        "sim-card-type": [
+          "Nano SIM"
+        ],
+        "display-technology": [
+          "LCD",
+          "OLED"
+        ],
+        "operating-system": [
+          "iOS"
+        ],
+        "processor-family": [
+          "Apple A15"
+        ],
+        "biometric-authentication-method": [
+          "None"
+        ],
+        "sim-card-type-1": [
+          "Nano SIM"
+        ],
+        "wi-fi-standard": [
+          "802.11ac",
+          "802.11ax"
+        ],
+        "processor-cores": [
+          "Multi"
+        ],
+        "power-source": [
+          "Rechargeable",
+          "Battery-powered",
+          "Batteries"
+        ],
+        "cosmetic-condition": [
+          "Refurbished-very good",
+          "New"
+        ],
+        "connectivity-technology": [
+          "Bluetooth",
+          "GPS",
+          "USB",
+          "Wi-Fi",
+          "NFC",
+          "HDMI"
+        ],
+        "battery-size": [
+          "Built-in battery",
+          "14500",
+          "21700"
+        ],
+        "subscription-type": [
+          "Unlocked"
+        ],
+        "data-network": [
+          "4G",
+          "LTE"
+        ],
+        "display-resolution": [
+          "2560 x 1440"
+        ],
+        "battery-technology": [
+          "Lithium",
+          "Lithium-ion (Li-ion)"
+        ],
+        "pattern": [
+          "Solid"
+        ]
+      },
+      "ratings": null
+    }
+  ],
+  "next_page_token": "eyJjYWNoZV9rZXkiOiAic2VhcmNoOjcxNzNjNjc4M2Y5MDc5Y2EiLCAib2Zmc2V0IjogNX0="
+}

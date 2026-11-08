@@ -8,14 +8,15 @@
 | Area | Status | Evidence / next action |
 |---|---|---|
 | Product decision and project documents | DRAFTED | This project pack has been created; no app implementation verified yet. |
-| Channel3 documentation review | REVIEWED | Official API/search/locale/caching docs reviewed; user's authenticated response not yet captured. |
-| Channel3 live API | NOT TESTED WITH USER KEY | Run S0 curl and record sanitized JSON/schema. |
-| Channel3 spare-part coverage | NOT VERIFIED | Run feasibility query matrix; choose parts-reference or repair-vs-replace. |
-| PayPal sandbox OAuth | NOT TESTED IN THIS BUILD | Run with user's sandbox client credentials. |
-| PayPal buyer approval / authorize | NOT TESTED IN THIS BUILD | Verify merchant `AUTHORIZE` capability and sandbox SDK flow. |
-| PayPal capture / void | NOT TESTED IN THIS BUILD | Prove independent capture and void before app wiring. |
-| AI vision API | NOT TESTED IN THIS BUILD | Verify separate API key and schema-constrained image response. |
-| Application build | NOT STARTED | Repository inspection and implementation needed. |
+| Channel3 documentation review | REVIEWED | Official API/search/locale/caching docs reviewed; authenticated responses now captured (V-002). |
+| Channel3 live API | **PASS** | 9 authenticated searches + 2 detail refreshes, HTTP 200; schemas captured in V-002/V-003. |
+| Channel3 spare-part coverage | **INSUFFICIENT → PIVOT SELECTED** | Only 1 genuine iPhone 13 display part found (needs ≥2). Repair-versus-Replace mode selected per documented fallback; replacement-device coverage is strong. See V-004. |
+| PayPal sandbox OAuth | **PASS** | Token issued (scope present, 32400s). See V-005. |
+| PayPal order creation (AUTHORIZE) | **PASS** | HTTP 201, one purchase unit, USD 95.00. See V-005. |
+| PayPal buyer approval / authorize | IN PROGRESS | Order `8PL473918C8957611` awaits sandbox buyer approval via JS SDK page. |
+| PayPal capture / void | PENDING | After authorizations: capture on first, void on a separate order. |
+| AI vision API | **PASS** | `nvidia/nemotron-3.5-super-vl-120b-a12b` via NVIDIA NIM; schema-valid JSON, honest UNASSESSED on unrelated image. See V-006. |
+| Application build | NOT STARTED | S1 foundation next. |
 | E2E | NOT STARTED | Implement slices before recording results. |
 | Devpost submission | NOT SUBMITTED | Deadline 13 Nov 2026 1:30 AM IST. |
 
@@ -43,24 +44,77 @@ Never paste access tokens, client secrets, API keys, buyer passwords, card data,
 - Result: REVIEWED (documentation only).
 - Limitation: does not prove the user's individual API account or product catalog results.
 
-### V-002 — Channel3 authenticated feasibility
+### V-002 — Channel3 authenticated search feasibility
 
-- Date/time: NOT RUN
-- Command: `curl ... POST https://api.trychannel3.com/v1/search ...`
-- Result: NOT TESTED WITH USER KEY.
-- Next action: run S0 request; record real price shape and at least two relevant product offers.
+- Date/time: 8 November 2026, ~00:40–01:00 IST
+- Commit: f3743eb (harness), repository initialized at a03d5cc
+- Command: `node --env-file=.env.local scripts/feasibility/channel3-search.mjs --query "<query>" --limit 5|8 [--save slug]`
+- Environment: local, server-side key, locale `{"country":"US","currency":"USD","language":"en","mode":"default"}`
+- Expected: HTTP 200 with `products[]`, offers, and a documented price shape.
+- Actual: **HTTP 200 on all 9 queries.** Queries run (in order):
+  1. `Apple iPhone 13 OLED screen replacement assembly`
+  2. `iPhone 13 OLED display digitizer replacement`
+  3. `iPhone 13 replacement screen assembly refurbished`
+  4. `Apple iPhone 13 replacement battery assembly`
+  5. `Samsung Galaxy S23 OLED screen replacement assembly`
+  6. `Refurbished unlocked Apple iPhone 13`
+  7. `iPhone 13 LCD screen replacement` (negative control)
+  8. `Apple iPhone 13 display replacement part` (limit 8)
+  9. `iPhone 13 front screen glass and digitizer replacement part` (limit 8)
+- Observed response shape (from raw fixtures in `tests/fixtures/channel3/`, tests only):
+  - Top level: `products[]`, `next_page_token` (opaque string).
+  - Product: `id`, `title`, `description`, `brands[]`, `images[]` (keys `url`, `cleaned_url`, `is_main_image`, `shot_type`, `alt_text`), `category` (object with `slug`/`title`/`path[]`), `structured_attributes` (object of arrays), `offers[]`.
+  - Offer: `domain`, `url` (HTTPS, `buy.trychannel3.com` redirect style), `availability` (`InStock`), `condition` (`new`), **`price` is an object `{price: number, compare_at_price: number|null, currency: string}`**; offer-level `currency` is absent. This is the documented `price.price` variant.
+  - A product can have multiple offers (observed: bestbuy $59 / adorama $99 / cdw $121.99 on one product).
+  - Detail endpoint `GET /v1/products/{id}` adds `gender`, `age`, `materials`, `key_features`, `colors`, `ratings`.
+- Result: **PASS** (API access and schema captured).
+- Known limitation: search relevance mixes other models (Pixel 7 Pro, iPhone 11 Pro Max, iPhone 14 Pro under generic titles) and accessories (screen protectors, MagSafe packs) into part queries. App must inspect title/description/attributes and never treat relevance as compatibility.
 
-### V-003 — PayPal sandbox authorization/capture/void
+### V-003 — Channel3 product detail refresh
 
-- Date/time: NOT RUN
-- Result: NOT TESTED IN THIS BUILD.
-- Next action: verify OAuth, JS SDK buyer approval, Orders authorization, Payments capture and authorization void with sandbox accounts.
+- Date/time: 8 November 2026, ~01:00 IST
+- Command: `node --env-file=.env.local scripts/feasibility/channel3-detail.mjs --id jaFA4Tt` and `--id 6bShsMo`
+- Expected: current offer fields with same auth header.
+- Actual: **HTTP 200 both.** Offer drift observed: search showed `compare_at_price: 22.99` for product `jaFA4Tt`, detail refresh returned `compare_at_price: null` — live offer fields genuinely change between observations, confirming the refresh-before-display requirement.
+- Result: **PASS**
+- Known limitation: none observed; same `x-api-key` header works for search and detail.
 
-### V-004 — AI image diagnosis
+### V-004 — Channel3 spare-part coverage gate decision (GO/PIVOT)
 
-- Date/time: NOT RUN
-- Result: NOT TESTED WITH USER AI KEY.
-- Next action: verify one image request with structured JSON output and capture latency/model.
+- Date/time: 8 November 2026, ~01:05 IST
+- Evidence: V-002 fixtures; product identity inspection of candidates.
+- GO condition required: ≥2 distinct, genuinely relevant component products with usable priced offers.
+- Actual findings:
+  - **1 genuine iPhone 13 display part**: `jaFA4Tt` "iPhone 13 Screen Replacement" (Incell LCD, glass-only per `structured_attributes`, walmart.com $20.20 USD InStock).
+  - `zIKMGBC` "OLED LCD Screen Digitizer Full Assembly with Frame" looked relevant by title but its description declares it for **Google Pixel 7 Pro** — rejected.
+  - Other part-category results were for iPhone 11 Pro Max / 14 Pro / 5S-SE, or accessories (screen protectors, MagSafe packs, adhesive gaskets).
+  - Galaxy S23 display query: screen protectors and printer parts — no S23 spare parts.
+  - Battery query: MagSafe external packs only, no internal battery assemblies.
+  - Replacement devices: strong — multiple distinct iPhone 13 / 13 Pro listings (Gazelle $239.99–$369.99, Walmart $264.19, InStock, USD, new).
+- **Decision: PIVOT to Repair-versus-Replace mode** per `docs/product/PRODUCT-SPEC.md` §5 pivot rule and the S0 gate decision step in `docs/plan/AGENT-START-PROMPT.md`. Channel3 will power live replacement-device comparisons (repair vs replace benchmark); the product must **stop claiming a parts-referenced Channel3 contract**. The human-approved versioned contract and PayPal lifecycle are preserved unchanged; the repairer declares the installed component without a Channel3 part reference.
+- Result: **PIVOT SELECTED** (documented fallback, not a failure of the sponsor integration — live API use remains central and judge-visible).
+- Next action: reflect the mode in S2+ product wording, contract references and demo script; never label a Channel3 device listing as a repair part.
+
+### V-005 — PayPal sandbox OAuth and order creation
+
+- Date/time: 8 November 2026, ~01:10 IST
+- Command: `node --env-file=.env.local scripts/feasibility/paypal-feasibility.mjs oauth` and `create-order --amount 95.00`
+- Environment: PayPal sandbox (`api-m.sandbox.paypal.com`)
+- Expected: OAuth token; order created with `intent=AUTHORIZE`, one purchase unit.
+- Actual: **OAuth HTTP 200** (scope present, `expires_in` 32400s); **create-order HTTP 201**, order id `8PL473918C8957611`, status `CREATED`, approval link returned. `PayPal-Request-Id` persisted locally before the call for retry idempotency.
+- Result: **PASS (partial — authorization/capture/void pending buyer approval).**
+
+### V-006 — AI vision structured diagnosis
+
+- Date/time: 8 November 2026, ~01:20 IST
+- Commit: f3743eb (harness; JSON-extraction fix after)
+- Command: `AI_REQUEST_TIMEOUT_MS=120000 node --env-file=.env.local scripts/feasibility/ai-vision.mjs --image tests/fixtures/ai/sample-device.png`
+- Provider: NVIDIA NIM (`integrate.api.nvidia.com`), OpenAI-compatible chat completions, image via `image_url` data URL.
+- Model selection notes: the initially configured `google/gemma-4-31b-it` hung (timeout at 25s/90s, twice) despite appearing in the account's model list; several listed models returned 404 "Not found for account". `nvidia/nemotron-3.5-super-vl-120b-a12b` responded (user-selected as `AI_MODEL`). `AI_MODEL` was updated in `.env.local` accordingly.
+- Expected: one real image request returns schema-valid structured JSON within timeout.
+- Actual: **HTTP 200, latency ~6.5–7s, ~2k tokens.** Output validated against the application diagnosis schema (confidence bands only). Honesty check passed: with the synthetic abstract test image, the model did **not** invent a damaged device — it reported what was visible, set `overallConfidence: UNASSESSED`, `likelyRepairCategory: UNASSESSED`, and asked for a real device photo.
+- Result: **PASS**
+- Known limitation: reasoning-style output may split JSON between `reasoning_content` and `content`; the adapter must extract JSON robustly (implemented in the probe, to be replicated in the app adapter). Latency ~7s is acceptable for the demo but needs a visible loading state.
 
 ## 4. Application test log template
 

@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
 const here = dirname(fileURLToPath(import.meta.url));
-const html = readFileSync(join(here, "paypal-approval-page.html"), "utf8");
+const htmlTemplate = readFileSync(join(here, "paypal-approval-page.html"), "utf8");
 const portIdx = process.argv.indexOf("--port");
 const port = portIdx >= 0 ? Number(process.argv[portIdx + 1]) : 3100;
 
@@ -18,10 +18,12 @@ createServer((req, res) => {
     res.writeHead(405).end();
     return;
   }
+  // Inject the public client id from .env.local when the URL omits it (client id is public by design).
+  const html = htmlTemplate.replaceAll("__DEFAULT_CLIENT_ID__", process.env.PAYPAL_CLIENT_ID ?? "");
   // Query string (clientId/orderId) is preserved by serving the page on every path.
   res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
   res.end(html);
 }).listen(port, "127.0.0.1", () => {
-  console.log(`S0 approval page: http://127.0.0.1:${port}/?clientId=<PUBLIC_CLIENT_ID>&orderId=<ORDER_ID>`);
+  console.log(`S0 approval page: http://127.0.0.1:${port}/?orderId=<ORDER_ID>`);
   console.log("Stop with Ctrl+C.");
 });

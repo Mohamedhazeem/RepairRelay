@@ -19,7 +19,7 @@
   <pre id="out">Loading SDK…</pre>
   <script>
     const params = new URLSearchParams(location.search);
-    const clientId = params.get("clientId");
+    const clientId = params.get("clientId") || "__DEFAULT_CLIENT_ID__";
     const orderId = params.get("orderId");
     const out = document.getElementById("out");
 

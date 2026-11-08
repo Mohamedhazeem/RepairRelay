@@ -1,0 +1,128 @@
+{
+  "id": "jaFA4Tt",
+  "title": "iPhone 13 Screen Replacement",
+  "description": "High-Quality Ultra-Clear Display: This 6.1-inch Incell LCD screen is designed for iPhone 13 screen replacement featuring a 1:1 original size design with high-definition visuals high brightness and fast touch response. It supports 3D Touch and offers drip-proof splash-proof oil-resistant and fingerprint-resistant properties for a smooth and responsive touch experience. Compatibility and Application: This iPhone 13 screen is exclusively compatible with the 6.1-inch iPhone 13 display (A2482 A2631 A2633 A2634 and A2635). It is not suitable for other models such as iPhone 13 Mini or iPhone 13 Pro. True Tone display Face ID and 3D Touch functions remain fully operational delivering an experience comparable to the original LCD screen. Professional screen replacement: Full viewing angle wide color gamut usable even while wearing sunglasses. Designed to replace faulty screens with issues like display problems color errors cracks scratches pixel distortion touch failure screen breakage or damage. The new phone screen is perfect for watching TV shows and movies playing video games and browsing images and text. Easy Installation with Instructions: This product includes only the iPhone 13 screen replacement part and waterproof adhesive. It does not include a full repair toolkit or other components like the front camera earpiece or sensor assembly. These must be transferred from the original screen to the new one. Refer to the user manual or installation videos on YouTube for guidance. The screen corners are extremely fragile—handle with care during installation. Customer Service: All our iPhone 13 LCD screens undergo rigorous double quality inspection before shipping to ensure 100% integrity. We recommend watching installation videos beforehand to avoid damage. If you encounter any issues or have questions while using your iPhone 13 LCD screen please contact us directly via email.",
+  "brands": [
+    {
+      "id": "dMrg",
+      "name": "LRSE"
+    }
+  ],
+  "images": [
+    {
+      "url": "https://cdn.trychannel3.com/a80b6248-02ea-4d23-a12a-0a7d83746112?aid=01M6WFNYP5JWVWZ679B0Y2Y7SC&mid=BsaX",
+      "cleaned_url": "https://cdn.trychannel3.com/cleaned/v1/a80b6248-02ea-4d23-a12a-0a7d83746112?aid=01M6WFNYP5JWVWZ679B0Y2Y7SC&mid=BsaX",
+      "is_main_image": true,
+      "shot_type": "hero",
+      "alt_text": "iPhone 13 screen replacement screen protector displayed on a phone body."
+    }
+  ],
+  "category": {
+    "slug": "mobile-phone-screens-screen-digitizers",
+    "title": "Mobile Phone Screens & Screen Digitizers",
+    "path": [
+      {
+        "slug": "electronics",
+        "title": "Electronics"
+      },
+      {
+        "slug": "communications",
+        "title": "Communications"
+      },
+      {
+        "slug": "telephony",
+        "title": "Telephony"
+      },
+      {
+        "slug": "mobile-phone-accessories",
+        "title": "Mobile Phone Accessories"
+      },
+      {
+        "slug": "mobile-phone-replacement-parts",
+        "title": "Mobile Phone Replacement Parts"
+      },
+      {
+        "slug": "mobile-phone-screens-screen-digitizers",
+        "title": "Mobile Phone Screens & Screen Digitizers"
+      }
+    ],
+    "has_children": false
+  },
+  "gender": null,
+  "age": null,
+  "materials": [],
+  "key_features": [
+    "6.1-inch Incell LCD screen",
+    "Supports 3D Touch, True Tone, and Face ID",
+    "Drip-proof, splash-proof, oil-resistant, and fingerprint-resistant",
+    "Includes waterproof adhesive",
+    "Compatible with iPhone 13 models A2482, A2631, A2633, A2634, A2635"
+  ],
+  "colors": [
+    {
+      "hex": "#17181d",
+      "percentage": 0.2715
+    },
+    {
+      "hex": "#cfd9e5",
+      "percentage": 0.2164
+    },
+    {
+      "hex": "#f7f8f5",
+      "percentage": 0.1399
+    },
+    {
+      "hex": "#7c929a",
+      "percentage": 0.1123
+    },
+    {
+      "hex": "#373d48",
+      "percentage": 0.1061
+    },
+    {
+      "hex": "#e4d9d3",
+      "percentage": 0.0826
+    },
+    {
+      "hex": "#9dd1ea",
+      "percentage": 0.0712
+    }
+  ],
+  "offers": [
+    {
+      "url": "https://buy.trychannel3.com/jaFA4Tt-BsaX-L47KZW?o=01M384HSJHAKMJBXM6CJTM56RE&aid=01M6WFNYP5JWVWZ679B0Y2Y7SC",
+      "domain": "walmart.com",
+      "price": {
+        "price": 20.2,
+        "compare_at_price": null,
+        "currency": "USD"
+      },
+      "availability": "InStock",
+      "condition": "new",
+      "max_commission_rate": 0.07,
+      "dimensions": null
+    }
+  ],
+  "variants": null,
+  "structured_attributes": {
+    "material": [
+      "Plastic"
+    ],
+    "adhesive-type": [
+      "Removable"
+    ],
+    "screen-assembly-components-included": [
+      "Touchscreen glass only"
+    ],
+    "pattern": [
+      "Solid"
+    ],
+    "attachment-method": [
+      "Clamping"
+    ],
+    "adhesive-format": [
+      "Sticker set"
+    ]
+  },
+  "ratings": null
+}

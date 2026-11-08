@@ -89,6 +89,8 @@ async function request(withResponseFormat) {
       signal: controller.signal,
     });
     return { res, latencyMs: Date.now() - started };
+  } catch (err) {
+    return { error: err.name === "AbortError" ? `timeout after ${timeoutMs}ms` : err.message, latencyMs: Date.now() - started };
   } finally {
     clearTimeout(timer);
   }
@@ -96,7 +98,15 @@ async function request(withResponseFormat) {
 
 console.log(`endpoint host: ${new URL(endpoint).host} model: ${model} image: ${imagePath} (${mime})`);
 
-let { res, latencyMs } = await request(true);
+let { res, latencyMs, error } = await request(true);
+if (error) {
+  console.error(`NETWORK_ERROR: ${error} — retrying once with same parameters`);
+  ({ res, latencyMs, error } = await request(true));
+  if (error) {
+    console.error(`NETWORK_ERROR again: ${error}`);
+    process.exit(2);
+  }
+}
 if (res.status === 400) {
   const errText = await res.clone().text().catch(() => "");
   if (/response_format/i.test(errText)) {
@@ -115,16 +125,40 @@ if (!res.ok) {
 const payload = await res.json();
 const usage = payload.usage ?? {};
 console.log(`usage: prompt=${usage.prompt_tokens ?? "?"} completion=${usage.completion_tokens ?? "?"} total=${usage.total_tokens ?? "?"}`);
-const content = payload.choices?.[0]?.message?.content;
+const message = payload.choices?.[0]?.message ?? {};
+// Reasoning-style models may split output between content and reasoning_content.
+const content = [message.content, message.reasoning_content]
+  .filter((c) => typeof c === "string" && c.trim())
+  .map((c) => c.trim())
+  .join("\n") || null;
 if (typeof content !== "string" || !content.trim()) {
   console.error("EMPTY_CHOICE_CONTENT — finish_reason:", payload.choices?.[0]?.finish_reason);
   process.exit(5);
 }
 
 let parsed;
-try {
-  parsed = JSON.parse(content.replace(/^```(?:json)?\s*|\s*```$/g, ""));
-} catch (err) {
+const candidates = [];
+const message2 = payload.choices?.[0]?.message ?? {};
+for (const c of [message2.content, message2.reasoning_content]) {
+  if (typeof c === "string" && c.trim()) candidates.push(c.trim().replace(/^```(?:json)?\s*|\s*```$/g, ""));
+}
+// Last resort: extract the outermost JSON object from mixed reasoning text.
+candidates.push((() => {
+  const start = content.indexOf("{");
+  const end = content.lastIndexOf("}");
+  return start >= 0 && end > start ? content.slice(start, end + 1) : "";
+})());
+parsed = null;
+for (const cand of candidates) {
+  if (!cand) continue;
+  try {
+    parsed = JSON.parse(cand);
+    break;
+  } catch {
+    // try next candidate
+  }
+}
+if (!parsed) {
   console.error("INVALID_JSON output (first 400 chars):", content.slice(0, 400).replace(/\s+/g, " "));
   process.exit(5);
 }

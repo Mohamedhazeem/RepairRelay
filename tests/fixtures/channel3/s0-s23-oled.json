@@ -1,0 +1,544 @@
+{
+  "products": [
+    {
+      "id": "DxgH4nD",
+      "title": "Galaxy S23 Screen Protector pack of two",
+      "description": "This is a pack of two clear protective screen protectors designed specifically for the Samsung Galaxy S23 FE smartphone to shield the display from scratches and damage.",
+      "brands": [
+        {
+          "id": "Mbqx",
+          "name": "Samsung"
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.trychannel3.com/994c2440-7b5e-4627-8710-168cae0c6a97?aid=01M6WFJETEKB0BCSBRQJ3PF7H0&mid=B50Y",
+          "cleaned_url": "https://cdn.trychannel3.com/cleaned/v1/994c2440-7b5e-4627-8710-168cae0c6a97?aid=01M6WFJETEKB0BCSBRQJ3PF7H0&mid=B50Y",
+          "is_main_image": true,
+          "shot_type": "packaging",
+          "alt_text": "Packaging showing a screen protector pack for Samsung Galaxy S23 FE."
+        }
+      ],
+      "category": {
+        "slug": "mobile-phone-screen-protectors",
+        "title": "Mobile Phone Screen Protectors",
+        "path": [
+          {
+            "slug": "electronics",
+            "title": "Electronics"
+          },
+          {
+            "slug": "communications",
+            "title": "Communications"
+          },
+          {
+            "slug": "telephony",
+            "title": "Telephony"
+          },
+          {
+            "slug": "mobile-phone-accessories",
+            "title": "Mobile Phone Accessories"
+          },
+          {
+            "slug": "mobile-phone-screen-protectors",
+            "title": "Mobile Phone Screen Protectors"
+          }
+        ],
+        "has_children": false
+      },
+      "gender": null,
+      "age": null,
+      "materials": [],
+      "key_features": [],
+      "colors": [
+        {
+          "hex": "#0b0b09",
+          "percentage": 0.3909
+        },
+        {
+          "hex": "#6ca892",
+          "percentage": 0.1734
+        },
+        {
+          "hex": "#92c7b2",
+          "percentage": 0.1461
+        },
+        {
+          "hex": "#c5dcd3",
+          "percentage": 0.1219
+        },
+        {
+          "hex": "#3d5750",
+          "percentage": 0.0908
+        },
+        {
+          "hex": "#93a9a3",
+          "percentage": 0.0769
+        }
+      ],
+      "offers": [
+        {
+          "url": "https://buy.trychannel3.com/DxgH4nD-B50Y-L47KZW?o=01M6QBZ5GYDGKTTWNGN22BY2NT&aid=01M6WFJETEKB0BCSBRQJ3PF7H0",
+          "domain": "selfridges.com",
+          "price": {
+            "price": 21,
+            "compare_at_price": null,
+            "currency": "USD"
+          },
+          "availability": "InStock",
+          "condition": "new",
+          "max_commission_rate": 0.077,
+          "dimensions": null
+        }
+      ],
+      "variants": null,
+      "structured_attributes": {
+        "screen-protector-features": [
+          "Scratch resistant"
+        ],
+        "compatible-device": [
+          "Smartphone"
+        ]
+      },
+      "ratings": null
+    },
+    {
+      "id": "sAYq8a6",
+      "title": "OPE,SCX-4833FD,STS",
+      "description": "A replacement control panel for a Samsung SCX-4833FD printer. This part features a digital LCD screen and a keypad for navigating printer menus and functions.",
+      "brands": [
+        {
+          "id": "Mbqx",
+          "name": "Samsung"
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.trychannel3.com/11b494e5-40b3-411d-8d1b-540901b48ee5?aid=01M6WFJETEKB0BCSBRQJ3PF7H0&mid=KRXv",
+          "cleaned_url": null,
+          "is_main_image": true,
+          "shot_type": "hero",
+          "alt_text": "Digital tape measure/level lying on a ruler for scale."
+        }
+      ],
+      "category": {
+        "slug": "printer-copier-fax-machine-replacement-parts",
+        "title": "Printer, Copier & Fax Machine Replacement Parts",
+        "path": [
+          {
+            "slug": "electronics",
+            "title": "Electronics"
+          },
+          {
+            "slug": "print-copy-scan-fax",
+            "title": "Print, Copy, Scan & Fax"
+          },
+          {
+            "slug": "printer-copier-fax-machine-accessories",
+            "title": "Printer, Copier & Fax Machine Accessories"
+          },
+          {
+            "slug": "printer-copier-fax-machine-replacement-parts",
+            "title": "Printer, Copier & Fax Machine Replacement Parts"
+          }
+        ],
+        "has_children": true
+      },
+      "gender": null,
+      "age": null,
+      "materials": [],
+      "key_features": [
+        "Digital LCD screen",
+        "Integrated keypad",
+        "Genuine replacement part"
+      ],
+      "colors": [
+        {
+          "hex": "#454f53",
+          "percentage": 0.6358
+        },
+        {
+          "hex": "#a2bacc",
+          "percentage": 0.2199
+        },
+        {
+          "hex": "#c6d9e3",
+          "percentage": 0.0763
+        },
+        {
+          "hex": "#879aa4",
+          "percentage": 0.068
+        }
+      ],
+      "offers": [
+        {
+          "url": "https://buy.trychannel3.com/sAYq8a6-KRXv-L47KZW?o=01M382GAP67ENCYW5PQDPDXNVC&aid=01M6WFJETEKB0BCSBRQJ3PF7H0",
+          "domain": "hp.com",
+          "price": {
+            "price": 45.23,
+            "compare_at_price": null,
+            "currency": "USD"
+          },
+          "availability": "InStock",
+          "condition": "new",
+          "max_commission_rate": 0.052,
+          "dimensions": null
+        }
+      ],
+      "variants": null,
+      "structured_attributes": {
+        "manufacturer-type": [
+          "Genuine"
+        ]
+      },
+      "ratings": null
+    },
+    {
+      "id": "lfG6TVE",
+      "title": "OPE, SCX-4833FD",
+      "description": "A replacement operation panel (OPE) for a Samsung SCX-4833FD printer, featuring an LCD screen, numerical keypad, and control buttons in a black finish.",
+      "brands": [
+        {
+          "id": "Mbqx",
+          "name": "Samsung"
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.trychannel3.com/9b31a4ef-f568-44b9-a360-7070ce1db41c?aid=01M6WFJETEKB0BCSBRQJ3PF7H0&mid=KRXv",
+          "cleaned_url": null,
+          "is_main_image": true,
+          "shot_type": "hero",
+          "alt_text": "Front view of a black digital camera body with a keypad and screen."
+        }
+      ],
+      "category": {
+        "slug": "printer-copier-fax-machine-replacement-parts",
+        "title": "Printer, Copier & Fax Machine Replacement Parts",
+        "path": [
+          {
+            "slug": "electronics",
+            "title": "Electronics"
+          },
+          {
+            "slug": "print-copy-scan-fax",
+            "title": "Print, Copy, Scan & Fax"
+          },
+          {
+            "slug": "printer-copier-fax-machine-accessories",
+            "title": "Printer, Copier & Fax Machine Accessories"
+          },
+          {
+            "slug": "printer-copier-fax-machine-replacement-parts",
+            "title": "Printer, Copier & Fax Machine Replacement Parts"
+          }
+        ],
+        "has_children": true
+      },
+      "gender": null,
+      "age": null,
+      "materials": [],
+      "key_features": [],
+      "colors": [
+        {
+          "hex": "#2b2f32",
+          "percentage": 0.8611
+        },
+        {
+          "hex": "#899597",
+          "percentage": 0.1389
+        }
+      ],
+      "offers": [
+        {
+          "url": "https://buy.trychannel3.com/lfG6TVE-KRXv-L47KZW?o=01M3841BXX6SD0PPGPE9VSASHZ&aid=01M6WFJETEKB0BCSBRQJ3PF7H0",
+          "domain": "hp.com",
+          "price": {
+            "price": 29.59,
+            "compare_at_price": null,
+            "currency": "USD"
+          },
+          "availability": "InStock",
+          "condition": "new",
+          "max_commission_rate": 0.052,
+          "dimensions": null
+        }
+      ],
+      "variants": null,
+      "structured_attributes": {
+        "manufacturer-type": [
+          "Genuine"
+        ]
+      },
+      "ratings": null
+    },
+    {
+      "id": "s6qleqU",
+      "title": "LED Backlight Strips (10) NEW",
+      "description": "This is a set of 10 new LED backlight strips for Samsung TVs, specifically compatible with models using part numbers BN96-39055A/BN96-39056A. These strips are a direct replacement for BN96-28772A/BN96-28773A and feature updated, more reliable connectors. They are designed for 55-inch Samsung TVs and are known to work with various H6203, H6103, and J6200 series models.",
+      "brands": [
+        {
+          "id": "Mbqx",
+          "name": "Samsung"
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.trychannel3.com/dd902931-a1e4-4351-b5b2-2485cae20215?aid=01M6WFJETEKB0BCSBRQJ3PF7H0&mid=LPzf",
+          "cleaned_url": null,
+          "is_main_image": true,
+          "shot_type": "flat_lay",
+          "alt_text": "Multiple strips of white LED backlight strips laid out for display."
+        }
+      ],
+      "category": {
+        "slug": "tv-led-backlight-strips-bars",
+        "title": "TV LED Backlight Strips & Bars",
+        "path": [
+          {
+            "slug": "electronics",
+            "title": "Electronics"
+          },
+          {
+            "slug": "video",
+            "title": "Video"
+          },
+          {
+            "slug": "video-accessories",
+            "title": "Video Accessories"
+          },
+          {
+            "slug": "television-parts-accessories",
+            "title": "Television Parts & Accessories"
+          },
+          {
+            "slug": "tv-led-backlight-strips-bars",
+            "title": "TV LED Backlight Strips & Bars"
+          }
+        ],
+        "has_children": false
+      },
+      "gender": null,
+      "age": null,
+      "materials": [
+        "LED"
+      ],
+      "key_features": [
+        "Set of 10 LED backlight strips",
+        "Compatible with Samsung part numbers BN96-39055A/BN96-39056A",
+        "Updated, more reliable connectors",
+        "Direct replacement for BN96-28772A/BN96-28773A",
+        "Designed for 55-inch Samsung TVs"
+      ],
+      "colors": [],
+      "offers": [
+        {
+          "url": "https://buy.trychannel3.com/s6qleqU-LPzf-L47KZW?o=01KBPA0ENJBZFHY9NBEB87R3DN&aid=01M6WFJETEKB0BCSBRQJ3PF7H0",
+          "domain": "newegg.com",
+          "price": {
+            "price": 49.99,
+            "compare_at_price": null,
+            "currency": "USD"
+          },
+          "availability": "InStock",
+          "condition": "new",
+          "max_commission_rate": 0.007,
+          "dimensions": null
+        }
+      ],
+      "variants": null,
+      "structured_attributes": {
+        "mounting-type": [
+          "Built-in"
+        ],
+        "display-technology": [
+          "LED"
+        ]
+      },
+      "ratings": null
+    },
+    {
+      "id": "KtZJkzT",
+      "title": "Samsung Galaxy S23 5G S911U",
+      "description": "Escape the everyday and share the epic with the Samsung Galaxy S23. Will only work with Verizon. . You ll always be ready to seize the moment with no compromises and take the perfect photos like a pro. Crank up the performance in your wireless life with Samsung s fastest mobile processor available. You won t have to settle for low quality cameras start capturing and creating images in rich detail and then use Quick Share** to share them across devices without losing quality. Plus you can keep your content looking incredible no matter where life takes you and your family with Adaptive Vision Booster that adjusts your screen s brightness.",
+      "brands": [
+        {
+          "id": "Mbqx",
+          "name": "Samsung"
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.trychannel3.com/9457fd54-c79b-4bed-baf6-941112734129?aid=01M6WFJETEKB0BCSBRQJ3PF7H0&mid=BsaX",
+          "cleaned_url": "https://cdn.trychannel3.com/4c5997e1-fcae-422d-9c1f-c78df236eef8?aid=01M6WFJETEKB0BCSBRQJ3PF7H0&mid=BsaX",
+          "is_main_image": true,
+          "shot_type": "hero",
+          "alt_text": "Front view of a cream-colored Samsung Galaxy S23 phone with a sunset screen."
+        }
+      ],
+      "category": {
+        "slug": "smart-phones",
+        "title": "Smart Phones",
+        "path": [
+          {
+            "slug": "electronics",
+            "title": "Electronics"
+          },
+          {
+            "slug": "communications",
+            "title": "Communications"
+          },
+          {
+            "slug": "telephony",
+            "title": "Telephony"
+          },
+          {
+            "slug": "mobile-phones",
+            "title": "Mobile Phones"
+          },
+          {
+            "slug": "smart-phones",
+            "title": "Smart Phones"
+          }
+        ],
+        "has_children": false
+      },
+      "gender": null,
+      "age": null,
+      "materials": [
+        "polished metal frame"
+      ],
+      "key_features": [
+        "6.1 inches Dynamic AMOLED 2X display",
+        "120Hz refresh rate",
+        "50 MP Triple Main Camera",
+        "128GB Storage, 8GB RAM",
+        "Qualcomm Snapdragon 8 Gen 2 chipset",
+        "Android 13",
+        "Unlocked for all major U.S. carriers",
+        "256GB Storage",
+        "5G Connectivity",
+        "Adaptive Vision Booster"
+      ],
+      "colors": [
+        {
+          "hex": "#070502",
+          "percentage": 0.2662
+        },
+        {
+          "hex": "#c29f5e",
+          "percentage": 0.134
+        },
+        {
+          "hex": "#aa7e3c",
+          "percentage": 0.1272
+        },
+        {
+          "hex": "#865a26",
+          "percentage": 0.1234
+        },
+        {
+          "hex": "#261506",
+          "percentage": 0.1203
+        },
+        {
+          "hex": "#cfba8d",
+          "percentage": 0.1185
+        },
+        {
+          "hex": "#4e2f10",
+          "percentage": 0.1104
+        }
+      ],
+      "offers": [
+        {
+          "url": "https://buy.trychannel3.com/KtZJkzT-BsaX-L47KZW?o=01M5ZP77Z2S85193F6NHTVD5KM&aid=01M6WFJETEKB0BCSBRQJ3PF7H0",
+          "domain": "walmart.com",
+          "price": {
+            "price": 399.88,
+            "compare_at_price": null,
+            "currency": "USD"
+          },
+          "availability": "InStock",
+          "condition": "new",
+          "max_commission_rate": 0.07,
+          "dimensions": {
+            "length": null,
+            "width": null,
+            "height": null,
+            "weight": {
+              "number": 5.9,
+              "unit": "oz"
+            }
+          }
+        }
+      ],
+      "variants": null,
+      "structured_attributes": {
+        "display-resolution": [
+          "1920 x 1080",
+          "1024 x 768"
+        ],
+        "data-network": [
+          "5G"
+        ],
+        "battery-technology": [
+          "Lithium-ion (Li-ion)"
+        ],
+        "processor-family": [
+          "Qualcomm snapdragon",
+          "Qualcomm Snapdragon 8 Gen 2"
+        ],
+        "charging-interface-type": [
+          "USB type-C"
+        ],
+        "processor-cores": [
+          "Octa"
+        ],
+        "connectivity-technology": [
+          "Cellular",
+          "Wi-Fi",
+          "Bluetooth",
+          "NFC",
+          "USB"
+        ],
+        "display-technology": [
+          "AMOLED"
+        ],
+        "power-source": [
+          "Battery-powered"
+        ],
+        "operating-system": [
+          "Android"
+        ],
+        "mobile-phone-form-factor": [
+          "Bar"
+        ],
+        "pattern": [
+          "Solid"
+        ],
+        "battery-type": [
+          "Contained-undetachable"
+        ],
+        "subscription-type": [
+          "Unlocked"
+        ],
+        "cosmetic-condition": [
+          "Refurbished-excellent"
+        ],
+        "sim-card-type-1": [
+          "Nano SIM"
+        ],
+        "sim-card-type": [
+          "Nano SIM"
+        ]
+      },
+      "ratings": {
+        "value": 5,
+        "count": 3,
+        "source_count": 2
+      }
+    }
+  ],
+  "next_page_token": "eyJjYWNoZV9rZXkiOiAic2VhcmNoOjI0YTE4MzNhNWI0OTI2YTgiLCAib2Zmc2V0IjogNX0="
+}

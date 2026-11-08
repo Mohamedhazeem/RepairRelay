@@ -1,0 +1,1037 @@
+{
+  "products": [
+    {
+      "id": "XHhWTbc",
+      "title": "Apple MagSafe Battery Pack",
+      "description": "The Apple MagSafe Battery Pack is a compact and intuitive portable charger designed for easy on-the-go wireless charging. Using perfectly aligned magnets, it snaps securely to the back of iPhone 12, 13, 14, and 15 series models. It charges automatically without needing to be turned on or off and does not interfere with credit cards or key fobs. For faster charging, it can be paired with a 20W or higher power adapter, and charging status can be tracked directly on the iPhone Lock Screen.",
+      "brands": [
+        {
+          "id": "k8qh",
+          "name": "Apple"
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.trychannel3.com/9f696c44-0d53-4c38-a8a6-e1bde0efe04b?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=CgP5",
+          "cleaned_url": "https://cdn.trychannel3.com/cleaned/v1/9f696c44-0d53-4c38-a8a6-e1bde0efe04b?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=CgP5",
+          "is_main_image": true,
+          "shot_type": "hero",
+          "alt_text": "White Apple MagSafe battery pack square, studio shot."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/7b2f2e61-5b35-4b32-b190-019378de8fb4?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=CgP5",
+          "cleaned_url": "https://cdn.trychannel3.com/cleaned/v1/7b2f2e61-5b35-4b32-b190-019378de8fb4?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=CgP5",
+          "is_main_image": false,
+          "shot_type": "hero",
+          "alt_text": "White Apple MagSafe battery pack showing features, studio shot."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/ffacbbd9-eafa-49b6-8745-131e5ac035b5?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=CgP5",
+          "cleaned_url": "https://cdn.trychannel3.com/cleaned/v1/ffacbbd9-eafa-49b6-8745-131e5ac035b5?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=CgP5",
+          "is_main_image": false,
+          "shot_type": "hero",
+          "alt_text": "White Apple MagSafe battery pack back view, studio shot."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/447f009c-989a-40fc-90e2-278b7727f3a9?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=CgP5",
+          "cleaned_url": "https://cdn.trychannel3.com/cleaned/v1/447f009c-989a-40fc-90e2-278b7727f3a9?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=CgP5",
+          "is_main_image": false,
+          "shot_type": "on_model",
+          "alt_text": "Light pink phone with white MagSafe battery pack on back."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/9288afac-389b-48a5-abee-a510f89cace2?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=CgP5",
+          "cleaned_url": null,
+          "is_main_image": false,
+          "shot_type": "lifestyle",
+          "alt_text": "Pink and blue phones with white MagSafe battery packs."
+        }
+      ],
+      "category": {
+        "slug": "power-banks",
+        "title": "Power Banks",
+        "path": [
+          {
+            "slug": "electronics",
+            "title": "Electronics"
+          },
+          {
+            "slug": "electronics-accessories",
+            "title": "Electronics Accessories"
+          },
+          {
+            "slug": "power",
+            "title": "Power"
+          },
+          {
+            "slug": "power-adapters-chargers",
+            "title": "Power Adapters & Chargers"
+          },
+          {
+            "slug": "power-banks",
+            "title": "Power Banks"
+          }
+        ],
+        "has_children": false
+      },
+      "gender": null,
+      "age": null,
+      "materials": [],
+      "key_features": [
+        "MagSafe compatible with magnetic alignment",
+        "Automatic charging functionality",
+        "Wireless charging for iPhone 12, 13, 14, and 15 series",
+        "Compatible with Lightning cables for up to 15W wireless charging",
+        "Lock Screen charge status tracking",
+        "No interference with credit cards or key fobs"
+      ],
+      "colors": [
+        {
+          "hex": "#e7e8eb",
+          "percentage": 1
+        }
+      ],
+      "offers": [
+        {
+          "url": "https://buy.trychannel3.com/XHhWTbc-CgP5-L47KZW?o=01M6JKEHNAWTH094MA0KY1EPS2&aid=01M6WFJCF22QDG64ZDZA1MME6C",
+          "domain": "sellout.woot.com",
+          "price": {
+            "price": 73.5,
+            "compare_at_price": null,
+            "currency": "USD"
+          },
+          "availability": "InStock",
+          "condition": "new",
+          "max_commission_rate": 0.091,
+          "dimensions": null
+        }
+      ],
+      "variants": null,
+      "structured_attributes": {
+        "charging-method": [
+          "Wireless"
+        ],
+        "material": [
+          "Plastic"
+        ],
+        "compatible-device": [
+          "Smartphone"
+        ],
+        "pattern": [
+          "Solid"
+        ],
+        "wireless-charging-standard": [
+          "MagSafe"
+        ],
+        "magsafe-compatibility": [
+          "MagSafe compatible"
+        ],
+        "mounting-type": [
+          "Portable"
+        ],
+        "charging-interface-type": [
+          "Lightning",
+          "Wireless charging"
+        ],
+        "battery-size": [
+          "Built-in battery"
+        ],
+        "battery-type": [
+          "Contained-undetachable"
+        ],
+        "power-source": [
+          "Rechargeable"
+        ],
+        "charger-style": [
+          "Power bank combo"
+        ]
+      },
+      "ratings": null
+    },
+    {
+      "id": "n5qAVll",
+      "title": "iPhone Air MagSafe Battery",
+      "description": "The iPhone Air MagSafe Battery is a compact, portable charger designed exclusively for the iPhone Air. It attaches magnetically to the back of the phone, providing up to 65 percent additional charge to extend battery life. It supports up to 12W of fast wireless charging and can be combined with a 20W or higher power adapter for even faster charging of the device.",
+      "brands": [
+        {
+          "id": "k8qh",
+          "name": "Apple"
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.trychannel3.com/d96c6667-8198-425e-9b1f-75b74f3ab47a?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=p1PB",
+          "cleaned_url": "https://cdn.trychannel3.com/cleaned/v1/d96c6667-8198-425e-9b1f-75b74f3ab47a?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=p1PB",
+          "is_main_image": true,
+          "shot_type": "hero",
+          "alt_text": "White iPhone Air MagSafe battery on a plain white background."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/c77412e6-d721-472a-adbb-9ff680599eba?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=p1PB",
+          "cleaned_url": null,
+          "is_main_image": false,
+          "shot_type": "hero",
+          "alt_text": "White iPhone case with MagSafe battery on a white background."
+        }
+      ],
+      "category": {
+        "slug": "wireless-chargers",
+        "title": "Wireless Chargers",
+        "path": [
+          {
+            "slug": "electronics",
+            "title": "Electronics"
+          },
+          {
+            "slug": "electronics-accessories",
+            "title": "Electronics Accessories"
+          },
+          {
+            "slug": "power",
+            "title": "Power"
+          },
+          {
+            "slug": "power-adapters-chargers",
+            "title": "Power Adapters & Chargers"
+          },
+          {
+            "slug": "wireless-chargers",
+            "title": "Wireless Chargers"
+          }
+        ],
+        "has_children": false
+      },
+      "gender": null,
+      "age": null,
+      "materials": [
+        "lithium-ion"
+      ],
+      "key_features": [
+        "Experience fast, reliable wireless charging for your iPhone Air with this MagSafe portable charger.",
+        "Enjoy extended power on the go; its high battery capacity keeps your iPhone Air charged all day.",
+        "Benefit from ultimate portability with this compact, lightweight Apple MagSafe battery, perfect for travel.",
+        "Connect effortlessly with the integrated USB-C connector, ensuring broad compatibility with your devices.",
+        "Rest assured with the durable lithium-ion battery, designed for long-lasting performance and safety.",
+        "Designed exclusively for iPhone Air",
+        "Adds up to 65 percent additional charge",
+        "Up to 12W of fast wireless charging",
+        "Supports simultaneous charging via 20W or higher power adapter"
+      ],
+      "colors": [
+        {
+          "hex": "#e6e6e8",
+          "percentage": 1
+        }
+      ],
+      "offers": [
+        {
+          "url": "https://buy.trychannel3.com/n5qAVll-p1PB-L47KZW?o=01M1ZCR7Y11VE5098Y49WJC6M6&aid=01M6WFJCF22QDG64ZDZA1MME6C",
+          "domain": "bestbuy.com",
+          "price": {
+            "price": 59,
+            "compare_at_price": 99,
+            "currency": "USD"
+          },
+          "availability": "InStock",
+          "condition": "new",
+          "max_commission_rate": 0.004,
+          "dimensions": null
+        },
+        {
+          "url": "https://buy.trychannel3.com/n5qAVll-T9Fg-L47KZW?o=01M6QD8MY5NV419VZAW82XPXB5&aid=01M6WFJCF22QDG64ZDZA1MME6C",
+          "domain": "adorama.com",
+          "price": {
+            "price": 99,
+            "compare_at_price": null,
+            "currency": "USD"
+          },
+          "availability": "InStock",
+          "condition": "new",
+          "max_commission_rate": 0.025,
+          "dimensions": null
+        },
+        {
+          "url": "https://buy.trychannel3.com/n5qAVll-TgS4-L47KZW?o=01M5BWNETBD76TN90TW65DA8P5&aid=01M6WFJCF22QDG64ZDZA1MME6C",
+          "domain": "cdw.com",
+          "price": {
+            "price": 121.99,
+            "compare_at_price": null,
+            "currency": "USD"
+          },
+          "availability": "InStock",
+          "condition": "new",
+          "max_commission_rate": 0,
+          "dimensions": null
+        }
+      ],
+      "variants": null,
+      "structured_attributes": {
+        "magsafe-compatibility": [
+          "MagSafe compatible"
+        ],
+        "compatible-device": [
+          "Smartphone"
+        ],
+        "battery-size": [
+          "Built-in battery",
+          "≤100Wh"
+        ],
+        "power-source": [
+          "Battery-powered",
+          "Rechargeable"
+        ],
+        "wireless-charging-standard": [
+          "MagSafe"
+        ],
+        "battery-type": [
+          "Rechargeable",
+          "Contained-undetachable"
+        ],
+        "material": [
+          "Plastic"
+        ],
+        "charging-interface-type": [
+          "MagSafe",
+          "USB type-C",
+          "Wireless charging"
+        ],
+        "mounting-type": [
+          "Portable"
+        ],
+        "charger-style": [
+          "Power bank combo"
+        ],
+        "usb-connector-type": [
+          "USB Type-C"
+        ],
+        "charging-method": [
+          "Wireless",
+          "USB"
+        ],
+        "pattern": [
+          "Solid"
+        ]
+      },
+      "ratings": {
+        "value": 4.21,
+        "count": 93,
+        "source_count": 2
+      }
+    },
+    {
+      "id": "syvhPxX",
+      "title": "Apple iPhone 13",
+      "description": "iPhone 13 - The most advanced dual-camera system ever on iPhone. Lightning-fast A15 Bionic chip. A big leap in battery life. Durable design. Superfast 5G. And a brighter Super Retina XDR display. Features 6.1-inch Super Retina XDR display Cinematic mode adds shallow depth of field and shifts focus automatically in your videos Advanced dual-camera system with 12MP Wide and Ultra Wide cameras; Photographic Styles Smart HDR 4 Night mode 4K Dolby Vision HDR recording 12MP TrueDepth front camera with Night mode 4K Dolby Vision HDR recording A15 Bionic chip for lightning-fast performance Up to 19 hours of video playback Durable design with Ceramic Shield Industry-leading IP68 water resistance Data plan required.",
+      "brands": [
+        {
+          "id": "k8qh",
+          "name": "Apple"
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.trychannel3.com/5dca7c71-2197-478a-a5b3-a3ae0f379857?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=BsaX",
+          "cleaned_url": "https://cdn.trychannel3.com/cleaned/v1/5dca7c71-2197-478a-a5b3-a3ae0f379857?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=BsaX",
+          "is_main_image": true,
+          "shot_type": "hero",
+          "alt_text": "Front view of a dark-colored iPhone with a vibrant gradient screen."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/d5253ee5-089d-4dc9-b437-d931ba3d72e0?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=BsaX",
+          "cleaned_url": null,
+          "is_main_image": false,
+          "shot_type": "hero",
+          "alt_text": "Three-quarter view of a dark smartphone showing a colorful screen."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/5748d738-8b96-44a3-aab9-d88cc0f08710?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=BsaX",
+          "cleaned_url": null,
+          "is_main_image": false,
+          "shot_type": "detail",
+          "alt_text": "Close-up of the camera module on the back of a phone."
+        }
+      ],
+      "category": {
+        "slug": "smart-phones",
+        "title": "Smart Phones",
+        "path": [
+          {
+            "slug": "electronics",
+            "title": "Electronics"
+          },
+          {
+            "slug": "communications",
+            "title": "Communications"
+          },
+          {
+            "slug": "telephony",
+            "title": "Telephony"
+          },
+          {
+            "slug": "mobile-phones",
+            "title": "Mobile Phones"
+          },
+          {
+            "slug": "smart-phones",
+            "title": "Smart Phones"
+          }
+        ],
+        "has_children": false
+      },
+      "gender": null,
+      "age": null,
+      "materials": [
+        "Ceramic Shield"
+      ],
+      "key_features": [
+        "6.1-inch Super Retina XDR display",
+        "Cinematic mode",
+        "Advanced dual-camera system with 12MP Wide and Ultra Wide cameras",
+        "Photographic Styles",
+        "Smart HDR 4",
+        "Night mode",
+        "4K Dolby Vision HDR recording",
+        "12MP TrueDepth front camera",
+        "A15 Bionic chip",
+        "Up to 19 hours of video playback on battery life"
+      ],
+      "colors": [
+        {
+          "hex": "#072c43",
+          "percentage": 0.358
+        },
+        {
+          "hex": "#a21c6f",
+          "percentage": 0.2165
+        },
+        {
+          "hex": "#5f095e",
+          "percentage": 0.1201
+        },
+        {
+          "hex": "#12031e",
+          "percentage": 0.1176
+        },
+        {
+          "hex": "#623e78",
+          "percentage": 0.1142
+        },
+        {
+          "hex": "#935883",
+          "percentage": 0.0736
+        }
+      ],
+      "offers": [
+        {
+          "url": "https://buy.trychannel3.com/syvhPxX-BsaX-L47KZW?o=01M5ZPNYBFG1XAY40Q5WPMPASR&aid=01M6WFJCF22QDG64ZDZA1MME6C",
+          "domain": "walmart.com",
+          "price": {
+            "price": 264.19,
+            "compare_at_price": 300.49,
+            "currency": "USD"
+          },
+          "availability": "InStock",
+          "condition": "new",
+          "max_commission_rate": 0.07,
+          "dimensions": null
+        }
+      ],
+      "variants": null,
+      "structured_attributes": {
+        "processor-cores": [
+          "Multi",
+          "Quad"
+        ],
+        "mobile-phone-form-factor": [
+          "Bar"
+        ],
+        "wi-fi-standard": [
+          "802.11ax"
+        ],
+        "subscription-type": [
+          "Contract"
+        ],
+        "processor-family": [
+          "Apple A15"
+        ],
+        "display-technology": [
+          "OLED"
+        ],
+        "display-resolution": [
+          "Full HD"
+        ],
+        "connectivity-technology": [
+          "Bluetooth",
+          "Wi-Fi",
+          "Cellular"
+        ],
+        "biometric-authentication-method": [
+          "Face recognition",
+          "Fingerprint sensor"
+        ],
+        "power-source": [
+          "Battery-powered"
+        ],
+        "data-network": [
+          "5G"
+        ],
+        "operating-system": [
+          "iOS"
+        ],
+        "cosmetic-condition": [
+          "Refurbished-excellent",
+          "New"
+        ],
+        "charging-interface-type": [
+          "Lightning"
+        ],
+        "battery-size": [
+          "Built-in battery"
+        ],
+        "wireless-charging-standard": [
+          "Qi"
+        ],
+        "pattern": [
+          "Solid"
+        ],
+        "battery-technology": [
+          "Lithium-ion (Li-ion)"
+        ],
+        "battery-type": [
+          "Contained-undetachable"
+        ],
+        "ingress-protection-ip-rating": [
+          "IP68"
+        ]
+      },
+      "ratings": null
+    },
+    {
+      "id": "24xEYT4",
+      "title": "iPhone 13",
+      "description": "Experience flagship performance with this certified refurbished Apple iPhone 13 featuring 256GB of storage. This unlocked device comes in a striking blue finish and is rated in excellent condition. Powered by the incredibly fast A15 chip, it delivers top-tier speed and efficiency, paired with extended battery life offering up to 17 hours of video playback and wireless charging support. The stunning 5.4-inch Super Retina XDR display provides sharp visuals and precise color accuracy for an immersive viewing experience. Capture professional-grade photos and videos with the advanced dual-camera system, featuring an upgraded Ultra Wide camera and a Wide camera that captures significantly more light, plus a new Cinematic mode for rack focus video effects. This model also supports MagSafe accessories and includes Photographic Styles for personalized photo adjustments.",
+      "brands": [
+        {
+          "id": "k8qh",
+          "name": "Apple"
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.trychannel3.com/da3fe131-e048-4e69-9ac7-e3f4ddda7598?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=1bcG",
+          "cleaned_url": "https://cdn.trychannel3.com/963f8ad8-2118-404a-8730-f6334ea7035b?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=1bcG",
+          "is_main_image": true,
+          "shot_type": "hero",
+          "alt_text": "Blue iPhone 13 256GB with a blue case and screen."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/3ccba02e-a420-4f8d-b0ed-f068b76dc822?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=1bcG",
+          "cleaned_url": "https://cdn.trychannel3.com/cleaned/v1/3ccba02e-a420-4f8d-b0ed-f068b76dc822?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=1bcG",
+          "is_main_image": false,
+          "shot_type": "hero",
+          "alt_text": "Black iPhone 13 256GB with a black case and screen."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/9c4c0e53-65e2-4ece-b2db-5a3eae24bde2?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=1bcG",
+          "cleaned_url": "https://cdn.trychannel3.com/cleaned/v1/9c4c0e53-65e2-4ece-b2db-5a3eae24bde2?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=1bcG",
+          "is_main_image": false,
+          "shot_type": "hero",
+          "alt_text": "Black iPhone 13 256GB with a black case and screen."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/a3e19dff-dc5e-4e0e-9471-860428cf5c8d?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=1bcG",
+          "cleaned_url": null,
+          "is_main_image": false,
+          "shot_type": "hero",
+          "alt_text": "Black iPhone 13 and a black iPhone 13 displayed together."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/333ce8a1-4c7b-438b-94c9-85003088af84?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=1bcG",
+          "cleaned_url": null,
+          "is_main_image": false,
+          "shot_type": "detail",
+          "alt_text": "Close-up of the camera module on a black iPhone."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/b1f879c1-57d0-4ee0-893a-48c31b8eda14?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=1bcG",
+          "cleaned_url": "https://cdn.trychannel3.com/cleaned/v1/b1f879c1-57d0-4ee0-893a-48c31b8eda14?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=1bcG",
+          "is_main_image": false,
+          "shot_type": "hero",
+          "alt_text": "Pink iPhone 13 256GB with a pink case and screen."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/f7f78e7a-a37b-4942-8cdf-4067c1dc6152?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=1bcG",
+          "cleaned_url": "https://cdn.trychannel3.com/cleaned/v1/f7f78e7a-a37b-4942-8cdf-4067c1dc6152?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=1bcG",
+          "is_main_image": false,
+          "shot_type": "hero",
+          "alt_text": "Pink iPhone 13 256GB with a pink case and screen."
+        }
+      ],
+      "category": {
+        "slug": "smart-phones",
+        "title": "Smart Phones",
+        "path": [
+          {
+            "slug": "electronics",
+            "title": "Electronics"
+          },
+          {
+            "slug": "communications",
+            "title": "Communications"
+          },
+          {
+            "slug": "telephony",
+            "title": "Telephony"
+          },
+          {
+            "slug": "mobile-phones",
+            "title": "Mobile Phones"
+          },
+          {
+            "slug": "smart-phones",
+            "title": "Smart Phones"
+          }
+        ],
+        "has_children": false
+      },
+      "gender": null,
+      "age": null,
+      "materials": [
+        "Aluminium",
+        "glass"
+      ],
+      "key_features": [
+        "A15 Bionic chip (6-core CPU, 4-core GPU, 16-core Neural Engine)",
+        "Super Retina XDR display",
+        "Dual 12MP camera system with Portrait mode and Dolby Vision up to 4K at 60 fps",
+        "Ceramic Shield front glass",
+        "Water resistant up to 6 metres for 30 minutes",
+        "MagSafe wireless charging up to 15W",
+        "Face ID security",
+        "5G cellular connectivity",
+        "Up to 19 hours video playback",
+        "Photographic Styles feature"
+      ],
+      "colors": [
+        {
+          "hex": "#a27a90",
+          "percentage": 0.2035
+        },
+        {
+          "hex": "#4b3d63",
+          "percentage": 0.1383
+        },
+        {
+          "hex": "#7f5f7b",
+          "percentage": 0.1298
+        },
+        {
+          "hex": "#060305",
+          "percentage": 0.1233
+        },
+        {
+          "hex": "#aa2546",
+          "percentage": 0.1127
+        },
+        {
+          "hex": "#c8646f",
+          "percentage": 0.105
+        },
+        {
+          "hex": "#df9a84",
+          "percentage": 0.1039
+        },
+        {
+          "hex": "#a84459",
+          "percentage": 0.0835
+        }
+      ],
+      "offers": [
+        {
+          "url": "https://buy.trychannel3.com/24xEYT4-1bcG-L47KZW?o=01KBPB38VZ216T603KY2YA187Y&aid=01M6WFJCF22QDG64ZDZA1MME6C",
+          "domain": "buy.gazelle.com",
+          "price": {
+            "price": 239.99,
+            "compare_at_price": null,
+            "currency": "USD"
+          },
+          "availability": "InStock",
+          "condition": "new",
+          "max_commission_rate": 0,
+          "dimensions": null
+        }
+      ],
+      "variants": null,
+      "structured_attributes": {
+        "wi-fi-standard": [
+          "802.11ac",
+          "802.11ax",
+          "802.11n"
+        ],
+        "sim-card-type": [
+          "Nano SIM"
+        ],
+        "processor-family": [
+          "Apple A15"
+        ],
+        "ingress-protection-ip-rating": [
+          "IP68",
+          "Not rated"
+        ],
+        "operating-system": [
+          "iOS"
+        ],
+        "cosmetic-condition": [
+          "Refurbished-fair",
+          "Refurbished-certified",
+          "Refurbished-good",
+          "Refurbished-excellent",
+          "New"
+        ],
+        "charging-interface-type": [
+          "Lightning",
+          "USB type-C",
+          "Wireless charging",
+          "Proprietary connector"
+        ],
+        "processor-cores": [
+          "Quad",
+          "Hexa",
+          "Multi"
+        ],
+        "display-technology": [
+          "OLED",
+          "LCD"
+        ],
+        "subscription-type": [
+          "Unlocked"
+        ],
+        "power-source": [
+          "Battery-powered",
+          "Rechargeable",
+          "USB",
+          "Batteries"
+        ],
+        "sim-card-capability": [
+          "Single"
+        ],
+        "biometric-authentication-method": [
+          "Face recognition",
+          "None"
+        ],
+        "mobile-phone-form-factor": [
+          "Bar"
+        ],
+        "battery-size": [
+          "N",
+          "14500",
+          "Built-in battery"
+        ],
+        "battery-type": [
+          "Rechargeable",
+          "Contained-undetachable",
+          "Disposable"
+        ],
+        "data-network": [
+          "LTE",
+          "4G",
+          "5G"
+        ],
+        "connectivity-technology": [
+          "Bluetooth",
+          "Cellular",
+          "GPS",
+          "LTE",
+          "NFC",
+          "USB",
+          "Wi-Fi",
+          "Wireless",
+          "Wired",
+          "Ethernet"
+        ],
+        "sim-card-type-1": [
+          "Nano SIM"
+        ],
+        "wireless-charging-standard": [
+          "Qi",
+          "MagSafe"
+        ],
+        "headphone-jack-type": [
+          "USB type-C"
+        ],
+        "display-resolution": [
+          "2160p",
+          "1920 x 1080",
+          "2560 x 1440"
+        ],
+        "battery-technology": [
+          "Lithium",
+          "Lithium-ion (Li-ion)"
+        ]
+      },
+      "ratings": {
+        "value": 3.62,
+        "count": 364,
+        "source_count": 1
+      }
+    },
+    {
+      "id": "caD3Kl3",
+      "title": "iPhone 13",
+      "description": "This certified pre-owned iPhone 13, featuring 256GB of storage and locked to the Verizon network, comes in the Starlight color and is in Good condition. It boasts the powerful A15 Bionic chip for lightning-fast performance, nearly 50% faster than competitors. The device showcases a stunning 5.4-inch Super Retina XDR display with HDR and True Tone technology for an immersive viewing experience. Photography enthusiasts will appreciate the upgraded dual-camera system, which includes an Ultra Wide camera that excels in low light and a wide camera capturing 50% more light, plus a new Cinematic mode for video. Additional features include Photographic Styles and MagSafe compatibility. This refurbished unit is backed by Gazelle's 55-point inspection, a 1-year warranty, and free 30-day returns, offering top-tier smartphone technology at a fraction of the retail price.",
+      "brands": [
+        {
+          "id": "k8qh",
+          "name": "Apple"
+        }
+      ],
+      "images": [
+        {
+          "url": "https://cdn.trychannel3.com/c6c33930-7ddf-453e-952e-de589c5bf70a?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=1bcG",
+          "cleaned_url": "https://cdn.trychannel3.com/7874fa40-3998-4aae-a701-6dbfab292a38?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=1bcG",
+          "is_main_image": true,
+          "shot_type": "hero",
+          "alt_text": "Starlight iPhone 13 256GB in a two-tone design, showing the back and screen."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/9d575afe-e922-4af3-9f5c-2b3dfa1bf4e1?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=1bcG",
+          "cleaned_url": "https://cdn.trychannel3.com/cleaned/v1/9d575afe-e922-4af3-9f5c-2b3dfa1bf4e1?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=1bcG",
+          "is_main_image": false,
+          "shot_type": "hero",
+          "alt_text": "Black iPhone 13 256GB in a two-tone design, showing the back and screen."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/26de9777-8f80-49d0-b3cd-1f34ff2c2613?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=1bcG",
+          "cleaned_url": "https://cdn.trychannel3.com/cleaned/v1/26de9777-8f80-49d0-b3cd-1f34ff2c2613?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=1bcG",
+          "is_main_image": false,
+          "shot_type": "hero",
+          "alt_text": "Black iPhone 13 256GB in a two-tone design, showing the back and screen."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/e582fd8d-ec0a-4511-ae87-0d1c47d59e18?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=1bcG",
+          "cleaned_url": null,
+          "is_main_image": false,
+          "shot_type": "hero",
+          "alt_text": "Black iPhone 13 256GB in a landscape orientation."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/10bf2aed-03c5-4432-84d9-b8e986a6f4bb?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=1bcG",
+          "cleaned_url": null,
+          "is_main_image": false,
+          "shot_type": "detail",
+          "alt_text": "Close-up of the camera module on a black iPhone."
+        },
+        {
+          "url": "https://cdn.trychannel3.com/00713088-af45-4b3c-950f-4c5f9abae313?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=1bcG",
+          "cleaned_url": "https://cdn.trychannel3.com/cleaned/v1/00713088-af45-4b3c-950f-4c5f9abae313?aid=01M6WFJCF22QDG64ZDZA1MME6C&mid=1bcG",
+          "is_main_image": false,
+          "shot_type": "hero",
+          "alt_text": "Black iPhone 13 256GB in a portrait orientation."
+        }
+      ],
+      "category": {
+        "slug": "smart-phones",
+        "title": "Smart Phones",
+        "path": [
+          {
+            "slug": "electronics",
+            "title": "Electronics"
+          },
+          {
+            "slug": "communications",
+            "title": "Communications"
+          },
+          {
+            "slug": "telephony",
+            "title": "Telephony"
+          },
+          {
+            "slug": "mobile-phones",
+            "title": "Mobile Phones"
+          },
+          {
+            "slug": "smart-phones",
+            "title": "Smart Phones"
+          }
+        ],
+        "has_children": false
+      },
+      "gender": null,
+      "age": null,
+      "materials": [
+        "Aluminium",
+        "Glass back"
+      ],
+      "key_features": [
+        "A15 Bionic chip (6-core CPU, 4-core GPU, 16-core Neural Engine)",
+        "5.4-inch Super Retina XDR display with HDR and True Tone",
+        "Dual-camera system (12MP Main + Ultra Wide)",
+        "Dolby Vision HDR video recording up to 4K at 60 fps",
+        "Ceramic Shield front cover",
+        "Water resistant up to 6 meters for 30 minutes",
+        "Face ID enabled",
+        "Superfast 5G cellular support",
+        "MagSafe wireless charging up to 15W",
+        "Up to 17 hours of video playback battery life"
+      ],
+      "colors": [
+        {
+          "hex": "#a47d92",
+          "percentage": 0.1695
+        },
+        {
+          "hex": "#583c64",
+          "percentage": 0.1502
+        },
+        {
+          "hex": "#8a627e",
+          "percentage": 0.1396
+        },
+        {
+          "hex": "#060203",
+          "percentage": 0.1226
+        },
+        {
+          "hex": "#e9a68b",
+          "percentage": 0.1166
+        },
+        {
+          "hex": "#aa2545",
+          "percentage": 0.109
+        },
+        {
+          "hex": "#ca6570",
+          "percentage": 0.104
+        },
+        {
+          "hex": "#ac4558",
+          "percentage": 0.0885
+        }
+      ],
+      "offers": [
+        {
+          "url": "https://buy.trychannel3.com/caD3Kl3-1bcG-L47KZW?o=01KBPA8RE0R5XF3KY0TWWV66AQ&aid=01M6WFJCF22QDG64ZDZA1MME6C",
+          "domain": "buy.gazelle.com",
+          "price": {
+            "price": 241.99,
+            "compare_at_price": null,
+            "currency": "USD"
+          },
+          "availability": "InStock",
+          "condition": "new",
+          "max_commission_rate": 0,
+          "dimensions": null
+        }
+      ],
+      "variants": null,
+      "structured_attributes": {
+        "display-technology": [
+          "LCD",
+          "OLED"
+        ],
+        "processor-family": [
+          "Apple A15"
+        ],
+        "biometric-authentication-method": [
+          "None"
+        ],
+        "battery-technology": [
+          "Lithium-ion (Li-ion)",
+          "Lithium"
+        ],
+        "wi-fi-standard": [
+          "802.11ac",
+          "802.11n"
+        ],
+        "sim-card-type": [
+          "Nano SIM",
+          "eSIM"
+        ],
+        "wireless-charging-standard": [
+          "MagSafe",
+          "Qi",
+          "Proprietary"
+        ],
+        "battery-size": [
+          "Built-in battery",
+          "14500"
+        ],
+        "headphone-jack-type": [
+          "USB type-C"
+        ],
+        "processor-cores": [
+          "Multi",
+          "Octa",
+          "Quad"
+        ],
+        "mobile-phone-form-factor": [
+          "Bar"
+        ],
+        "battery-type": [
+          "Disposable",
+          "Rechargeable",
+          "Contained-undetachable"
+        ],
+        "power-source": [
+          "Rechargeable",
+          "Battery-powered",
+          "USB",
+          "Batteries"
+        ],
+        "display-resolution": [
+          "2560 x 1440",
+          "1920 x 1080",
+          "1024 x 768"
+        ],
+        "charging-interface-type": [
+          "Proprietary connector",
+          "USB type-C",
+          "Wireless charging"
+        ],
+        "cosmetic-condition": [
+          "New",
+          "Refurbished-good",
+          "Refurbished-very good",
+          "Refurbished-excellent",
+          "Refurbished-certified"
+        ],
+        "subscription-type": [
+          "Unlocked"
+        ],
+        "sim-card-capability": [
+          "Single",
+          "Embedded"
+        ],
+        "operating-system": [
+          "iOS"
+        ],
+        "connectivity-technology": [
+          "Bluetooth",
+          "GPS",
+          "NFC",
+          "Wi-Fi",
+          "USB",
+          "HDMI",
+          "Wired"
+        ],
+        "data-network": [
+          "4G",
+          "5G",
+          "LTE"
+        ],
+        "sim-card-type-1": [
+          "Nano SIM"
+        ],
+        "sim-card-type-2": [
+          "eSIM"
+        ]
+      },
+      "ratings": {
+        "value": 3.62,
+        "count": 364,
+        "source_count": 1
+      }
+    }
+  ],
+  "next_page_token": "eyJjYWNoZV9rZXkiOiAic2VhcmNoOjc3MGU3Yjg1ZjFmMDc1NmMiLCAib2Zmc2V0IjogNX0="
+}
