@@ -95,7 +95,7 @@ export async function runDiagnosis(
     return { ok: false, code: "DEPENDENCY_UNAVAILABLE", message };
   }
 
-  const parsed = DiagnosisReportSchema.safeParse(extractJsonObject({ content: result.text }));
+  const parsed = DiagnosisReportSchema.safeParse(extractJsonObject({ content: result.content, reasoning_content: result.reasoningContent }));
   if (!parsed.success) {
     await prisma.repairRequest.update({ where: { id: repairId }, data: { status: "DIAGNOSIS_FAILED" } });
     await writeAudit(prisma, {
