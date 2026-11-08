@@ -58,6 +58,20 @@ export async function seedDemoUsers(prisma: PrismaClient, seedPassword: string):
       create: { email: account.email, displayName: account.displayName, role: account.role, passwordHash },
     });
   }
+  // Simulated repairer demo profiles — always labelled SIMULATED, never verified actors.
+  for (const account of SEED_ACCOUNTS.filter((a) => a.role === UserRole.SIMULATED_REPAIRER)) {
+    const user = await prisma.user.findUnique({ where: { email: account.email } });
+    if (!user) continue;
+    await prisma.simulatedRepairer.upsert({
+      where: { userId: user.id },
+      update: { displayName: account.displayName, demoDescription: account.demoDescription ?? "Simulated demo actor.", active: true },
+      create: {
+        userId: user.id,
+        displayName: account.displayName,
+        demoDescription: account.demoDescription ?? "Simulated demo actor.",
+      },
+    });
+  }
 }
 
 const isDirectRun = process.argv[1]?.endsWith("seed.ts");

@@ -27,6 +27,7 @@ model User {
   disabledAt   DateTime?
 
   repairRequests RepairRequest[]
+  simulatedRepairer SimulatedRepairer?
 
   @@map("users")
 }
@@ -106,9 +107,75 @@ model RepairRequest {
 
   selectedCandidateId       String?
   selectedChannel3ProductId String?
+  selectedQuoteId           String?
+
+  quotes RepairQuote[]
 
   @@index([customerId])
   @@map("repair_requests")
+}
+
+/// Seeded demo actor. demoLabel is fixed to SIMULATED — never presented as a real technician.
+model SimulatedRepairer {
+  id              String   @id @default(uuid())
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id])
+  displayName     String
+  demoLabel       String   @default("SIMULATED")
+  demoDescription String
+  active          Boolean  @default(true)
+  createdAt       DateTime @default(now())
+
+  quotes RepairQuote[]
+
+  @@map("simulated_repairers")
+}
+
+enum QuoteStatus {
+  GENERATED
+  SELECTED
+  SUPERSEDED
+  EXPIRED
+}
+
+/// Attestation is explicitly simulation data: the seeded actor selected a value,
+/// not independent technical verification (PRODUCT-SPEC §6.5).
+enum CompatibilityAttestation {
+  CONFIRMED_FOR_DEMO
+  NOT_CONFIRMED
+  REJECTED
+}
+
+/// Itemized quote snapshot. Repair-versus-Replace mode: the component is
+/// technician-declared — there is no Channel3 part reference on a quote.
+model RepairQuote {
+  id                      String                  @id @default(uuid())
+  repairRequestId         String
+  repairRequest           RepairRequest           @relation(fields: [repairRequestId], references: [id])
+  repairerId              String
+  repairer                SimulatedRepairer       @relation(fields: [repairerId], references: [id])
+  version                 Int                     @default(1)
+  status                  QuoteStatus             @default(GENERATED)
+  componentLabel          String
+  compatibilityAttestation CompatibilityAttestation
+  compatibilityNotes      String
+  partChargeMinor         Int
+  labourMinor             Int
+  feesMinor               Int                     @default(0)
+  taxMinor                Int                     @default(0)
+  totalMinor              Int
+  currency                String                  @default("USD")
+  warrantyDays            Int?
+  warrantyText            String
+  estimatedDurationHours  Int?
+  scopeText               String
+  exclusionsText          String
+  validUntil              DateTime
+  createdAt               DateTime                @default(now())
+
+  @@unique([repairRequestId, repairerId, version])
+  @@index([repairRequestId])
+  @@map("repair_quotes")
 }
 
 enum SearchRunStatus {
