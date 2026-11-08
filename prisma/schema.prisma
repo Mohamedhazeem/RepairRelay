@@ -26,5 +26,141 @@ model User {
   updatedAt    DateTime  @updatedAt
   disabledAt   DateTime?
 
+  repairRequests RepairRequest[]
+
   @@map("users")
+}
+
+enum RepairStatus {
+  DRAFT
+  INTAKE_SUBMITTED
+  DIAGNOSIS_PENDING
+  DIAGNOSIS_READY
+  DIAGNOSIS_INCONCLUSIVE
+  DIAGNOSIS_FAILED
+  PARTS_SEARCH_PENDING
+  PARTS_AVAILABLE
+  PARTS_EMPTY
+  PARTS_SEARCH_FAILED
+  QUOTES_PENDING
+  QUOTES_AVAILABLE
+  CONTRACT_SELECTED
+  CONTRACT_APPROVED
+  REPAIR_IN_PROGRESS
+  EVIDENCE_SUBMITTED
+  CUSTOMER_REVIEW
+  REWORK_IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum DeviceModelConfidence {
+  USER_SELECTED
+  AI_SUGGESTED
+  UNKNOWN
+}
+
+enum RepairCategory {
+  DISPLAY_REPLACEMENT
+  BATTERY_REPLACEMENT
+  CHARGING_PORT_REPLACEMENT
+  CAMERA_REPLACEMENT
+  DIAGNOSTIC_ONLY
+  OTHER
+}
+
+enum AssetKind {
+  INTAKE
+  BEFORE
+  AFTER
+  COMPONENT
+  OTHER
+}
+
+enum ConfidenceBand {
+  LOW
+  MEDIUM
+  HIGH
+  UNASSESSED
+}
+
+model RepairRequest {
+  id                     String                @id @default(uuid())
+  publicReference        String                @unique
+  customerId             String
+  customer               User                  @relation(fields: [customerId], references: [id])
+  deviceBrand            String
+  deviceModel            String
+  modelIdentifier        String?
+  deviceModelConfidence  DeviceModelConfidence @default(USER_SELECTED)
+  symptoms               String
+  repairCategory         RepairCategory?
+  status                 RepairStatus          @default(DRAFT)
+  version                Int                   @default(1)
+  createdAt              DateTime              @default(now())
+  updatedAt              DateTime              @updatedAt
+
+  assets          UploadedAsset[]
+  diagnosisReports DiagnosisReport[]
+
+  @@index([customerId])
+  @@map("repair_requests")
+}
+
+model UploadedAsset {
+  id             String    @id @default(uuid())
+  repairRequestId String
+  repairRequest  RepairRequest @relation(fields: [repairRequestId], references: [id])
+  ownerId        String
+  assetKind      AssetKind
+  storageKey     String    @unique
+  mimeType       String
+  byteSize       Int
+  width          Int
+  height         Int
+  sha256         String
+  createdAt      DateTime  @default(now())
+  deletedAt      DateTime?
+
+  @@index([repairRequestId])
+  @@map("uploaded_assets")
+}
+
+model DiagnosisReport {
+  id                      String          @id @default(uuid())
+  repairRequestId         String
+  repairRequest           RepairRequest   @relation(fields: [repairRequestId], references: [id])
+  provider                String
+  model                   String
+  schemaVersion           Int
+  deviceModelAssessment   Json
+  visibleObservations     Json
+  suspectedCauses         Json
+  likelyRepairCategory    String?
+  confidenceBand          ConfidenceBand
+  unknowns                Json
+  recommendedQuestions    Json
+  limitations             Json
+  rawOutputRedacted       String?
+  createdAt               DateTime        @default(now())
+  supersededAt            DateTime?
+
+  @@index([repairRequestId])
+  @@map("diagnosis_reports")
+}
+
+/// Append-only by application convention. No secrets, card data, raw images or full PII.
+model AuditEvent {
+  id                     String   @id @default(uuid())
+  aggregateType          String
+  aggregateId            String
+  actorType              String
+  actorId                String?
+  eventType              String
+  payloadAllowlistedJson Json?
+  traceId                String
+  createdAt              DateTime @default(now())
+
+  @@index([aggregateType, aggregateId])
+  @@map("audit_events")
 }
