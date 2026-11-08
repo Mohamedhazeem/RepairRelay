@@ -165,6 +165,7 @@ model RepairJob {
   updatedAt           DateTime       @updatedAt
 
   submissions EvidenceSubmission[]
+  decisions   CustomerDecision[]
 
   @@index([repairerId])
   @@map("repair_jobs")
@@ -219,6 +220,29 @@ model EvidenceAssessment {
 
   @@index([submissionId])
   @@map("evidence_assessments")
+}
+
+enum DecisionType {
+  ACCEPT
+  REQUEST_REWORK
+  CANCEL
+}
+
+/// Immutable. One decision per evidence submission (unique); rework creates a new
+/// submission and a new decision. Accept/cancel payment orchestration runs through S04.
+model CustomerDecision {
+  id                   String       @id @default(uuid())
+  repairJobId          String
+  repairJob            RepairJob    @relation(fields: [repairJobId], references: [id])
+  evidenceSubmissionId String      @unique
+  contractVersionId    String
+  customerId           String
+  decision             DecisionType
+  comment              String?
+  createdAt            DateTime     @default(now())
+
+  @@index([repairJobId])
+  @@map("customer_decisions")
 }
 
 enum ContractStatus {
