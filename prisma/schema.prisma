@@ -102,9 +102,94 @@ model RepairRequest {
 
   assets          UploadedAsset[]
   diagnosisReports DiagnosisReport[]
+  searchRuns      ProductSearchRun[]
+
+  selectedCandidateId       String?
+  selectedChannel3ProductId String?
 
   @@index([customerId])
   @@map("repair_requests")
+}
+
+enum SearchRunStatus {
+  SUCCEEDED
+  EMPTY
+  FAILED
+}
+
+enum OfferAvailability {
+  InStock
+  OutOfStock
+  UNKNOWN
+}
+
+enum OfferCondition {
+  new
+  used
+  refurbished
+  UNKNOWN
+}
+
+/// Search execution record. Query/result metadata only — never a stale-offer cache.
+model ProductSearchRun {
+  id                   String          @id @default(uuid())
+  repairRequestId      String
+  repairRequest        RepairRequest   @relation(fields: [repairRequestId], references: [id])
+  provider             String          @default("CHANNEL3")
+  query                String
+  country              String
+  currency             String
+  language             String
+  mode                 String
+  providerRequestId    String?
+  status               SearchRunStatus
+  resultCount          Int
+  normalizationVersion Int
+  errorCode            String?
+  createdAt            DateTime        @default(now())
+  completedAt          DateTime?
+
+  candidates ProductCandidate[]
+
+  @@index([repairRequestId])
+  @@map("product_search_runs")
+}
+
+/// Stable external reference. No offer price/availability/URL stored here as catalog data.
+model ProductCandidate {
+  id                String          @id @default(uuid())
+  searchRunId       String
+  searchRun         ProductSearchRun @relation(fields: [searchRunId], references: [id])
+  channel3ProductId String
+  title             String
+  description       String?
+  brandNames        Json?
+  imageUrl          String?
+  createdAt         DateTime        @default(now())
+
+  offerObservations OfferObservation[]
+
+  @@unique([searchRunId, channel3ProductId])
+  @@index([channel3ProductId])
+  @@map("product_candidates")
+}
+
+/// Short-lived observation of an offer at a point in time. Never served after expiresAt.
+model OfferObservation {
+  id                String           @id @default(uuid())
+  productCandidateId String
+  productCandidate  ProductCandidate @relation(fields: [productCandidateId], references: [id])
+  domain            String
+  offerUrl          String
+  priceMinor        Int?
+  currency          String?
+  availability      OfferAvailability @default(UNKNOWN)
+  condition         OfferCondition   @default(UNKNOWN)
+  observedAt        DateTime
+  expiresAt         DateTime
+
+  @@index([productCandidateId])
+  @@map("offer_observations")
 }
 
 model UploadedAsset {
