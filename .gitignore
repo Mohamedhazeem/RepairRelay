@@ -19,3 +19,4 @@ data/uploads/
 *.local.json
 
 data/ (feasibility probe state)
+*.tsbuildinfo
