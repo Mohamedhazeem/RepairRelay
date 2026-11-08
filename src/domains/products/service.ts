@@ -15,6 +15,11 @@ import { normalizeSearchResponse, pickDisplayOffer, NORMALIZATION_VERSION, type 
 export const OFFER_OBSERVATION_TTL_MS = 10 * 60 * 1000; // 10 minutes
 const DEVICE_SEARCH_MAX = 8;
 
+/** An observation is current only before its expiry; expired offers are never served as live. */
+export function isObservationFresh(obs: { expiresAt: Date }, now: number = Date.now()): boolean {
+  return obs.expiresAt.getTime() > now;
+}
+
 export type DiscoveryErrorCode =
   | "DEPENDENCY_UNAVAILABLE"
   | "PROVIDER_REJECTED"
