@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+/*
+ * RepairRelay design tokens — from docs/product/UX-DESIGN.md.
+ * Canvas #F5F7FA, surface #FFFFFF, ink #152238, muted #66758A, line #E3E8EF,
+ * brand #0F766E, brand-soft #E7F5F2, success #15803D, warning #B45309,
+ * danger #B91C1C, info #1D4ED8. WCAG 2.2 AA; color never the sole status signal.
+ */
+
+@theme inline {
+  --color-canvas: #f5f7fa;
+  --color-surface: #ffffff;
+  --color-ink: #152238;
+  --color-muted: #66758a;
+  --color-line: #e3e8ef;
+  --color-brand: #0f766e;
+  --color-brand-soft: #e7f5f2;
+  --color-success: #15803d;
+  --color-warning: #b45309;
+  --color-danger: #b91c1c;
+  --color-info: #1d4ed8;
+
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --radius-card: 15px;
+  --radius-control: 11px;
+}
+
+body {
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 0.9375rem; /* 15px body within the 14–16 px spec */
+  min-height: 100vh;
+}
+
+/* Visible keyboard focus everywhere (accessibility rule). */
+:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
