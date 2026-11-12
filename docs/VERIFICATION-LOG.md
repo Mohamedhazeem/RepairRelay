@@ -1,13 +1,13 @@
 # RepairRelay — Verification Log
 
-**Last updated:** 8 November 2026  
+**Last updated:** 12 November 2026  
 **Purpose:** record only tests actually run. Do not convert planned work into a passing result.
 
 ## 1. Current status
 
 | Area | Status | Evidence / next action |
 |---|---|---|
-| Product decision and project documents | DRAFTED | This project pack has been created; no app implementation verified yet. |
+| Product decision and project documents | FINAL | Product spec, UX spec, architecture, API contracts, integration notes and this log are complete and kept in sync with the implementation. |
 | Channel3 documentation review | REVIEWED | Official API/search/locale/caching docs reviewed; authenticated responses now captured (V-002). |
 | Channel3 live API | **PASS** | 9 authenticated searches + 2 detail refreshes, HTTP 200; schemas captured in V-002/V-003. |
 | Channel3 spare-part coverage | **INSUFFICIENT → PIVOT SELECTED** | Only 1 genuine iPhone 13 display part found (needs ≥2). Repair-versus-Replace mode selected per documented fallback; replacement-device coverage is strong. See V-004. |
@@ -16,8 +16,8 @@
 | PayPal buyer approval / authorize | **PASS** | Official sandbox UI approval (SDK page + hosted page); order `APPROVED`; authorization `29294125B72500359` USD 95.00. Buyer-cancel path also observed (`onCancel` fired, no authorization). See V-007. |
 | PayPal capture / void | **PASS** | Capture `3EC39096GD493553N` COMPLETED → auth `CAPTURED`; void → auth `VOIDED`; void-after-capture and capture-after-void both rejected by PayPal with the expected errors. See V-007. |
 | AI vision API | **PASS** | `nvidia/nemotron-3.5-super-vl-120b-a12b` via NVIDIA NIM; schema-valid JSON, honest UNASSESSED on unrelated image. See V-006. |
-| Application build | NOT STARTED | S1 foundation next. |
-| E2E | NOT STARTED | Implement slices before recording results. |
+| Application build | **PASS** | `npm run build` clean at f7adc8e and re-verified 12 Nov 2026; all 38 routes dynamic, middleware active. See §4. |
+| E2E | **PASS** | `npx playwright test` 2/2 at f7adc8e and re-verified 12 Nov 2026 with real AI + Channel3. PayPal buyer approval is covered by the manual sandbox rehearsal (V-007). See §4. |
 | Devpost submission | NOT SUBMITTED | Deadline 13 Nov 2026 1:30 AM IST. |
 
 ## 2. How to record a verification
@@ -188,6 +188,16 @@ Never paste access tokens, client secrets, API keys, buyer passwords, card data,
 | 2026-11-08 | S11 working tree | `npx playwright test` | PASS | 2/2: full customer journey with real providers (12.7s) + role guards. Real UI gap found & fixed by E2E: quote selection now creates the contract draft (was curl-only) |
 | 2026-11-08 | S11 working tree | `npm run lint` / `typecheck` / `test` / `build` | PASS | Final gates: 0/0 lint, 128/128 Vitest, build clean |
 | 2026-11-08 | Docs-vs-implementation audit | Full cross-check of API-CONTRACTS / DATA-MODEL / UX-DESIGN / scope-ownership | PASS with 3 gaps found and fixed | All 21 documented API endpoints implemented (capture/void as internal orchestration per the contracts' own "prefer internal" note); all documented entities in the schema; all 11 UX screens mapped. **Gaps found and fixed:** (1) intake functionality checklist was UI-only — now persisted and fed to the AI diagnosis input per AI-AND-EVIDENCE §3; (2) demo-operator reset was CLI-only — now an admin-gated UI button + POST /api/admin/demo-reset (403 for customers, verified); (3) rate limiting existed only on AI diagnosis — now also on product search, uploads, evidence uploads and payment mutations per ARCHITECTURE §7 (in-memory limiter, single-instance limitation documented). Remaining accepted gaps: CSRF relies on SameSite=Lax (no token); responsive/keyboard manual pass pending; PDF passport export skipped per documented cut order |
+
+| 2026-11-12 | f7adc8e + working tree | `npm run lint` / `npm run typecheck` / `npm test` / `npm run build` | PASS | Full regression re-run at current HEAD: 0 lint problems, 0 type errors, 128/128 Vitest (20 files), clean production build with all 38 routes dynamic. |
+| 2026-11-12 | f7adc8e + working tree | `npx playwright test` | PASS | 2/2 re-run with real providers: customer journey 1.1 min (real AI diagnosis + live Channel3 search) and role guards. PayPal buyer approval remains covered by the manual sandbox rehearsal (V-007). |
+| 2026-11-12 | working tree | Prisma state probe (`paymentAttempt` / `paymentOperation`) | PASS | 0 unresolved payment UNKNOWNs (`AUTHORIZATION_UNKNOWN`/`CAPTURE_UNKNOWN`/`VOID_UNKNOWN`) and 0 open operations (`STARTED`/`UNKNOWN`). No optimistic or fabricated success state persisted. |
+| 2026-11-12 | working tree | `next start -p 3102` + curl guard probe | PASS | `/`, `/repairs`, `/repairer`, `/admin/demo` all 307 to `/login?next=…`; `/api/auth/me` returns 401 JSON with a traceId. Production-mode role middleware confirmed active. |
+| 2026-11-12 | working tree | Dashboard, nav and sign-in hardening | DONE | `/repairs` rebuilt from the S1 stub into a real dashboard: active repair cards with status, next action, contract total and payment state; recent completed/cancelled list; audit activity feed. Customer nav de-duplicated to Overview / Activity / Start a repair. Sign-in throttle added (10 failed attempts / 5 min per email → 429 `RATE_LIMITED`, in-memory, single-instance limitation documented). Stale entries in this log and the execution checklist corrected. |
+| 2026-11-12 | working tree | Sign-in throttle correction + unit tests | DONE | The first cut of the throttle counted *successful* sign-ins against the budget, which would have returned 429 to a demo user signing in repeatedly with a correct password (the manual checklist needs many same-account sign-ins). Changed to failure-only counting: the limit is peeked before the database lookup, consumed only on a failed authentication, and cleared on success. New unit tests cover `peek`/`record`/`reset` semantics. Verified live against `next start`: 12 consecutive sign-ins with the correct password all returned 200; 10 wrong passwords returned 401 and the 11th returned 429 `RATE_LIMITED`. |
+| 2026-11-12 | working tree | Responsive sweep (360/768/1024/1440 × 9 routes) | PASS after 2 fixes | Automated horizontal-overflow measurement against the production build, with the stylesheet confirmed loaded (body background `rgb(245,247,250)`) before each measurement. First run found 60px overflow at 360px on every screen: the app-shell header (`DEMO ENVIRONMENT` badge + display name + sign-out) could not shrink. Fixed by letting the header and nav wrap. Second run still found 12px overflow at 360px on the dashboard activity feed, whose timestamp used a fixed `w-40 shrink-0`; changed to full-width below `sm` with a `min-w-0` label. Final run: **0 overflowing combinations out of 36**. |
+| 2026-11-12 | working tree | Keyboard / focus / reduced-motion check | PASS | Tab order on the dashboard is logo → sign out → Overview → Activity → Start a repair → content links, all reachable. The author `:focus-visible` rule (`outline: 2px solid var(--color-brand)`) was confirmed applied in a real browser (`solid rgb(15,118,110)`) — headless Chromium reports the UA focus ring instead, which is a harness quirk, not an app defect. `prefers-reduced-motion: reduce` confirmed honoured. The dialog focus trap still needs an eyeball pass during the manual demo checklist. |
+| 2026-11-12 | final working tree | `npm run lint` / `npm run typecheck` / `npm test` / `npm run build` / `npx playwright test` | PASS | Final gate run after every fix above: 0 lint problems, 0 type errors, **131/131 Vitest (20 files)**, clean production build (38 routes, all dynamic), 2/2 Playwright specs with real AI + live Channel3. |
 
 ### V-008 — S1 foundation slice
 

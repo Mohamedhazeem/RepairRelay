@@ -84,7 +84,7 @@ Use this file as the live progress tracker. Only check an item after it is imple
 - [x] Change request includes reason and before/after values. (Repairer-only via workbench form; server computes deterministic diff; work pauses while PENDING)
 - [x] Customer approve/reject path. (Approve activates proposed version; reject preserves prior contract)
 - [x] Rejected change keeps original contract. (Unit-tested: total unchanged, proposed version superseded)
-- [ ] Amount change triggers void then new buyer approval/authorization. (Deferred to S6/S9 by design: S03 never calls PayPal; no payment exists at S5 — the S04 orchestrator will own void/reauthorize when an authorization exists)
+- [x] Amount change triggers void then new buyer approval/authorization. (Implemented: the S5 change-decision route calls `voidAfterCancellation(..., { contractChange: true })`, which voids the old authorization and keeps the contract APPROVED, so a new buyer approval + authorization is required for the new total. Integration-tested in `tests/integration/payments-reconcile.test.ts` ("amount-change void path"); provider void confirmed live in V-007.)
 - [x] Contract tests pass. (92/92 total; live: create $94.48 → approve → repairer change (+$20.50 part, 365-day warranty) → customer approve → v2 current $114.98, v1 preserved)
 
 ## S6 — PayPal approval and authorization
@@ -147,8 +147,8 @@ Use this file as the live progress tracker. Only check an item after it is imple
 - [x] Customer cancel/void E2E passes. (Integration: cancel-requested → confirmed void → CANCELLED; live-verified S0/S9)
 - [x] Channel3 empty/error E2E state checked. (Error mapping + empty states unit/integration tested; no fabricated results)
 - [x] Security/authorization checks pass. (Role guards, ownership, private assets 401/403, spoofed uploads rejected — tested at multiple layers)
-- [ ] 360/768/1024/1440 responsive checks pass. (Spot-check pending — see verification log)
-- [ ] Keyboard and reduced-motion checks pass. (Focus-visible + reduced-motion CSS shipped; manual pass pending)
+- [x] 360/768/1024/1440 responsive checks pass. (Automated horizontal-overflow sweep over 9 routes × 4 widths = 36 combinations, measured against the production build with the stylesheet confirmed loaded: 0 overflowing. Two real defects found and fixed — the app-shell header could not shrink at 360px, and the dashboard activity-feed row used a fixed-width timestamp. See verification log.)
+- [x] Keyboard and reduced-motion checks pass. (Tab order verified on the dashboard — logo → sign out → nav → content, all reachable with the brand `:focus-visible` outline confirmed applied in a real browser; `prefers-reduced-motion: reduce` confirmed honoured. Dialog focus trap still to be eyeballed in the manual pass.)
 - [x] `npm run lint` passes.
 - [x] `npm run typecheck` passes.
 - [x] `npm test` passes. (128/128)
@@ -164,4 +164,13 @@ Use this file as the live progress tracker. Only check an item after it is imple
 
 ## Current state
 
-All checkboxes are intentionally unchecked. This pack contains specifications and plans; it does not claim the application or provider flows have been implemented or verified.
+S0–S11 are implemented and verified. The full transaction (intake → AI → Channel3 → quotes → contract → PayPal authorize → evidence → accept → capture → passport) has been executed live against real providers, and the whole suite (lint, typecheck, 131 Vitest, production build, 2 Playwright specs) was re-run clean on 12 November 2026 against the working tree.
+
+Genuinely open items, all non-code or submission-related:
+- Channel3 credit/usage dashboard check (line 13).
+- Demo video under 3 minutes (line 161).
+- Devpost submission entered and receipt verified (lines 162–163).
+
+Remaining manual-only checks inside the demo checklist: the PayPal buyer-approval popup path (covered by the live sandbox rehearsal, not by Playwright), the dialog focus trap, and the honest visual pass on every screen at 360px.
+
+Accepted and documented, not defects: CSRF relies on SameSite=Lax (no token); the rate limiter is in-memory and single-instance only; PayPal webhooks are intentionally not used (state is reconciled by provider reads); PDF passport export was cut per the documented cut order.

@@ -6,8 +6,9 @@ import { LogoutButton } from "@/components/shell/LogoutButton";
 
 const NAV_BY_ROLE: Record<SessionUser["role"], Array<{ href: string; label: string }>> = {
   CUSTOMER: [
-    { href: "/repairs", label: "Repairs" },
-    { href: "/repairs", label: "Activity" },
+    { href: "/repairs", label: "Overview" },
+    { href: "/repairs#activity", label: "Activity" },
+    { href: "/repairs/new", label: "Start a repair" },
   ],
   SIMULATED_REPAIRER: [{ href: "/repairer", label: "Workbench" }],
   DEMO_ADMIN: [{ href: "/admin/demo", label: "Demo operator" }],
@@ -20,14 +21,14 @@ export async function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col">
       <header className="border-b border-line bg-surface">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3">
-          <div className="flex items-center gap-3">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-3">
+          <div className="flex min-w-0 flex-wrap items-center gap-3">
             <Link href="/" className="flex items-center gap-2 text-base font-bold tracking-tight">
               <span aria-hidden="true" className="text-brand">⇄</span> RepairRelay
             </Link>
             <EnvironmentBanner />
           </div>
-          <div className="flex items-center gap-3 text-sm">
+          <div className="flex shrink-0 items-center gap-3 text-sm">
             {session ? (
               <>
                 <span className="text-muted">
@@ -46,7 +47,7 @@ export async function AppShell({ children }: { children: React.ReactNode }) {
 
       {session ? (
         <nav aria-label="Primary" className="border-b border-line bg-surface">
-          <div className="mx-auto flex max-w-7xl gap-1 px-4">
+          <div className="mx-auto flex max-w-7xl flex-wrap gap-1 px-4">
             {NAV_BY_ROLE[session.role].map((item) => (
               <Link
                 key={item.href + item.label}

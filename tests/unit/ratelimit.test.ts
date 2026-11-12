@@ -23,4 +23,37 @@ describe("sliding-window rate limiter", () => {
     t += 10_500;
     expect(limiter.check("a").allowed).toBe(true);
   });
+
+  it("peek reports the decision without consuming budget", () => {
+    const limiter = new SlidingWindowRateLimiter(2, 10_000);
+    expect(limiter.peek("a").allowed).toBe(true);
+    expect(limiter.peek("a").allowed).toBe(true);
+    // Peeking repeatedly must never exhaust the budget on its own.
+    for (let i = 0; i < 50; i += 1) expect(limiter.peek("a").allowed).toBe(true);
+    expect(limiter.check("a").allowed).toBe(true);
+    expect(limiter.check("a").allowed).toBe(true);
+    expect(limiter.peek("a").allowed).toBe(false);
+  });
+
+  it("record consumes budget only for the recorded key", () => {
+    const limiter = new SlidingWindowRateLimiter(2, 10_000);
+    limiter.record("a");
+    limiter.record("a");
+    expect(limiter.peek("a").allowed).toBe(false);
+    expect(limiter.peek("b").allowed).toBe(true);
+  });
+
+  it("reset clears the budget so a correct credential is never throttled", () => {
+    const limiter = new SlidingWindowRateLimiter(2, 10_000);
+    limiter.record("a");
+    limiter.record("a");
+    expect(limiter.peek("a").allowed).toBe(false);
+    limiter.reset("a");
+    expect(limiter.peek("a").allowed).toBe(true);
+    // Reset only clears the named key.
+    limiter.record("b");
+    limiter.record("b");
+    limiter.reset("a");
+    expect(limiter.peek("b").allowed).toBe(false);
+  });
 });

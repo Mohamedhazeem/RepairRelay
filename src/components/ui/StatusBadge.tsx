@@ -1,6 +1,6 @@
 import { cx } from "@/lib/ui/classnames";
 
-type Tone = "neutral" | "brand" | "success" | "warning" | "danger" | "info";
+export type Tone = "neutral" | "brand" | "success" | "warning" | "danger" | "info";
 
 const TONE_CLASSES: Record<Tone, string> = {
   neutral: "border-line bg-surface text-muted",
