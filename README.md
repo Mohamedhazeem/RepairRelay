@@ -169,7 +169,7 @@ Start with [`docs/README.md`](docs/README.md), then [`docs/REPAIRRELAY-2.0-SPEC-
 
 ## Stack
 
-Next.js 16 App Router, TypeScript (strict), React 19, Tailwind CSS 4 (UX-spec design tokens), Prisma 6 + PostgreSQL, jose-signed HttpOnly cookie sessions with role middleware, sharp image pipeline, Vitest + Playwright, server-only adapters for Channel3 / OpenAI-compatible vision AI / PayPal Orders + Payments APIs.
+Next.js 16 App Router, TypeScript (strict), React 19, Tailwind CSS 4 (UX-spec design tokens), Prisma 6 + PostgreSQL, jose-signed HttpOnly cookie sessions with a role-scoped request proxy (`src/proxy.ts`, the Next 16 replacement for the deprecated `middleware` convention), sharp image pipeline, Vitest + Playwright, server-only adapters for Channel3 / OpenAI-compatible vision AI / PayPal Orders + Payments APIs.
 
 ## Important integration constraints
 

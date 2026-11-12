@@ -2,8 +2,14 @@ import { NextResponse, type NextRequest } from "next/server";
 import { SESSION_COOKIE, verifySessionToken } from "@/lib/auth/session";
 
 /**
- * Edge guard: presence + claims of the session cookie for role-scoped areas.
+ * Request-boundary guard (Next 16 `proxy` convention — `middleware` is deprecated).
+ * Presence + claims of the session cookie for role-scoped areas.
  * Pages additionally verify server-side (defense in depth).
+ *
+ * Runs on the Node.js runtime: `proxy` does not support the edge runtime and the
+ * runtime is not configurable. `verifySessionToken` swallows configuration errors
+ * and returns null, so a bad environment degrades to "signed out" (redirect to
+ * /login) rather than a 500.
  */
 
 const AREA_ROLES: Array<{ prefix: string; roles: Array<"CUSTOMER" | "SIMULATED_REPAIRER" | "DEMO_ADMIN"> }> = [
@@ -12,7 +18,7 @@ const AREA_ROLES: Array<{ prefix: string; roles: Array<"CUSTOMER" | "SIMULATED_R
   { prefix: "/admin", roles: ["DEMO_ADMIN"] },
 ];
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const area = AREA_ROLES.find((a) => pathname === a.prefix || pathname.startsWith(`${a.prefix}/`));
   if (!area) return NextResponse.next();
