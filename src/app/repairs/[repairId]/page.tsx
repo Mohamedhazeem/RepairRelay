@@ -55,7 +55,7 @@ export default async function RepairDetailPage({ params }: { params: Promise<{ r
             Reference {repair.publicReference} · created {repair.createdAt.toLocaleDateString("en-US")}
           </p>
         </div>
-        <StatusBadge label={repair.status.replaceAll("_", " ")} tone="neutral" />
+        <StatusBadge label={repair.status.replaceAll("_", " ")} tone="neutral" className="shrink-0" />
       </div>
 
       <section className="rounded-card border border-line bg-surface p-5">

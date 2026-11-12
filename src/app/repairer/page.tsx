@@ -81,9 +81,9 @@ export default async function RepairerPage() {
                     {contract.status.replaceAll("_", " ").toLowerCase()}
                   </p>
                 </div>
-                <div className="flex gap-2">
-                  <StatusBadge label={`Payment: ${payment?.status.replaceAll("_", " ") ?? "NONE"}`} tone={authorized ? "success" : "warning"} />
-                  {job ? <StatusBadge label={job.status.replaceAll("_", " ")} tone={job.status === "CUSTOMER_REVIEW" ? "info" : "neutral"} /> : null}
+                <div className="flex flex-wrap gap-2">
+                  <StatusBadge label={`Payment: ${payment?.status.replaceAll("_", " ") ?? "NONE"}`} tone={authorized ? "success" : "warning"} className="shrink-0" />
+                  {job ? <StatusBadge label={job.status.replaceAll("_", " ")} tone={job.status === "CUSTOMER_REVIEW" ? "info" : "neutral"} className="shrink-0" /> : null}
                 </div>
               </div>
               <dl className="mt-4 grid gap-2 text-sm sm:grid-cols-2">

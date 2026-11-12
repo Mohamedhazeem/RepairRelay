@@ -167,8 +167,8 @@ export function PaymentPanel({
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-2">
-        <StatusBadge label="PAYPAL SANDBOX" tone="warning" />
-        {status ? <StatusBadge label={status.replaceAll("_", " ")} tone={authorized ? "success" : status === "BUYER_CANCELLED" || status.includes("DECLINED") ? "danger" : "warning"} /> : null}
+        <StatusBadge label="PAYPAL SANDBOX" tone="warning" className="shrink-0" />
+        {status ? <StatusBadge label={status.replaceAll("_", " ")} tone={authorized ? "success" : status === "BUYER_CANCELLED" || status.includes("DECLINED") ? "danger" : "warning"} className="shrink-0" /> : null}
       </div>
 
       <section className="rounded-card border border-line bg-surface p-5 text-sm">

@@ -100,7 +100,7 @@ export function DiagnosisPanel({
 
   return (
     <div aria-live="polite" className="space-y-4">
-      <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         <StatusBadge label="AI-assisted assessment — review before proceeding" tone="info" icon="✦" />
         <StatusBadge label={`Confidence: ${diagnosis.overallConfidence}`} tone={BAND_TONE[diagnosis.overallConfidence] ?? "neutral"} />
       </div>

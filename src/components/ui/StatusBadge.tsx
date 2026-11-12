@@ -25,7 +25,11 @@ export function StatusBadge({
   return (
     <span
       className={cx(
-        "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-semibold tracking-wide",
+        // `text-center` matters: a badge is a flex item, so it is blockified to
+        // `display:flex` and its text becomes an anonymous flex item. If the
+        // badge is squeezed and the label wraps, `start` alignment leaves the
+        // wrapped lines hugging the left edge of the leftover space.
+        "inline-flex items-center justify-center gap-1.5 rounded-full border px-2.5 py-0.5 text-center text-xs font-semibold tracking-wide",
         TONE_CLASSES[tone],
         className,
       )}

@@ -270,8 +270,8 @@ export default async function RepairsPage() {
               const payment = repair.contract?.paymentAttempts[0] ?? null;
               return (
                 <li key={repair.id} className="rounded-card border border-line bg-surface p-5">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
+                  <div className="flex flex-wrap items-start justify-between gap-x-3 gap-y-2">
+                    <div className="min-w-0 flex-1">
                       <h3 className="font-semibold">
                         {repair.deviceBrand} {repair.deviceModel}
                       </h3>
@@ -279,7 +279,11 @@ export default async function RepairsPage() {
                         Reference {repair.publicReference} · updated {repair.updatedAt.toLocaleDateString("en-US")}
                       </p>
                     </div>
-                    <StatusBadge label={repair.status.replaceAll("_", " ")} tone={toneForStatus(repair.status)} />
+                    <StatusBadge
+                      label={repair.status.replaceAll("_", " ")}
+                      tone={toneForStatus(repair.status)}
+                      className="shrink-0"
+                    />
                   </div>
 
                   <dl className="mt-3 space-y-1 text-sm">
@@ -344,8 +348,12 @@ export default async function RepairsPage() {
                       Reference {repair.publicReference} · {repair.status === "COMPLETED" ? "completed" : "cancelled"}
                     </p>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <StatusBadge label={repair.status.replaceAll("_", " ")} tone={toneForStatus(repair.status)} />
+                  <div className="flex shrink-0 items-center gap-3">
+                    <StatusBadge
+                      label={repair.status.replaceAll("_", " ")}
+                      tone={toneForStatus(repair.status)}
+                      className="shrink-0"
+                    />
                     {action.href ? (
                       <Link href={action.href} className="text-sm font-medium text-brand hover:underline">
                         {action.label}

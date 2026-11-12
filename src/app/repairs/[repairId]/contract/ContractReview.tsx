@@ -92,12 +92,12 @@ export function ContractReview({
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center gap-3">
-        <StatusBadge label={currentStatus.replaceAll("_", " ")} tone={currentStatus === "APPROVED" ? "success" : "warning"} />
+        <StatusBadge label={currentStatus.replaceAll("_", " ")} tone={currentStatus === "APPROVED" ? "success" : "warning"} className="shrink-0" />
         <span className="text-sm text-muted">
           Version {terms.versionNumber} · created {new Date(terms.createdAt).toLocaleString("en-US")}
         </span>
         <SimulatedActorBadge />
-        <StatusBadge label="PAYPAL SANDBOX" tone="warning" />
+        <StatusBadge label="PAYPAL SANDBOX" tone="warning" className="shrink-0" />
       </div>
 
       {error ? <ErrorState title="Action failed" description={error} /> : null}
